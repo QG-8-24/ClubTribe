@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ClubTribe-dependencies</artifactId>
-    <packaging>o=pom</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <!-- 环境配置的统一管理，告诉Maven 源码、报告及jdk版本指定为utf-8的 -->
@@ -23,6 +23,9 @@
         <junit.version>4.12</junit.version>
         <spring.version>5.1.6.RELEASE</spring.version>
         <mybatis.version>3.2.8</mybatis.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <jstl.version>1.2</jstl.version>
+        <jsp.version>2.2</jsp.version>
     </properties>
     <!--依赖管理，不直接下载依赖，只是管理依赖-->
     <dependencyManagement>
@@ -134,13 +137,18 @@
             <!-- Servlet Begin -->
             <dependency>
                 <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
+                <artifactId>servlet-api</artifactId>
                 <version>${servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>jstl</artifactId>
                 <version>${jstl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp.version}</version>
             </dependency>
             <!-- Servlet End -->
 
@@ -149,6 +157,7 @@
                 <artifactId>mybatis</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>
