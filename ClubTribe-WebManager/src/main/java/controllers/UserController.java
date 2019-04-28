@@ -5,15 +5,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("test")
+@RequestMapping("user")
 public class UserController {
 
-    @RequestMapping("test1")
-    public ModelAndView show(){
+    @RequestMapping("clubhome")
+    public ModelAndView test(String userid,String clubid){
+        System.out.println(userid + "+++++" + clubid);
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("clubhome");
-        System.out.println("123");
+        modelAndView.addObject("userid",userid);
+        modelAndView.addObject("cludid",clubid);
         return modelAndView;
     }
-
 }

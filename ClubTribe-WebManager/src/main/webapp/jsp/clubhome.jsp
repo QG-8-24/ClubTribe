@@ -3,9 +3,23 @@
 <head>
     <title>clubhome</title>
     <link rel="stylesheet" type="text/css" href="../css/clubhomestyle.css">
-    <link type="text/css" rel="">
+    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script>
+        $(function () {
+       var cludid='${cludid}';
+            console.log(cludid);
+        });
+    </script>
 </head>
 <body>
-<h4>主页</h4>
+<ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Portfolio</a></li>
+    <li><a href="#">Our Team</a></li>
+    <li><a href="#">Contact US</a></li>
+</ul>
+
 </body>
 </html>

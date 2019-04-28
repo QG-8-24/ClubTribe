@@ -5,12 +5,15 @@
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script>
         $(function () {
-            alert("666")
+            console.log("666");
         });
     </script>
 </head>
 <body>
-hello
-<a href="test/test1">123</a>
+<form action="user/clubhome">
+    <input name="userid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
+    <input name="clubid" type="text" value="123456789" style="display: none">
+    <input type="submit" value="9898" name="">
+</form>
 </body>
 </html>
