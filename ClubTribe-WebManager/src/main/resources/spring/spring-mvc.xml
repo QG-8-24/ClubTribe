@@ -12,11 +12,23 @@
     <mvc:annotation-driven></mvc:annotation-driven>
 
     <!--声明组件扫描器-->
-    <context:component-scan base-package="controllers"></context:component-scan>
+    <context:component-scan base-package="clubtribe.controllers"></context:component-scan>
 
     <!--声明视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
+<!--    &lt;!&ndash; 处理请求返回json字符串的中文乱码问题 &ndash;&gt;-->
+<!--    <mvc:annotation-driven>-->
+<!--        <mvc:message-converters>-->
+<!--            <bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
+<!--                <property name="supportedMediaTypes">-->
+<!--                    <list>-->
+<!--                        <value>application/json;charset=UTF-8</value>-->
+<!--                    </list>-->
+<!--                </property>-->
+<!--            </bean>-->
+<!--        </mvc:message-converters>-->
+<!--    </mvc:annotation-driven>-->
 </beans>

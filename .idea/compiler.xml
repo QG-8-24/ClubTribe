@@ -6,10 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ClubTribe-WebManager" />
+        <module name="ClubTribe-Pojo" />
         <module name="ClubTribe-Services" />
         <module name="ClubTribe-Dao" />
-        <module name="ClubTribe-Beans" />
+        <module name="ClubTribe-WebManager" />
         <module name="ClubTribeServices" />
         <module name="ClubTribeDao" />
         <module name="ClubTribeWebManager" />

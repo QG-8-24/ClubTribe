@@ -11,10 +11,10 @@
 
 
     <modules>
-        <module>ClubTribe-dependencies</module>
+        <module>ClubTribe-Dependencies</module>
+        <module>ClubTribe-Pojo</module>
         <module>ClubTribe-Dao</module>
         <module>ClubTribe-Services</module>
-        <module>ClubTribe-Beans</module>
         <module>ClubTribe-WebManager</module>
     </modules>
 
