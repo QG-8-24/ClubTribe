@@ -5,21 +5,36 @@
     <title>clubhome</title>
     <link rel="stylesheet" type="text/css" href="../css/clubhomestyle.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="../js/clubhome.js"></script>
     <script>
         $(function () {
-            var clubid = '${clubid}';
-            console.log("==============" + clubid);
-            $.ajax({
-                url: "${pageContext.request.contextPath}/user/getclubname",
-                data: {
-                    "clubid": clubid
-                },
-                success: function (resp) {
-                    console.log(resp);
-                    $("#title").append(resp)
-                }
-            });
+            var init = function () {
+                var userid = '${userid}';
+                var clubid = '${clubid}';
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/init",
+                    data: {
+                        "userid": userid,
+                        "clubid": clubid
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        var str = resp.split("@");
+                        var username = str[0];
+                        console.log(username);
+                        var clubname = str[1];
+                        if (username != 'null') {
+                            $("#log").css({
+                                "display": "none"
+                            });
+                            $("#username").append(username);
+                        }
+                        if (clubname != 'null') {
+                            $("#title").append(clubname);
+                        }
+                    }
+                });
+            };
+            init();
             $("#context #aboutus #btn").click(function () {
                 $("#context #aboutus #btn").fadeOut(2000, function () {
                     $("#context #aboutus #data").fadeIn(2000);
@@ -37,12 +52,11 @@
 <div id="context">
     <div id="top">
         <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
-        <div id="topbtn"><a href="${pageContext.request.contextPath}/index.jsp">首页</a>
-            <a href="">注册</a>
-            <a href="">登录</a>
-            <a href="">反馈</a>
-            <a href="">QGshen</a>
-            <a href="${pageContext.request.contextPath}/index.jsp">退出</a>
+        <div id="topbtn">
+            <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
+            <a href="#" id="log">登录</a>
+            <a href="#" id="username"></a>
+            <a href="${pageContext.request.contextPath}/user/logout">退出</a>
         </div>
     </div>
     <div id="clubbg">
@@ -52,17 +66,17 @@
     </div>
     <div id="aboutus">
         <div id="btn">关于我们>>></div>
-        <div id="data">景德镇火箭队 休斯顿碰瓷队 反正火箭总冠军✈✈✈</div>
+        <div id="data">景德镇火箭队 休斯顿碰瓷队 火箭没搞了</div>
     </div>
-    <div id="fun">
-        <div style="background: powderblue">1</div>
-        <div style="background: skyblue">2</div>
-        <div style="background: pink">3</div>
-        <div style="background: yellowgreen">4</div>
-        <div style="background: greenyellow">5</div>
-        <div style="background: cadetblue">6</div>
-        <div style="background: lightyellow">7</div>
-        <div style="background: indianred">8</div>
+    <div id="function">
+        <div style="background: powderblue">签到</div>
+        <div style="background: skyblue">社团活动</div>
+        <div style="background: pink">相册</div>
+        <div style="background: yellowgreen">留言墙</div>
+        <div style="background: greenyellow">公告</div>
+        <div style="background: cadetblue">投票</div>
+        <div style="background: lightyellow">抽奖</div>
+        <div style="background: indianred">管理员操作</div>
     </div>
 </div>
 <div id="bot"></div>

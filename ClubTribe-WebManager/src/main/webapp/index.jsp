@@ -11,8 +11,8 @@
 </head>
 <body>
 <form action="user/clubhome">
-    <input name="clubid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
-<%--    <input name="clubid" type="text" value="824" style="display: none">--%>
+    用户名：<input name="userid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
+    社团id:<input name="clubid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
     <input type="submit" value="9898" name="">
 </form>
 </body>
