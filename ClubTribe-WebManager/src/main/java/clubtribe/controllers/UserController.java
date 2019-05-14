@@ -1,5 +1,6 @@
 package clubtribe.controllers;
 
+import clubtribe.pojo.User;
 import clubtribe.services.ClubsServices;
 import clubtribe.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("user")
@@ -56,8 +57,27 @@ public class UserController {
         return username + "@" + clubname;
     }
 
-    @RequestMapping(value = "logout")
-    public String logout(HttpSession session) {
-        return "redirect:clubhome";
+    @RequestMapping(value = "join",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String join(String userid, String clubid) {
+        String str = "加入失败";
+        String clubids = userServices.getclubs(Integer.parseInt(userid));
+        String[] strs = clubids.split("@");
+        //规定最多五个clubid
+        if (strs.length >= 5) {
+            str = "加入失败 每个用户最多加入5个社团";
+        } else {
+            if (Arrays.asList(strs).contains(clubid)) {
+                str = "你已是该社团成员 无需再次擦操作！";
+            } else {
+                clubids = clubids + "@" + clubid;
+                User user=new User();
+                user.setUserid(Integer.parseInt(userid));
+                user.setClubids(clubids);
+                userServices.joinclub(user);
+                str = "加入成功!";
+            }
+        }
+        return str;
     }
 }

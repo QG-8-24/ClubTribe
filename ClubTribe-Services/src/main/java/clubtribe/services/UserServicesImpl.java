@@ -1,6 +1,7 @@
 package clubtribe.services;
 
 import clubtribe.dao.UserMapper;
+import clubtribe.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,15 @@ public class UserServicesImpl implements UserServices {
     public String findnamebyid(Integer userid) {
         return userMapper.getusername(userid);
     }
+
+    @Override
+    public String getclubs(Integer userid) {
+       return userMapper.getclubs(userid);
+    }
+
+    @Override
+    public int joinclub(User user) {
+        return userMapper.joinclub(user);
+    }
+
 }

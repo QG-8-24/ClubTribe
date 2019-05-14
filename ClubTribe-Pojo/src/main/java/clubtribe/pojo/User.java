@@ -5,19 +5,18 @@ public class User {
     private String username;
     private String useremail;
     private String password;
-    private String cludids;
+    private String clubids;
 
-
-    public User() {
-        super();
-    }
-
-    public User(Integer userid, String username, String useremail, String password, String cludids) {
+    public User(Integer userid, String username, String useremail, String password, String clubids) {
         this.userid = userid;
         this.username = username;
         this.useremail = useremail;
         this.password = password;
-        this.cludids = cludids;
+        this.clubids = clubids;
+    }
+
+    public User() {
+        super();
     }
 
     public Integer getUserid() {
@@ -52,12 +51,12 @@ public class User {
         this.password = password;
     }
 
-    public String getCludids() {
-        return cludids;
+    public String getClubids() {
+        return clubids;
     }
 
-    public void setCludids(String cludids) {
-        this.cludids = cludids;
+    public void setClubids(String clubids) {
+        this.clubids = clubids;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", useremail='" + useremail + '\'' +
                 ", password='" + password + '\'' +
-                ", cludids='" + cludids + '\'' +
+                ", clubids='" + clubids + '\'' +
                 '}';
     }
 }
