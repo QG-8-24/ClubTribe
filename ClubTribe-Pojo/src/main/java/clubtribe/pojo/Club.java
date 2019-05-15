@@ -4,23 +4,29 @@ package clubtribe.pojo;
  * @author MQ
  * 社团集合类
  */
-public class Clubs {
+public class Club {
     private Integer schoolid;
-    private String clubsid;
+    private String clubid;
     private String clubname;
     private Integer perid;
     private String adminid;
+    private String msgboard;
+    private String msg;
+    private String ablum;
 
-    public Clubs() {
+    public Club() {
         super();
     }
 
-    public Clubs(Integer schoolid, String clubsid, String clubname, Integer perid, String adminid) {
+    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String ablum) {
         this.schoolid = schoolid;
-        this.clubsid = clubsid;
+        this.clubid = clubid;
         this.clubname = clubname;
         this.perid = perid;
         this.adminid = adminid;
+        this.msgboard = msgboard;
+        this.msg = msg;
+        this.ablum = ablum;
     }
 
     public Integer getSchoolid() {
@@ -31,12 +37,12 @@ public class Clubs {
         this.schoolid = schoolid;
     }
 
-    public String getClubsid() {
-        return clubsid;
+    public String getClubid() {
+        return clubid;
     }
 
-    public void setClubsid(String clubsid) {
-        this.clubsid = clubsid;
+    public void setClubid(String clubid) {
+        this.clubid = clubid;
     }
 
     public String getClubname() {
@@ -63,14 +69,41 @@ public class Clubs {
         this.adminid = adminid;
     }
 
+    public String getMsgboard() {
+        return msgboard;
+    }
+
+    public void setMsgboard(String msgboard) {
+        this.msgboard = msgboard;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getAblum() {
+        return ablum;
+    }
+
+    public void setAblum(String ablum) {
+        this.ablum = ablum;
+    }
+
     @Override
     public String toString() {
         return "Clubs{" +
                 "schoolid=" + schoolid +
-                ", clubsid='" + clubsid + '\'' +
+                ", clubsid='" + clubid + '\'' +
                 ", clubname='" + clubname + '\'' +
                 ", perid=" + perid +
                 ", adminid='" + adminid + '\'' +
+                ", msgboard='" + msgboard + '\'' +
+                ", msg='" + msg + '\'' +
+                ", ablum='" + ablum + '\'' +
                 '}';
     }
 }
