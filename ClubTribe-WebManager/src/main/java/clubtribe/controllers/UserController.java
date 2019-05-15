@@ -1,7 +1,7 @@
 package clubtribe.controllers;
 
-import clubtribe.pojo.User;
-import clubtribe.services.ClubsServices;
+import clubtribe.pojo.Club;
+import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Controller
@@ -16,7 +18,7 @@ import java.util.Arrays;
 public class UserController {
 
     @Autowired
-    private ClubsServices clubsServices;
+    private ClubServices clubsServices;
     @Autowired
     private UserServices userServices;
 
@@ -57,9 +59,9 @@ public class UserController {
         return username + "@" + clubname;
     }
 
-    @RequestMapping(value = "join",produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "joinapply", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String join(String userid, String clubid) {
+    public String join(String userid, String clubid) throws IOException, ClassNotFoundException {
         String str = "加入失败";
         String clubids = userServices.getclubs(Integer.parseInt(userid));
         String[] strs = clubids.split("@");
@@ -70,14 +72,43 @@ public class UserController {
             if (Arrays.asList(strs).contains(clubid)) {
                 str = "你已是该社团成员 无需再次擦操作！";
             } else {
-                clubids = clubids + "@" + clubid;
-                User user=new User();
-                user.setUserid(Integer.parseInt(userid));
-                user.setClubids(clubids);
-                userServices.joinclub(user);
-                str = "加入成功!";
+                if (clubsServices.getmsg(Integer.parseInt(clubid)) == null || clubsServices.getmsg(Integer.parseInt(clubid)).length() == 0) {
+                    String filename = "D:/clubtribe/clubmsg/msg" + clubid + ".txt";
+                    File file = new File(filename);
+                    if (!file.exists()) {
+                        file.createNewFile();
+                        Club club = new Club();
+                        club.setClubid(clubid);
+                        club.setMsg(file.toString());
+                        clubsServices.initmsg(club);
+                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+                        ArrayList<String> list = new ArrayList<>();
+                        oos.writeObject(list);
+                        oos.close();
+                    }
+                }
+                String filepath = clubsServices.getmsg(Integer.parseInt(clubid));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+                ArrayList<String> list = (ArrayList<String>) ois.readObject();
+                ois.close();
+                if (list.contains(userid)) {
+                    str = "你已发送过加入申请 不能重复申请 亲耐心等待审核";
+                } else {
+                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+                    list.add(userid);
+                    oos.writeObject(list);
+                    oos.close();
+                    str = "加入申请已发送!";
+                }
             }
         }
         return str;
+    }
+
+    @RequestMapping("interadmin")
+    @ResponseBody
+    public String interadmin(String userid, String clubid){
+
+        return null;
     }
 }

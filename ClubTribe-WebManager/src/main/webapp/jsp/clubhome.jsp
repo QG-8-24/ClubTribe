@@ -50,7 +50,21 @@
             // 加入社团
             function join() {
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/user/join",
+                    url: "${pageContext.request.contextPath}/user/joinapply",
+                    data: {
+                        "userid": uid,
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        alert(resp);
+                    }
+                });
+            }
+
+            //进入管理页面
+            function interadmin() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/interadmin",
                     data: {
                         "userid": uid,
                         "clubid": cid,
@@ -65,24 +79,25 @@
                 if (uid.length == 0) {
                     alert("请先登录!");
                 } else {
-                   join();
+                    join();
                 }
             });
         });
     </script>
 </head>
 <body>
-<div id="context">
-    <div id="top">
-        <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
-        <div id="topbtn">
-            <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
-            <a href="#" id="log">登录</a>
-            <a href="#" id="username"></a>
-<%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
-        </div>
+
+<div id="top">
+    <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
+    <div id="topbtn">
+        <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
+        <a href="#" id="log">登录</a>
+        <a href="#" id="username"></a>
+        <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
-    <div style="height: 4px;width: 100%;background: deepskyblue;margin-bottom: 10px"></div>
+</div>
+<div style="height: 4px;width: 100%;background: deepskyblue;margin-bottom: 5px"></div>
+<div id="context">
     <div id="clubbg">
         <img id="img" src="../img/bg.jpg" alt="#">
         <div id="title"></div>
@@ -100,7 +115,7 @@
         <div style="background: greenyellow">公告</div>
         <div style="background: cadetblue">投票</div>
         <div style="background: lightyellow">抽奖</div>
-        <div style="background: indianred">管理员操作</div>
+        <div style="background: indianred" id="admin">管理员操作</div>
     </div>
 </div>
 <div id="bot"></div>
