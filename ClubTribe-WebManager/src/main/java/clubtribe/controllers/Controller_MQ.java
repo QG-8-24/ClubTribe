@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class Controller_MQ {
 
     @Autowired
     private ClubServices clubsServices;
