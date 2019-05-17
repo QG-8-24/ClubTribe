@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,11 +59,22 @@ public class Controller_MQ {
         return username + "@" + clubname;
     }
 
+    /**
+     * 加入社团申请
+     * @param userid
+     * @param clubid
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @RequestMapping(value = "joinapply", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String join(String userid, String clubid) throws IOException, ClassNotFoundException {
         String str = "加入失败";
-        String[] clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
+        String[] clubids = new String[0];
+        if (userServices.getuserclubs(Integer.parseInt(userid)) != null) {
+            clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
+        }
         //规定最多五个clubid
         if (clubids.length >= 5) {
             str = "加入失败 每个用户最多加入5个社团";
@@ -105,14 +115,22 @@ public class Controller_MQ {
         return str;
     }
 
-    @RequestMapping("interadmin")
+    @RequestMapping("ifadmin")
     @ResponseBody
-    public String interadmin(String userid, String clubid, HttpServletResponse response) throws IOException {
+    public String ifadmin(String userid, String clubid) {
         String[] admin = clubsServices.getadmin(Integer.parseInt(clubid)).split("@");
         if (Arrays.asList(admin).contains(userid)) {
             return "true";
-        } else {
-            return "false";
         }
+        return "false";
+    }
+
+    @RequestMapping("interadmin")
+    public ModelAndView interadmin(String userid, String clubid) throws IOException {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("userid", userid);
+        modelAndView.addObject("clubid", clubid);
+        modelAndView.setViewName("clubadmin");
+        return modelAndView;
     }
 }

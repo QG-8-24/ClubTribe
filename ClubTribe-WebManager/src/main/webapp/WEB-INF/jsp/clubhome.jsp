@@ -20,7 +20,6 @@
                     success: function (resp) {
                         var str = resp.split("@");
                         var username = str[0];
-                        console.log(username);
                         var clubname = str[1];
                         if (username != 'null') {
                             $("#log").css({
@@ -35,7 +34,26 @@
                     }
                 });
             };
+
+            //验证是否为管理员
+            function ifadmin() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/ifadmin",
+                    data: {
+                        "userid": uid,
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        if (resp == "true") {
+                            $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}")
+                            $("#admin").removeAttr("onclick");
+                        }
+                    }
+                });
+            }
+
             init();
+            ifadmin();
             $("#context #aboutus #btn").click(function () {
                 $("#context #aboutus #btn").fadeOut(2000, function () {
                     $("#context #aboutus #data").fadeIn(2000);
@@ -61,23 +79,7 @@
                 });
             }
 
-            //进入管理页面
-            function interadmin() {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/user/interadmin",
-                    data: {
-                        "userid": uid,
-                        "clubid": cid,
-                    },
-                    success: function (resp) {
-                       if(resp=="true"){
-
-                       }else{
-                           alert("仅限管理员！");
-                       }
-                    }
-                });
-            }
+            //加入事件
             $("#join").click(function () {
                 if (uid.length == 0) {
                     alert("请先登录!");
@@ -85,8 +87,11 @@
                     join();
                 }
             });
+
             $("#admin").click(function () {
-                interadmin();
+                if($("#admin").attr("href")=="#"){
+                    alert("仅限管理员！");
+                }
             });
         });
     </script>
@@ -121,9 +126,10 @@
         <div style="background: greenyellow">公告</div>
         <div style="background: cadetblue">投票</div>
         <div style="background: lightyellow">抽奖</div>
-        <div style="background: indianred" id="admin"><a href="${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}">管理员操作</a></div>
+        <div style="background: indianred"><a id="admin" href="#" onclick="return false;">管理员操作</a>
+        </div>
     </div>
 </div>
-<div id="bot"></div>
+<div style="height: 4px;width: 100%;background: deepskyblue;margin-bottom: 5px"></div>
 </body>
 </html>
