@@ -24,4 +24,11 @@ public interface ClubServices {
      * @return
      */
     int initmsg(Club club);
+
+    /**
+     * 获取社团管理员
+     * @param clubid
+     * @return
+     */
+    String getadmin(Integer clubid);
 }

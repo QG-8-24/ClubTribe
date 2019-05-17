@@ -13,7 +13,7 @@
 <form action="user/clubhome">
     用户名：<input name="userid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
     社团id:<input name="clubid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
-    <input type="submit" value="9898" name="">
+    <input type="submit" value="进入" name="">
 </form>
 </body>
 </html>

@@ -4,7 +4,11 @@
     <title>管理员操作</title>
     <link rel="stylesheet" type="text/css" href="../css/clubadminstyle.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-
+    <script type="text/javascript">
+        $(function () {
+            
+        });
+    </script>
 </head>
 <body>
 <div id="top">
@@ -23,7 +27,6 @@
         </ul>
     </div>
     <div id="rightbox"></div>
-
 </div>
 </body>
 </html>

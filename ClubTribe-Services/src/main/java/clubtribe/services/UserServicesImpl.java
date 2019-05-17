@@ -20,8 +20,8 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public String getclubs(Integer userid) {
-       return userMapper.getclubs(userid);
+    public String getuserclubs(Integer userid) {
+       return userMapper.getuserclubs(userid);
     }
 
     @Override

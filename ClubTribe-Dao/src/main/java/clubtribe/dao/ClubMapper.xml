@@ -10,4 +10,7 @@
     <update id="initmsg" parameterType="clubtribe.pojo.Club">
          update t_clubs set msg=#{msg} where clubid=#{clubid}
     </update>
+    <select id="getadminids" resultType="java.lang.String">
+        select adminid from t_clubs where clubid=#{?}
+    </select>
 </mapper>

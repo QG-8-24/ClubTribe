@@ -4,7 +4,7 @@
     <select id="getusername" resultType="java.lang.String">
         select username from t_user where userid =#{?}
     </select>
-    <select id="getclubs" resultType="java.lang.String">
+    <select id="getuserclubs" resultType="java.lang.String">
         select clubids from t_user where userid =#{?}
     </select>
     <update id="joinclub" parameterType="clubtribe.pojo.User">

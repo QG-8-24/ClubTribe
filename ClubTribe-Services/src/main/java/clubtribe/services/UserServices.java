@@ -16,7 +16,7 @@ public interface UserServices {
      * @param userid
      * @return
      */
-    String getclubs(Integer userid);
+    String getuserclubs(Integer userid);
 
     /**
      * 用户加入新的社团

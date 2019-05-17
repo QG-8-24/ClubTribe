@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,13 +64,12 @@ public class Controller_MQ {
     @ResponseBody
     public String join(String userid, String clubid) throws IOException, ClassNotFoundException {
         String str = "加入失败";
-        String clubids = userServices.getclubs(Integer.parseInt(userid));
-        String[] strs = clubids.split("@");
+        String[] clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
         //规定最多五个clubid
-        if (strs.length >= 5) {
+        if (clubids.length >= 5) {
             str = "加入失败 每个用户最多加入5个社团";
         } else {
-            if (Arrays.asList(strs).contains(clubid)) {
+            if (Arrays.asList(clubids).contains(clubid)) {
                 str = "你已是该社团成员 无需再次擦操作！";
             } else {
                 if (clubsServices.getmsg(Integer.parseInt(clubid)) == null || clubsServices.getmsg(Integer.parseInt(clubid)).length() == 0) {
@@ -107,8 +107,12 @@ public class Controller_MQ {
 
     @RequestMapping("interadmin")
     @ResponseBody
-    public String interadmin(String userid, String clubid){
-
-        return null;
+    public String interadmin(String userid, String clubid, HttpServletResponse response) throws IOException {
+        String[] admin = clubsServices.getadmin(Integer.parseInt(clubid)).split("@");
+        if (Arrays.asList(admin).contains(userid)) {
+            return "true";
+        } else {
+            return "false";
+        }
     }
 }

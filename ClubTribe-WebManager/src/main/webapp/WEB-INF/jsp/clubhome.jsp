@@ -70,17 +70,23 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        alert(resp);
+                       if(resp=="true"){
+
+                       }else{
+                           alert("仅限管理员！");
+                       }
                     }
                 });
             }
-
             $("#join").click(function () {
                 if (uid.length == 0) {
                     alert("请先登录!");
                 } else {
                     join();
                 }
+            });
+            $("#admin").click(function () {
+                interadmin();
             });
         });
     </script>
@@ -115,7 +121,7 @@
         <div style="background: greenyellow">公告</div>
         <div style="background: cadetblue">投票</div>
         <div style="background: lightyellow">抽奖</div>
-        <div style="background: indianred" id="admin">管理员操作</div>
+        <div style="background: indianred" id="admin"><a href="${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}">管理员操作</a></div>
     </div>
 </div>
 <div id="bot"></div>

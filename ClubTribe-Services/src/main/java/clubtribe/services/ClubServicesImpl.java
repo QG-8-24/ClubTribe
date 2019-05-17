@@ -28,4 +28,9 @@ public class ClubServicesImpl implements ClubServices {
     public int initmsg(Club club) {
         return clubMapper.initmsg(club);
     }
+
+    @Override
+    public String getadmin(Integer clubid) {
+        return clubMapper.getadminids(clubid);
+    }
 }

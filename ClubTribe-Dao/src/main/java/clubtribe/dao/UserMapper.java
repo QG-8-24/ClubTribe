@@ -18,7 +18,7 @@ public interface UserMapper {
      * @param userid
      * @return
      */
-    String getclubs(Integer userid);
+    String getuserclubs(Integer userid);
 
     /**
      * 加入社团
