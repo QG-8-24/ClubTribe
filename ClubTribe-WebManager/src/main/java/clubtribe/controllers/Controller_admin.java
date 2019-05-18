@@ -36,9 +36,7 @@ public class Controller_admin {
     @RequestMapping("getmsg")
     @ResponseBody
     public String getmsg(String clubid, String userid) throws IOException, ClassNotFoundException {
-        System.out.println(clubid + "===" + userid);
         String filepath = clubServices.getmsg(Integer.parseInt(clubid));
-        System.out.println(filepath);
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
         ArrayList<String> list = (ArrayList<String>) ois.readObject();
         for (String it : list) {

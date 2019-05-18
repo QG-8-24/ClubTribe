@@ -93,6 +93,20 @@
                     alert("仅限管理员！");
                 }
             });
+
+            //签到
+            $("#sign").click(function () {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/sign",
+                    data: {
+                        "userid": uid,
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        alert(resp);
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -117,7 +131,7 @@
         <div id="data">景德镇火箭队 休斯顿碰瓷队 火箭没搞了</div>
     </div>
     <div id="function">
-        <div style="background: powderblue">签到</div>
+        <div style="background: powderblue" id="sign">签到</div>
         <div style="background: skyblue">社团活动</div>
         <div style="background: pink">相册</div>
         <div style="background: yellowgreen">留言墙</div>

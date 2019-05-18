@@ -14,4 +14,14 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
     public int insert(ClubMember clubMember) {
         return clubMemberMapper.insert(clubMember);
     }
+
+    @Override
+    public int sign(ClubMember clubMember) {
+        return clubMemberMapper.sign(clubMember);
+    }
+
+    @Override
+    public String getsigntime(ClubMember clubMember) {
+        return clubMemberMapper.getsigntime(clubMember);
+    }
 }

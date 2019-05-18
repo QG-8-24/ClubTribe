@@ -10,4 +10,18 @@ public interface ClubMemberMapper {
      * @param member
      */
     int insert(ClubMember member);
+
+    /**
+     * 签到
+     * @param clubMember
+     * @return
+     */
+    int sign(ClubMember clubMember);
+
+    /**
+     * 获取签到时间
+     * @param clubMember
+     * @return
+     */
+    String getsigntime(ClubMember clubMember);
 }
