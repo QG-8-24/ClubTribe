@@ -122,6 +122,13 @@ public class Controller_user {
         return str;
     }
 
+    /**
+     * 判断是否为管理员
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     */
     @RequestMapping("ifadmin")
     @ResponseBody
     public String ifadmin(String userid, String clubid) {
@@ -132,6 +139,14 @@ public class Controller_user {
         return "false";
     }
 
+    /**
+     * 进入管理员页面
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("interadmin")
     public ModelAndView interadmin(String userid, String clubid) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
@@ -141,6 +156,13 @@ public class Controller_user {
         return modelAndView;
     }
 
+    /**
+     * 社团成员签到
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     */
     @RequestMapping(value = "sign", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String sign(String userid, String clubid) {
