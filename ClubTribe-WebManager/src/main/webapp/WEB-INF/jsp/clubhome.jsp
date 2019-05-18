@@ -45,7 +45,7 @@
                     },
                     success: function (resp) {
                         if (resp == "true") {
-                            $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}")
+                            $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}");
                             $("#admin").removeAttr("onclick");
                         }
                     }
@@ -89,15 +89,13 @@
             });
 
             $("#admin").click(function () {
-                if($("#admin").attr("href")=="#"){
+                if ($("#admin").attr("href") == "#") {
                     alert("仅限管理员！");
                 }
             });
         });
     </script>
 </head>
-<body>
-
 <div id="top">
     <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
     <div id="topbtn">

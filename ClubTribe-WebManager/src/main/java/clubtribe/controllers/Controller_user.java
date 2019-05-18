@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("user")
-public class Controller_MQ {
+public class Controller_user {
 
     @Autowired
     private ClubServices clubsServices;
@@ -75,7 +75,7 @@ public class Controller_MQ {
         if (userServices.getuserclubs(Integer.parseInt(userid)) != null) {
             clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
         }
-        //规定最多五个clubid
+        //规定最多五个clubid7
         if (clubids.length >= 5) {
             str = "加入失败 每个用户最多加入5个社团";
         } else {
