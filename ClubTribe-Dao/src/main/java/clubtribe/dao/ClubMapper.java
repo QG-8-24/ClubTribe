@@ -3,6 +3,9 @@ package clubtribe.dao;
 
 import clubtribe.pojo.Club;
 
+import java.util.List;
+import java.lang.String;
+
 /**
  * @author MQ
  */
@@ -17,6 +20,7 @@ public interface ClubMapper {
 
     /**
      * 获取社团msg
+     *
      * @param clubid
      * @return
      */
@@ -24,6 +28,7 @@ public interface ClubMapper {
 
     /**
      * 初始化社团msg
+     *
      * @param club
      * @return
      */
@@ -31,8 +36,16 @@ public interface ClubMapper {
 
     /**
      * 获取社团管理员
+     *
      * @param clubid
      * @return
      */
     String getadminids(Integer clubid);
+
+    /**
+     * 获取所有clubid
+     *
+     * @return
+     */
+    List<String> getallClubids();
 }

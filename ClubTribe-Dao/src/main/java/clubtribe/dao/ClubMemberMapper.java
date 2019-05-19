@@ -24,4 +24,9 @@ public interface ClubMemberMapper {
      * @return
      */
     String getsigntime(ClubMember clubMember);
+
+    /**
+     * 清零签到
+     */
+    void updataED(ClubMember clubMember);
 }

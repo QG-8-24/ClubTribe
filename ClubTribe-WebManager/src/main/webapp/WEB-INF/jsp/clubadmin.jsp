@@ -40,7 +40,7 @@
                         if (resp == "true") {
                             alert("成功!");
                             var str = "#" + userid;
-                           $(str).remove();
+                            $(str).remove();
                         } else {
                             alert("失败！");
                         }
@@ -75,6 +75,13 @@
             $("#msg").on("click", ".reject", function () {
                 reject($(this).parent().attr("id"));
             });
+            $("#leftbox").on("click", "ul li", function () {
+                var sel = $(this).attr("id").split("sel");
+                var box = "#box" + sel[1];
+                $(box).siblings().fadeOut(1000,function () {
+                    $(box).fadeIn(1000);
+                });
+            });
         });
     </script>
 </head>
@@ -86,16 +93,21 @@
 <div id="context">
     <div id="leftbox">
         <ul>
-            <li>加入申请</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
+            <li id="sel1">加入申请</li>
+            <li id="sel2">2</li>
+            <li id="sel3">3</li>
+            <li id="sel4">4</li>
+            <li id="sel5">5</li>
         </ul>
     </div>
     <div id="rightbox">
-        <ul id="msg"></ul>
+        <div id="box1">
+            <ul id="msg"></ul>
+        </div>
+        <div id="box2" style="background: skyblue"></div>
+        <div id="box3" style="background: pink"></div>
+        <div id="box4" style="background: green"></div>
+        <div id="box5" style="background: yellow"></div>
     </div>
 </div>
 </body>

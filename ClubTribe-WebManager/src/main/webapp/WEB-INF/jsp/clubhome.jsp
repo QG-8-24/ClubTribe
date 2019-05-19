@@ -95,7 +95,7 @@
             });
 
             //签到
-            $("#sign").click(function () {
+            $(".sign").click(function () {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/sign",
                     data: {
@@ -106,6 +106,15 @@
                         alert(resp);
                     }
                 });
+            });
+            $("#fun2").click(function () {
+                $("#show1").fadeOut(1000, function () {
+                    $("#show2").fadeIn(1000);
+                });
+
+            });
+            $("#function").on("click", "div", function () {
+
             });
         });
     </script>
@@ -131,17 +140,21 @@
         <div id="data">景德镇火箭队 休斯顿碰瓷队 火箭没搞了</div>
     </div>
     <div id="function">
-        <div style="background: powderblue" id="sign">签到</div>
-        <div style="background: skyblue">社团活动</div>
-        <div style="background: pink">相册</div>
-        <div style="background: yellowgreen">留言墙</div>
-        <div style="background: greenyellow">公告</div>
-        <div style="background: cadetblue">投票</div>
-        <div style="background: lightyellow">抽奖</div>
+        <div style="background: powderblue" class="sign" id="fun1">签到</div>
+        <div style="background: skyblue" id="fun2">社团活动</div>
+        <div style="background: pink" id="fun3">相册</div>
+        <div style="background: yellowgreen" id="fun4">留言墙</div>
+        <div style="background: greenyellow" id="fun5">公告</div>
+        <div style="background: cadetblue" id="fun6">投票</div>
+        <div style="background: lightyellow" id="fun7">抽奖</div>
         <div style="background: indianred"><a id="admin" href="#" onclick="return false;">管理员操作</a>
         </div>
     </div>
 </div>
-<div style="height: 4px;width: 100%;background: deepskyblue;margin-bottom: 5px"></div>
+<div id="bot">
+    <div id="show1" style="height: 100%;width: 100%;background:yellowgreen;"></div>
+    <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
+</div>
+<div style="height: 4px;width: 100%;background: deepskyblue;margin:5px auto"></div>
 </body>
 </html>

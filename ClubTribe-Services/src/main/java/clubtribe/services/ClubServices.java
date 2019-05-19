@@ -2,6 +2,8 @@ package clubtribe.services;
 
 import clubtribe.pojo.Club;
 
+import java.util.List;
+
 public interface ClubServices {
     /**
      * 根据cludid查询社团名
@@ -31,4 +33,10 @@ public interface ClubServices {
      * @return
      */
     String getadmin(Integer clubid);
+
+    /**
+     * 获取所有社团id
+     * @return
+     */
+    List<String> getAllclubids();
 }

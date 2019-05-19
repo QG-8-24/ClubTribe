@@ -39,9 +39,6 @@ public class Controller_admin {
         String filepath = clubServices.getmsg(Integer.parseInt(clubid));
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
         ArrayList<String> list = (ArrayList<String>) ois.readObject();
-        for (String it : list) {
-            System.out.println(it);
-        }
         ObjectMapper mapper = new ObjectMapper();
         ois.close();
         return mapper.writeValueAsString(list);

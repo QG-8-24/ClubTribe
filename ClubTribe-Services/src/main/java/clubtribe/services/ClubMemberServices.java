@@ -22,4 +22,9 @@ public interface ClubMemberServices {
      * @return
      */
     String getsigntime(ClubMember clubMember);
+
+    /**
+     * 签到重置
+     */
+    void updataED();
 }
