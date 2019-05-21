@@ -42,10 +42,4 @@ public interface ClubMapper {
      */
     String getadminids(Integer clubid);
 
-    /**
-     * 获取所有clubid
-     *
-     * @return
-     */
-    List<String> getallClubids();
 }

@@ -25,6 +25,8 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
 
     @Override
     public int sign(ClubMember clubMember) {
+        //月签到天数加一
+        clubMemberMapper.UPdatemsign(clubMember);
         return clubMemberMapper.sign(clubMember);
     }
 
@@ -34,16 +36,20 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
     }
 
     /**
-     * 凌晨自动清零
+     * 每天签到重置
      */
     @Override
     @Scheduled(cron = "0 0 0 * * ?")
     public void updataED() {
-        List<String> list = clubMapper.getallClubids();
-        for (String it : list) {
-            ClubMember clubMember = new ClubMember();
-            clubMember.setClubname(it);
-            clubMemberMapper.updataED(clubMember);
-        }
+        clubMemberMapper.updataED();
+    }
+
+    /**
+     * 每月签到重置
+     */
+    @Override
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void updataEM() {
+        clubMemberMapper.updataEM();
     }
 }

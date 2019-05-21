@@ -107,14 +107,11 @@
                     }
                 });
             });
-            $("#fun2").click(function () {
-                $("#show1").fadeOut(1000, function () {
-                    $("#show2").fadeIn(1000);
-                });
-
-            });
             $("#function").on("click", "div", function () {
-
+                var sel = "#show" + $(this).attr("id").split("fun")[1];
+                $(sel).siblings().fadeOut(2000, function () {
+                    $(sel).fadeIn(2000);
+                });
             });
         });
     </script>
@@ -154,6 +151,11 @@
 <div id="bot">
     <div id="show1" style="height: 100%;width: 100%;background:yellowgreen;"></div>
     <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
+    <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
+    <div id="show4" style="height: 100%;width: 100%;background:deeppink;"></div>
+    <div id="show5" style="height: 100%;width: 100%;background:deepskyblue;"></div>
+    <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
+    <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
 </div>
 <div style="height: 4px;width: 100%;background: deepskyblue;margin:5px auto"></div>
 </body>

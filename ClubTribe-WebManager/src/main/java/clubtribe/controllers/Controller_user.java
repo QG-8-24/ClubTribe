@@ -171,7 +171,7 @@ public class Controller_user {
         String[] clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
         if (Arrays.asList(clubids).contains(clubid)) {
             ClubMember clubMember = new ClubMember();
-            clubMember.setClubname(clubid);
+            clubMember.setClubid(clubid);
             clubMember.setUserid(userid);
             String signtime = clubMemberServices.getsigntime(clubMember);
             if (signtime.length() == 0 || signtime == null) {

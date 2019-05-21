@@ -4,13 +4,13 @@ import clubtribe.pojo.ClubMember;
 
 public interface ClubMemberServices {
     /**
-     *
      * @param clubMember
      */
     int insert(ClubMember clubMember);
 
     /**
      * 签到
+     *
      * @param clubMember
      * @return
      */
@@ -18,13 +18,19 @@ public interface ClubMemberServices {
 
     /**
      * 获取签到时间
+     *
      * @param clubMember
      * @return
      */
     String getsigntime(ClubMember clubMember);
 
     /**
-     * 签到重置
+     * 每天签到重置
      */
     void updataED();
+
+    /**
+     * 每月签到重置
+     */
+    void updataEM();
 }

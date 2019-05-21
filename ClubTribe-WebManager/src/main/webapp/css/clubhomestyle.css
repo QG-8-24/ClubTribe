@@ -8,7 +8,6 @@ a {
     color: #333;
 }
 
-
 #context {
     width: 80%;
     margin: 0 auto;
@@ -150,10 +149,12 @@ a {
     width: 80%;
     height: 600px;
     margin: 10px auto;
+    position: relative;
 }
 
-#show2 {
+#show2, #show3, #show4, #show5, #show6, #show7 {
     width: 100%;
     height: 100%;
     display: none;
+    position: absolute;
 }

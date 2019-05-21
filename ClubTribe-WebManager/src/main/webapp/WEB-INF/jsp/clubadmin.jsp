@@ -78,8 +78,8 @@
             $("#leftbox").on("click", "ul li", function () {
                 var sel = $(this).attr("id").split("sel");
                 var box = "#box" + sel[1];
-                $(box).siblings().fadeOut(1000,function () {
-                    $(box).fadeIn(1000);
+                $(box).siblings().fadeOut(2000, function () {
+                    $(box).fadeIn(2000);
                 });
             });
         });

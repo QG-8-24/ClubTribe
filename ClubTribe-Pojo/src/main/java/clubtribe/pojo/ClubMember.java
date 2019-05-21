@@ -14,18 +14,18 @@ public class ClubMember {
     }
 
     public ClubMember(String clubid, String userid, String sign, String msign) {
-        this.clubid= "club_"+clubid;
+        this.clubid = clubid;
         this.userid = userid;
         this.sign = sign;
         this.msign = msign;
     }
 
-    public String getClubname() {
+    public String getClubid() {
         return clubid;
     }
 
-    public void setClubname(String clubid) {
-        this.clubid ="club_"+clubid;
+    public void setClubid(String clubid) {
+        this.clubid = clubid;
     }
 
     public String getUserid() {

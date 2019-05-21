@@ -34,9 +34,4 @@ public interface ClubServices {
      */
     String getadmin(Integer clubid);
 
-    /**
-     * 获取所有社团id
-     * @return
-     */
-    List<String> getAllclubids();
 }

@@ -13,6 +13,7 @@ public interface ClubMemberMapper {
 
     /**
      * 签到
+     *
      * @param clubMember
      * @return
      */
@@ -20,13 +21,25 @@ public interface ClubMemberMapper {
 
     /**
      * 获取签到时间
+     *
      * @param clubMember
      * @return
      */
     String getsigntime(ClubMember clubMember);
 
     /**
-     * 清零签到
+     * 签到天数加一
      */
-    void updataED(ClubMember clubMember);
+    void UPdatemsign(ClubMember clubMember);
+
+    /**
+     * 每天清零签到
+     */
+    void updataED();
+
+    /**
+     * 每月清零签到
+     */
+    void updataEM();
+
 }

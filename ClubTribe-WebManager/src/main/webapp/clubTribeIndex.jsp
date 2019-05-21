@@ -1,39 +1,37 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: asus
-  Date: 2019/5/17
-  Time: 19:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
-    <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <style type="text/css">
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        ul{
-            list-style: none;/*取消列表默认样式*/
+
+        ul {
+            list-style: none; /*取消列表默认样式*/
         }
-        .top{
+
+        .top {
             border-bottom: 4px solid deepskyblue;
             height: 60px;
             text-align: center;
             position: relative;
         }
-        .top img{
+
+        .top img {
             float: left;
         }
-        .top #topbtn{
+
+        .top #topbtn {
             float: right;
             height: 60px;
             margin-right: 30px;
             line-height: 60px;
         }
-        .top #topbtn a{
+
+        .top #topbtn a {
             float: left;
             display: inline-block;
             text-decoration: none;
@@ -41,7 +39,8 @@
             margin-left: 10px;
             font-weight: bolder;
         }
-        .banner{
+
+        .banner {
             height: 600px;
             width: 80%;
             margin: 10px auto;
@@ -49,7 +48,8 @@
             border-radius: 10px;
             position: relative;
         }
-        .banner img{
+
+        .banner img {
             text-align: center;
             display: block;
             height: 100%;
@@ -57,7 +57,8 @@
             border-radius: 10px;
             position: absolute;
         }
-        .banner #firstbtn a{
+
+        .banner #firstbtn a {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -75,7 +76,8 @@
             text-decoration: none;
             display: inline-block;
         }
-        .banner #secondbtn{
+
+        .banner #secondbtn {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -93,7 +95,8 @@
             text-decoration: none;
             display: inline-block;
         }
-        .banner #Dselect1{
+
+        .banner #Dselect1 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -111,12 +114,13 @@
             text-decoration: none;
             display: inline-block;
         }
-        .banner #Dselect1 select{
+
+        .banner #Dselect1 select {
             background: none;
             font-size: 15px;
         }
 
-        .banner #Dselect2{
+        .banner #Dselect2 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -134,11 +138,13 @@
             text-decoration: none;
             display: inline-block;
         }
-        .banner #Dselect2 select{
+
+        .banner #Dselect2 select {
             background: none;
             font-size: 15px;
         }
-        .banner #Dselect3{
+
+        .banner #Dselect3 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -156,11 +162,13 @@
             text-decoration: none;
             display: inline-block;
         }
-        .banner #Dselect3 select{
+
+        .banner #Dselect3 select {
             background: none;
             font-size: 15px;
         }
-        .banner #searchClub{
+
+        .banner #searchClub {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -178,7 +186,8 @@
             text-decoration: none;
             display: inline-block;
         }
-        .main{
+
+        .main {
             width: 80%;
             height: 600px;
             margin: 10px auto;
@@ -186,7 +195,8 @@
             border-radius: 10px;
             position: relative;
         }
-        .footer{
+
+        .footer {
             height: 300px;
             background-color: black;
             position: relative;
@@ -194,35 +204,37 @@
     </style>
     <script>
         $(function () {
-            var userid='222222222';
-            var FirstData=null;
+            var userid = '222222222';
+            var FirstData = null;
+
             function searchMyClub() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/myClub",
-                    data:{
-                        "userid":userid
+                    data: {
+                        "userid": userid
                     },
-                    success:function (resp) {
-                        $(window).attr('location','${pageContext.request.contextPath}/jsp/myclub_CJN.jsp');
+                    success: function (resp) {
+                        $(window).attr('location', '${pageContext.request.contextPath}/jsp/myclub_CJN.jsp');
                     }
                 })
             };
             $("#secondbtn").click(function () {
                 searchMyClub();
             });
+
             function findFirstData() {
-                $.getJSON("${pageContext.request.contextPath}/search/firstData",function (data) {
-                    var school=data;
-                    var res="";
-                    for (var i=0;i<school.length;i++){
+                $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
+                    var school = data;
+                    var res = "";
+                    for (var i = 0; i < school.length; i++) {
                         if (i == 0) {
-                            res += "<option>"+school[i].schoolAddress+"</option>";
+                            res += "<option>" + school[i].schoolAddress + "</option>";
                         }
                         for (var j = 0; j < i - 1; j++) {
                             if (school[j].schoolAddress == school[i].schoolAddress) {
 
-                            }else {
-                                res += "<option>"+school[i].schoolAddress+"</option>";
+                            } else {
+                                res += "<option>" + school[i].schoolAddress + "</option>";
                             }
 
                         }
@@ -230,10 +242,11 @@
                     $("#select1").append(res);
                 });
             }
+
             findFirstData();
-                $("#select1").change(function () {
+            $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
-                $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress="+seled,function(data){
+                $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {
                     // $("#select2").html("");
                     $("#select2").empty();
                     $("#select2").append("<option>--请选择--</option>");
@@ -241,36 +254,36 @@
                     $("#select3").append("<option>--请选择--</option>");
                     var school = data;
                     var res = "";
-                    for(var i = 0;i<school.length;i++){
-                        res += "<option>"+school[i].schoolname+"</option>";
+                    for (var i = 0; i < school.length; i++) {
+                        res += "<option>" + school[i].schoolname + "</option>";
                     }
                     $("#select2").append(res);
                 });
             });
             $("#select2").change(function () {
-                var seled=$("#select2 option:selected").val();
-                $.getJSON("${pageContext.request.contextPath}/search/thirdData?Schoolname="+seled,function(data){
+                var seled = $("#select2 option:selected").val();
+                $.getJSON("${pageContext.request.contextPath}/search/thirdData?Schoolname=" + seled, function (data) {
                     // $("#select3").html("");
                     $("#select3").empty();
                     $("#select3").append("<option>--请选择--</option>");
                     var club = data;
                     var res = "";
-                    for(var i = 0;i<club.length;i++){
-                        res += "<option>"+club[i].clubname+"</option>";
+                    for (var i = 0; i < club.length; i++) {
+                        res += "<option>" + club[i].clubname + "</option>";
                     }
                     $("#select3").append(res);
                 });
             });
             $("#searchClub").click(function () {
-                var seled=$("#select3 option:selected").val();
-                $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname="+seled,function(data){
+                var seled = $("#select3 option:selected").val();
+                $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + seled, function (data) {
                     // $("#select2").html("");
                     var club = data;
                     var res = "";
-                    for(var i = 0;i<club.length;i++){
-                        res += "uid:"+userid+",cid:"+club[i].clubid;
+                    for (var i = 0; i < club.length; i++) {
+                        res += "uid:" + userid + ",cid:" + club[i].clubid;
                         alert(res);
-                        $(window).attr('location','${pageContext.request.contextPath}/user/clubhome?userid='+userid+'&clubid='+club[i].clubid);
+                        $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
                     }
 
                 });
@@ -281,15 +294,15 @@
 <body>
 <div>
     <div class="top">
-        <div><img src="../img/title.png"></div>
+        <div><img src="img/title.png"></div>
         <div id="topbtn">
-        <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
-        <a href="#" id="log">登录</a>
-        <a href="#" id="username"></a>
+            <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
+            <a href="#" id="log">登录</a>
+            <a href="#" id="username"></a>
         </div>
     </div>
     <div class="banner">
-        <img src="../img/back.jpg" alt="#">
+        <img src="img/back.jpg" alt="#">
         <div id="firstbtn">
             <a href="/search/allClub">查找所有社团</a>
         </div>
@@ -298,29 +311,29 @@
         </div>
         <div id="Dselect1">
             地区:<select style="width: 100px" id="select1">
-                <option value="null">--请选择--</option>
-                </select>
+            <option value="null">--请选择--</option>
+        </select>
         </div>
         <div id="Dselect2">
             学校:<select style="width: 100px" id="select2">
             <option value="null">--请选择--</option>
-            </select>
+        </select>
         </div>
         <div id="Dselect3">
             社团:<select style="width: 100px" id="select3">
             <option value="null">--请选择--</option>
-            </select>
+        </select>
         </div>
         <div id="searchClub">
             查找社团
         </div>
-        </div>
-
     </div>
-    <div class="main">
 
-    </div>
-    <div class="footer"></div>
+</div>
+<div class="main">
+
+</div>
+<div class="footer"></div>
 </div>
 
 </body>

@@ -31,12 +31,13 @@ public class ClubSearchController_CJN {
     private ClubSearchServices_CJN clubSearchServices_cjn;
 
     @RequestMapping("allClub")
-    public String searchAll(Model model){
+    public String searchAll(Model model) {
         System.out.println("search.............");
-        List<Club> list=clubSearchServices_cjn.searchAll();
-        model.addAttribute("clubs",list);
+        List<Club> list = clubSearchServices_cjn.searchAll();
+        model.addAttribute("clubs", list);
         return "clubsearch_CJN";
     }
+
     /**
      * 查找个人社团
      *
@@ -45,88 +46,89 @@ public class ClubSearchController_CJN {
      */
     @RequestMapping("myClub")
     @ResponseBody
-    public String searchMyClub(String userid, HttpSession httpSession){
+    public String searchMyClub(String userid, HttpSession httpSession) {
         System.out.println("my club..........");
         System.out.println(userid);
         String clubids = clubSearchServices_cjn.getclubs(Integer.parseInt(userid));
         String[] clubidList = clubids.split("@");
-        List<Club> clubList=new ArrayList<>();
-        int count=clubidList.length;
-        for (int i=0;i<count;i++){
-            String clubid=clubidList[i];
-            Club club=clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
+        List<Club> clubList = new ArrayList<>();
+        int count = clubidList.length;
+        for (int i = 0; i < count; i++) {
+            String clubid = clubidList[i];
+            Club club = clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
             clubList.add(club);
         }
-        String str=null;
-        if (clubidList.length!=0){
-            str="查找成功";
-        }else {
-            str="失败";
+        String str = null;
+        if (clubidList.length != 0) {
+            str = "查找成功";
+        } else {
+            str = "失败";
         }
-        httpSession.setAttribute("clubList",clubList);
+        httpSession.setAttribute("clubList", clubList);
         return str;
     }
+
     @RequestMapping(value = "firstData", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String searchFirstData() {
-        List<School> firstData=clubSearchServices_cjn.searchFirstData();
-        int count=firstData.size();
-        for (int i=0;i<count;i++){
+        List<School> firstData = clubSearchServices_cjn.searchFirstData();
+        int count = firstData.size();
+        for (int i = 0; i < count; i++) {
             System.out.println(firstData.get(i).getSchoolAddress());
         }
         System.out.println(JSONArray.fromObject(firstData).toString());
         return JSONArray.fromObject(firstData).toString();
 
     }
+
     /**
-     *
      * @param SchoolAddress
      * @return
      */
-    @RequestMapping(value = "secondData",produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "secondData", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String searchSecondData(String SchoolAddress){
+    public String searchSecondData(String SchoolAddress) {
         System.out.println(SchoolAddress);
-        List<School> secondData=clubSearchServices_cjn.searchSecondDataByAddress(SchoolAddress);
-        int count=secondData.size();
-        for (int i=0;i<count;i++){
+        List<School> secondData = clubSearchServices_cjn.searchSecondDataByAddress(SchoolAddress);
+        int count = secondData.size();
+        for (int i = 0; i < count; i++) {
             System.out.println(secondData.get(i).getSchoolname());
         }
         System.out.println(JSONArray.fromObject(secondData).toString());
         return JSONArray.fromObject(secondData).toString();
     }
+
     /**
-     *
      * @param Schoolname
      * @return
      */
-    @RequestMapping(value = "thirdData",produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "thirdData", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String searchThirdData(String Schoolname){
+    public String searchThirdData(String Schoolname) {
         System.out.println(Schoolname);
-        String Clubids=clubSearchServices_cjn.searchClubidsBySchoolname(Schoolname);
+        String Clubids = clubSearchServices_cjn.searchClubidsBySchoolname(Schoolname);
         System.out.println(Clubids);
         String[] clubidList = Clubids.split("@");
-        List<Club> clubList=new ArrayList<>();
-        int count=clubidList.length;
-        for (int i=0;i<count;i++){
-            String clubid=clubidList[i];
-            Club club=clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
+        List<Club> clubList = new ArrayList<>();
+        int count = clubidList.length;
+        for (int i = 0; i < count; i++) {
+            String clubid = clubidList[i];
+            Club club = clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
             clubList.add(club);
         }
         System.out.println(JSONArray.fromObject(clubList).toString());
         return JSONArray.fromObject(clubList).toString();
     }
+
     /**
-     *
      * @param Clubname
      * @return
      */
-    @RequestMapping(value = "searchClubByName",produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "searchClubByName", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String searchClubByName(String Clubname){
+    public String searchClubByName(String Clubname) {
         System.out.println(Clubname);
-        List<Club> clubList=clubSearchServices_cjn.searchClubByName(Clubname);
+        List<Club> clubList = clubSearchServices_cjn.searchClubByName(Clubname);
         System.out.println(JSONArray.fromObject(clubList).toString());
         return JSONArray.fromObject(clubList).toString();
     }

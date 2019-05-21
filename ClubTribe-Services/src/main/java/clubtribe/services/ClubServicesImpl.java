@@ -36,8 +36,4 @@ public class ClubServicesImpl implements ClubServices {
         return clubMapper.getadminids(clubid);
     }
 
-    @Override
-    public List<String> getAllclubids() {
-        return clubMapper.getallClubids();
-    }
 }

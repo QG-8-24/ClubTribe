@@ -50,7 +50,7 @@ public class Controller_admin {
         String filepath = clubServices.getmsg(Integer.parseInt(clubid));
         String str = "false";
         ClubMember clubMember = new ClubMember();
-        clubMember.setClubname(clubid);
+        clubMember.setClubid(clubid);
         clubMember.setUserid(userid);
         clubMember.setSign("");
         clubMember.setMsign("");
