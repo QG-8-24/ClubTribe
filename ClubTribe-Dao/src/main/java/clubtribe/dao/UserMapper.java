@@ -25,4 +25,5 @@ public interface UserMapper {
      * @return
      */
     int joinclub(User user);
+
 }

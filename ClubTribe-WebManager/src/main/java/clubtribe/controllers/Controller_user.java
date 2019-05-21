@@ -1,6 +1,8 @@
 package clubtribe.controllers;
 
 import clubtribe.pojo.Club;
+import clubtribe.pojo.ClubMember;
+import clubtribe.services.ClubMemberServices;
 import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 @Controller
 @RequestMapping("user")
@@ -21,6 +25,8 @@ public class Controller_user {
     private ClubServices clubsServices;
     @Autowired
     private UserServices userServices;
+    @Autowired
+    private ClubMemberServices clubMemberServices;
 
     /**
      * 登录进入社团主页
@@ -61,6 +67,7 @@ public class Controller_user {
 
     /**
      * 加入社团申请
+     *
      * @param userid
      * @param clubid
      * @return
@@ -115,6 +122,13 @@ public class Controller_user {
         return str;
     }
 
+    /**
+     * 判断是否为管理员
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     */
     @RequestMapping("ifadmin")
     @ResponseBody
     public String ifadmin(String userid, String clubid) {
@@ -125,6 +139,14 @@ public class Controller_user {
         return "false";
     }
 
+    /**
+     * 进入管理员页面
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("interadmin")
     public ModelAndView interadmin(String userid, String clubid) throws IOException {
         ModelAndView modelAndView = new ModelAndView();
@@ -132,5 +154,36 @@ public class Controller_user {
         modelAndView.addObject("clubid", clubid);
         modelAndView.setViewName("clubadmin");
         return modelAndView;
+    }
+
+    /**
+     * 社团成员签到
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     */
+    @RequestMapping(value = "sign", produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String sign(String userid, String clubid) {
+        String flag = "签到失败 仅限社员";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String[] clubids = userServices.getuserclubs(Integer.parseInt(userid)).split("@");
+        if (Arrays.asList(clubids).contains(clubid)) {
+            ClubMember clubMember = new ClubMember();
+            clubMember.setClubname(clubid);
+            clubMember.setUserid(userid);
+            String signtime = clubMemberServices.getsigntime(clubMember);
+            if (signtime.length() == 0 || signtime == null) {
+                String time = df.format(new Date());
+                clubMember.setSign(time);
+                if (clubMemberServices.sign(clubMember) != 0) {
+                    flag = "签到成功";
+                }
+            } else {
+                flag = "你今日已经签到过";
+            }
+        }
+        return flag;
     }
 }

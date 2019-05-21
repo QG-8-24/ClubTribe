@@ -4,4 +4,13 @@
     <insert id="insert" parameterType="clubtribe.pojo.ClubMember">
        insert into ${clubid}(userid,sign,msign) value (#{userid},#{sign},#{msign})
    </insert>
+    <update id="sign" parameterType="clubtribe.pojo.ClubMember">
+        update ${clubid} set sign=#{sign} where userid=#{userid}
+    </update>
+    <select id="getsigntime" parameterType="clubtribe.pojo.ClubMember" resultType="java.lang.String">
+        select sign from ${clubid}  where userid=#{userid}
+    </select>
+    <update id="updataED" parameterType="clubtribe.pojo.ClubMember">
+        update ${clubid} set sign=""
+    </update>
 </mapper>

@@ -13,4 +13,7 @@
     <select id="getadminids" resultType="java.lang.String">
         select adminid from t_clubs where clubid=#{?}
     </select>
+    <select id="getallClubids" resultType="java.lang.String">
+        select clubid from t_clubs;
+    </select>
 </mapper>
