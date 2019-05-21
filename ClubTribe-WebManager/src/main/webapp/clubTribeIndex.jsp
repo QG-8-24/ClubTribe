@@ -230,7 +230,7 @@
                         if (i == 0) {
                             res += "<option>" + school[i].schoolAddress + "</option>";
                         }
-                        for (var j = 0; j < i - 1; j++) {
+                        for (var j = 0; j <= i - 1; j++) {
                             if (school[j].schoolAddress == school[i].schoolAddress) {
 
                             } else {
