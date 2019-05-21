@@ -14,6 +14,7 @@
     用户名：<input name="userid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
     社团id:<input name="clubid" type="text" oninput="value=value.replace(/[^\d]/g,'')">
     <input type="submit" value="进入" name="">
+    <a href="jsp/clubTribeIndex_CJN.jsp">CJN</a>
 </form>
 </body>
 </html>
