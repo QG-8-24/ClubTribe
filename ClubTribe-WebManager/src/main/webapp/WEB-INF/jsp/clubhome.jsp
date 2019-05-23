@@ -176,7 +176,7 @@
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
 </div>
-<div style="height: 4px;width: 100%;">~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~</div>
+<div style="height: 4px;width: 100%;background: deepskyblue;"></div>
 <div id="context">
     <div id="clubbg">
         <img id="img" src="../img/bg.jpg" alt="#">
@@ -234,6 +234,8 @@
     <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
 </div>
-<div style="height: 24px;width: 100%;margin:5px auto;font-size: 24px">~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~</div>
+<div style="height: 24px;width: 100%;margin:5px auto;font-size: 24px">
+    ~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~
+</div>
 </body>
 </html>
