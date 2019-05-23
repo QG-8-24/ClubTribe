@@ -52,6 +52,7 @@ public class Controller_admin {
         ClubMember clubMember = new ClubMember();
         clubMember.setClubid(clubid);
         clubMember.setUserid(userid);
+        clubMember.setUsername(userServices.findnamebyid(Integer.parseInt(userid)));
         clubMember.setSign("");
         clubMember.setMsign("");
         try {
@@ -65,9 +66,9 @@ public class Controller_admin {
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
                 oos.writeObject(list);
                 oos.close();
-                String clubids=userServices.getuserclubs(Integer.parseInt(userid));
-                clubids=clubids+"@"+clubid;
-                User user=new User();
+                String clubids = userServices.getuserclubs(Integer.parseInt(userid));
+                clubids = clubids + "@" + clubid;
+                User user = new User();
                 user.setUserid(Integer.parseInt(userid));
                 user.setClubids(clubids);
                 userServices.joinclub(user);

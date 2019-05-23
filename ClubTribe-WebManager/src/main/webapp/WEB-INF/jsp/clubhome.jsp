@@ -94,6 +94,54 @@
                 }
             });
 
+            function getsignmsg() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/getsignmsg",
+                    data: {
+                        "clubid": cid,
+                    },
+                    dataType: "json",
+                    success: function (resp) {
+                        $("#sign table").children().remove();
+                        $("#sign table").append("<tr class='white'>\n" + "<td>名次</td>\n" + "<td>用户名</td>\n" + "<td>签到时间</td>\n" + "</tr>");
+                        $("#msign table").children().remove();
+                        $("#msign table").append("<tr class='white'>\n" + "<td>名次</td>\n" + "<td>用户名</td>\n" + "<td>总签到天数</td>\n" + "</tr>");
+                        $.each(resp, function (i, obj) {
+                            if (i == 0) {
+                                $("#sign table").append("<tr class='gold'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
+                            } else if (i == 1) {
+                                $("#sign table").append("<tr class='silver'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
+                            } else if (i == 2) {
+                                $("#sign table").append("<tr class='bronze'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
+                            } else {
+                                $("#sign table").append("<tr class='white><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
+                            }
+                        });
+                        var resp2 = resp;
+                        $.each(resp2, function (i, obj) {
+                            if (i + 1 < resp.length) {
+                                if (resp2[i + 1].msign > resp2[i].msign) {
+                                    tep = resp2[i]
+                                    resp2[i] = resp2[i + 1];
+                                    resp2[i + 1] = tep;
+                                }
+                            }
+                        });
+                        $.each(resp2, function (i, obj) {
+                            if (i == 0) {
+                                $("#msign table").append("<tr class='gold'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else if (i == 1) {
+                                $("#msign table").append("<tr class='silver'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else if (i == 2) {
+                                $("#msign table").append("<tr class='bronze'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else {
+                                $("#msign table").append("<tr class='white'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            }
+                        });
+                    }
+                });
+            }
+
             //签到
             $(".sign").click(function () {
                 $.ajax({
@@ -104,9 +152,12 @@
                     },
                     success: function (resp) {
                         alert(resp);
+                        getsignmsg();
                     }
                 });
             });
+
+
             $("#function").on("click", "div", function () {
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
                 $(sel).siblings().fadeOut(2000, function () {
@@ -125,10 +176,11 @@
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
 </div>
-<div style="height: 4px;width: 100%;background: deepskyblue;margin-bottom: 5px"></div>
+<div style="height: 4px;width: 100%;">~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~</div>
 <div id="context">
     <div id="clubbg">
         <img id="img" src="../img/bg.jpg" alt="#">
+        <div id="imgm"></div>
         <div id="title"></div>
         <div id="join">JOIN&nbspUS</div>
     </div>
@@ -137,19 +189,44 @@
         <div id="data">景德镇火箭队 休斯顿碰瓷队 火箭没搞了</div>
     </div>
     <div id="function">
-        <div style="background: powderblue" class="sign" id="fun1">签到</div>
-        <div style="background: skyblue" id="fun2">社团活动</div>
-        <div style="background: pink" id="fun3">相册</div>
-        <div style="background: yellowgreen" id="fun4">留言墙</div>
-        <div style="background: greenyellow" id="fun5">公告</div>
-        <div style="background: cadetblue" id="fun6">投票</div>
-        <div style="background: lightyellow" id="fun7">抽奖</div>
-        <div style="background: indianred"><a id="admin" href="#" onclick="return false;">管理员操作</a>
+        <div class="sign" id="fun1"><span>签到</span></div>
+        <div id="fun2"><span>社团活动</span></div>
+        <div id="fun3"><span>相册</span></div>
+        <div id="fun4"><span>留言墙</span></div>
+        <div id="fun5"><span>公告</span></div>
+        <div id="fun6"><span>投票</span></div>
+        <div id="fun7"><span>抽奖</span></div>
+        <div><a id="admin" href="#" onclick="return false;"><span style="color: white">管理员操作</span></a>
         </div>
     </div>
 </div>
 <div id="bot">
-    <div id="show1" style="height: 100%;width: 100%;background:yellowgreen;"></div>
+    <div id="show1" style="height: 100%;width: 100%;">
+        <div id="sign" style="float: left;width: 50%;height: 100%;">
+            <div style="margin:10px auto;font-size: 24px;width: 50%;text-align: center" class="white">今 日 签 到 榜</div>
+            <div style="width: 100%;height: 92%;">
+                <table style="width:100%;">
+                    <tr class="white">
+                        <td>名次</td>
+                        <td>用户名</td>
+                        <td>签到时间</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="msign" style="float: left;width: 50%;height: 100%;">
+            <div style="margin:10px auto;font-size: 24px;width: 50%;text-align: center" class="white">本 月 签 到 榜</div>
+            <div style="width: 100%;height: 92%;">
+                <table style="width:100%" cellspacing="0" cellpadding="0">
+                    <tr class="white">
+                        <td>名次</td>
+                        <td>用户名</td>
+                        <td>总签到天数</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
     <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
     <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
     <div id="show4" style="height: 100%;width: 100%;background:deeppink;"></div>
@@ -157,6 +234,6 @@
     <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
 </div>
-<div style="height: 4px;width: 100%;background: deepskyblue;margin:5px auto"></div>
+<div style="height: 24px;width: 100%;margin:5px auto;font-size: 24px">~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~~~☠~~</div>
 </body>
 </html>

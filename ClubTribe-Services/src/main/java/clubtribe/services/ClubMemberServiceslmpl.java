@@ -52,4 +52,9 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
     public void updataEM() {
         clubMemberMapper.updataEM();
     }
+
+    @Override
+    public ClubMember[] getsignmsg(String clubid) {
+        return clubMemberMapper.getsignmsg(clubid);
+    }
 }

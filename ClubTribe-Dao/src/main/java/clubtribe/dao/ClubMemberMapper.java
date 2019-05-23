@@ -42,4 +42,7 @@ public interface ClubMemberMapper {
      */
     void updataEM();
 
+    //获取社团成员信息
+    ClubMember[] getsignmsg(String clubid);
+
 }

@@ -5,6 +5,8 @@ import clubtribe.pojo.ClubMember;
 import clubtribe.services.ClubMemberServices;
 import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,5 +188,26 @@ public class Controller_user {
             }
         }
         return flag;
+    }
+
+    @RequestMapping(value = "getsignmsg")
+    @ResponseBody
+    public String getsignmsg(String clubid) throws ParseException, JsonProcessingException {
+        ClubMember[] list = clubMemberServices.getsignmsg(clubid);
+        ClubMember tep = new ClubMember();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (int i = 0; i < list.length; i++) {
+            for (int j = i + 1; j < list.length; j++) {
+                Date date1 = sdf.parse(list[i].getSign());
+                Date date2 = sdf.parse(list[j].getSign());
+                if (date1.compareTo(date2) > 0) {
+                    tep = list[i];
+                    list[i] = list[j];
+                    list[j] = tep;
+                }
+            }
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(list);
     }
 }

@@ -6,6 +6,7 @@ package clubtribe.pojo;
 public class ClubMember {
     private String clubid;
     private String userid;
+    private String username;
     private String sign;
     private String msign;
 
@@ -13,11 +14,20 @@ public class ClubMember {
         super();
     }
 
-    public ClubMember(String clubid, String userid, String sign, String msign) {
+    public ClubMember(String clubid, String userid, String username, String sign, String msign) {
         this.clubid = clubid;
         this.userid = userid;
+        this.username = username;
         this.sign = sign;
         this.msign = msign;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getClubid() {
@@ -57,6 +67,7 @@ public class ClubMember {
         return "ClubMember{" +
                 "clubid='" + clubid + '\'' +
                 ", userid='" + userid + '\'' +
+                ", username='" + username + '\'' +
                 ", sign='" + sign + '\'' +
                 ", msign='" + msign + '\'' +
                 '}';

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="clubtribe.dao.ClubMemberMapper">
     <insert id="insert" parameterType="clubtribe.pojo.ClubMember">
-       insert into t_clubmember(clubid,userid,sign,msign) value (#{clubid},#{userid},#{sign},#{msign})
+       insert into t_clubmember(clubid,userid,username,sign,msign) value (#{clubid},#{userid},#{username},#{sign},#{msign})
    </insert>
     <update id="sign" parameterType="clubtribe.pojo.ClubMember">
         update t_clubmember set sign=#{sign} where userid=#{userid} and clubid=#{clubid}
@@ -19,4 +19,7 @@
     <update id="updataEM">
         update t_clubmember set msign=""
     </update>
+    <select id="getsignmsg" resultType="clubtribe.pojo.ClubMember">
+        select * from t_clubmember where clubid=#{?}
+    </select>
 </mapper>
