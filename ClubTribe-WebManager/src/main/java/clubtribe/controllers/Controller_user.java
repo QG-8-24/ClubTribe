@@ -93,7 +93,7 @@ public class Controller_user {
                 str = "你已是该社团成员 无需再次擦操作！";
             } else {
                 if (clubsServices.getmsg(Integer.parseInt(clubid)) == null || clubsServices.getmsg(Integer.parseInt(clubid)).length() == 0) {
-                    String filename = "D:/clubtribe/clubmsg/msg" + clubid + ".txt";
+                    String filename = "D:/clubtribefile/clubmsg/msg" + clubid + ".txt";
                     File file = new File(filename);
                     if (!file.exists()) {
                         file.createNewFile();

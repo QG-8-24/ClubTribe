@@ -3,7 +3,6 @@ package clubtribe.test;
 import clubtribe.dao.ClubMapper;
 import clubtribe.dao.ClubMemberMapper;
 import clubtribe.dao.UserMapper;
-import clubtribe.pojo.ClubMember;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,10 +46,7 @@ public class ManagerTest {
 
     @Test
     public void test2() throws IOException, ClassNotFoundException {
-        ClubMember clubMember=new ClubMember();
-        clubMember.setClubname("824");
-        clubMember.setUserid("870830369");
-        System.out.println(clubMemberMapper.getsigntime(clubMember));
+
     }
 }
 
