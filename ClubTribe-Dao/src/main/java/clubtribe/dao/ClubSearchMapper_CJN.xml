@@ -5,10 +5,10 @@
             select *from t_clubs
         </select>
 
+
         <select id="findnamebyid" resultType="clubtribe.pojo.Club">
             select *from t_clubs where clubid=#{clubid}
         </select>
-
         <select id="getclubs" resultType="java.lang.String">
             select clubids from t_user where userid=#{userid}
         </select>
@@ -24,5 +24,8 @@
         </select>
         <select id="searchClubByName" resultType="clubtribe.pojo.Club">
             select *from t_clubs where clubname=#{Clubname}
+        </select>
+        <select id="getUsername" resultType="java.lang.String">
+            select username from t_user WHERE userid=#{userid};
         </select>
 </mapper>

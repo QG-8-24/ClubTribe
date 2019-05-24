@@ -11,6 +11,7 @@ public interface ClubSearchServices_CJN {
     Club findnamebyid(Integer clubid);
 
 
+
     List<School> searchFirstData();
 
     String getclubs(Integer userid);
@@ -20,4 +21,6 @@ public interface ClubSearchServices_CJN {
     String searchClubidsBySchoolname(String Schoolname);
 
     List<Club> searchClubByName(String Clubname);
+
+    String getUsername(String userid);
 }

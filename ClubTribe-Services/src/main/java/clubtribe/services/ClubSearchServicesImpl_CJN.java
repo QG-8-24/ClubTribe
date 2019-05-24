@@ -14,6 +14,7 @@ public class ClubSearchServicesImpl_CJN implements ClubSearchServices_CJN {
     @Autowired
     private ClubSearchMapper_CJN clubSearchMapper_cjn;
 
+
     @Override
     public List<Club> searchAll() {
         return clubSearchMapper_cjn.searchAll();
@@ -52,6 +53,12 @@ public class ClubSearchServicesImpl_CJN implements ClubSearchServices_CJN {
     public List<Club> searchClubByName(String Clubname) {
         return clubSearchMapper_cjn.searchClubByName(Clubname);
 
+    }
+
+    @Override
+    public String getUsername(String userid) {
+
+        return clubSearchMapper_cjn.getUsername(userid);
     }
 
 

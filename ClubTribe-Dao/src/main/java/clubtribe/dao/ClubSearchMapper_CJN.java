@@ -12,16 +12,18 @@ public interface ClubSearchMapper_CJN {
 
     User searchMyClub(@Param("userid") String userid);
 
-    Club findnamebyid(@Param("clubid") Integer clubid);
 
+    Club findnamebyid(@Param("clubid") Integer clubid);
 
     List<School> searchFirstData();
 
-    String getclubs(@Param("userid")Integer userid);
+    String getclubs(@Param("userid") Integer userid);
 
-    List<School> searchSecondDataByAddress(@Param("SchoolAddress")String SchoolAddress);
+    List<School> searchSecondDataByAddress(@Param("SchoolAddress") String SchoolAddress);
 
-    String searchClubidsBySchoolname(@Param("Schoolname")String Schoolname);
+    String searchClubidsBySchoolname(@Param("Schoolname") String Schoolname);
 
-    List<Club> searchClubByName(@Param("Clubname")String Clubname);
+    List<Club> searchClubByName(@Param("Clubname") String Clubname);
+
+    String getUsername(@Param("userid") String userid);
 }

@@ -13,6 +13,7 @@
             list-style: none; /*取消列表默认样式*/
         }
 
+
         .top {
             border-bottom: 4px solid deepskyblue;
             height: 60px;
@@ -22,6 +23,7 @@
 
         .top img {
             float: left;
+            margin-left: 60px;
         }
 
         .top #topbtn {
@@ -47,6 +49,7 @@
             background-color: skyblue;
             border-radius: 10px;
             position: relative;
+
         }
 
         .banner img {
@@ -56,25 +59,6 @@
             width: 100%;
             border-radius: 10px;
             position: absolute;
-        }
-
-        .banner #firstbtn a {
-            height: 60px;
-            width: 200px;
-            border: 6px solid skyblue;
-            text-align: center;
-            line-height: 60px;
-            -webkit-border-radius: 50px;
-            border-radius: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            position: absolute;
-            top: 20%;
-            left: 20%;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .banner #secondbtn {
@@ -88,15 +72,15 @@
             font-size: 24px;
             cursor: pointer;
             position: absolute;
-            top: 20%;
-            left: 60%;
+            top: 40%;
+            left: 70%;
             font-weight: bold;
             color: white;
             text-decoration: none;
             display: inline-block;
         }
 
-        .banner #Dselect1 {
+        .mid #Dselect1 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -107,20 +91,20 @@
             font-size: 24px;
             cursor: pointer;
             position: absolute;
-            top: 5%;
-            left: 5%;
+            top: 10%;
+            left: 10%;
             font-weight: bold;
             color: white;
             text-decoration: none;
             display: inline-block;
         }
 
-        .banner #Dselect1 select {
+        .mid #Dselect1 select {
             background: none;
             font-size: 15px;
         }
 
-        .banner #Dselect2 {
+        .mid #Dselect2 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -131,20 +115,20 @@
             font-size: 24px;
             cursor: pointer;
             position: absolute;
-            top: 5%;
-            left: 25%;
+            top: 10%;
+            left: 30%;
             font-weight: bold;
             color: white;
             text-decoration: none;
             display: inline-block;
         }
 
-        .banner #Dselect2 select {
+        .mid #Dselect2 select {
             background: none;
             font-size: 15px;
         }
 
-        .banner #Dselect3 {
+        .mid #Dselect3 {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -155,20 +139,20 @@
             font-size: 24px;
             cursor: pointer;
             position: absolute;
-            top: 5%;
-            left: 45%;
+            top: 10%;
+            left: 50%;
             font-weight: bold;
             color: white;
             text-decoration: none;
             display: inline-block;
         }
 
-        .banner #Dselect3 select {
+        .mid #Dselect3 select {
             background: none;
             font-size: 15px;
         }
 
-        .banner #searchClub {
+        .mid #searchClub {
             height: 60px;
             width: 200px;
             border: 6px solid skyblue;
@@ -179,47 +163,107 @@
             font-size: 24px;
             cursor: pointer;
             position: absolute;
-            top: 5%;
-            left: 65%;
+            top: 10%;
+            left: 70%;
             font-weight: bold;
             color: white;
             text-decoration: none;
             display: inline-block;
         }
-
+        .mid {
+            height: 100px;
+            width: 80%;
+            margin: 10px auto;
+            background-color: skyblue;
+            border-radius: 10px;
+            position: relative;
+            /*background:url("../img/search.gif") no-repeat;*/
+            /*background-size:100% 100%;*/
+        }
+        .mid img {
+            text-align: center;
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+            position: absolute;
+        }
         .main {
             width: 80%;
-            height: 600px;
+            height: 200px;
             margin: 10px auto;
             background-color: skyblue;
             border-radius: 10px;
             position: relative;
         }
-
+        .main img {
+            text-align: center;
+            display: block;
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+            position: absolute;
+        }
         .footer {
             height: 300px;
-            background-color: black;
+            width: 100%;
             position: relative;
+            background:url("../img/footer.jpg") no-repeat;
+            background-size: 100%;
+        }
+        .footer #firstinfo{
+            height: 300px;
+            text-align: center;
+            line-height: 300px;
+            font-weight: bold;
+            display: inline-block;
+            color: white;
+            font-size: 24px;
+            float: left;
+            margin-left: 45%;
+        }
+        .footer #secondinfo{
+            display: none;
+            text-align: center;
+            line-height: 60px;
+            font-weight: bold;
+            color: white;
+            font-size: 24px;
+            margin: 0 100px;
+            position: absolute;
         }
     </style>
     <script>
         $(function () {
             var userid = '222222222';
-            var FirstData = null;
-
-            function searchMyClub() {
+            var flag=1;
+            function init() {
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/search/myClub",
+                    url: "${pageContext.request.contextPath}/search/init",
                     data: {
                         "userid": userid
                     },
                     success: function (resp) {
-                        $(window).attr('location', '${pageContext.request.contextPath}/jsp/myclub_CJN.jsp');
+                        var username=resp;
+                        if (username != 'null') {
+                            $("#log").css({
+                                "display": "none"
+                            });
+                            $("#username").append(username);
+                        }
                     }
                 })
+            }
+            init();
+            function searchMyClub() {
+                $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             };
             $("#secondbtn").click(function () {
-                searchMyClub();
+                if (userid == null) {
+                    alert('请先登录');
+                }else {
+                    searchMyClub();
+                }
             });
 
             function findFirstData() {
@@ -275,40 +319,59 @@
                 });
             });
             $("#searchClub").click(function () {
-                var seled = $("#select3 option:selected").val();
-                $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + seled, function (data) {
-                    // $("#select2").html("");
-                    var club = data;
-                    var res = "";
-                    for (var i = 0; i < club.length; i++) {
-                        res += "uid:" + userid + ",cid:" + club[i].clubid;
-                        alert(res);
-                        $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
-                    }
-
-                });
+                var sel1=$("#select1 option:selected").val();
+                var sel2=$("#select2 option:selected").val();
+                var sel3=$("#select3 option:selected").val();
+                if (sel1==null||sel3==null||sel2==null) {
+                    alert('请查看是否有未选择的选项');
+                }else {
+                    $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
+                        var club = data;
+                        var res = "";
+                        for (var i = 0; i < club.length; i++) {
+                            res += "uid:" + userid + ",cid:" + club[i].clubid;
+                            alert(res);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                        }
+                    });
+                }
             });
+            $("#mainimg").click(function () {
+
+                if (flag == 1) {
+                    $("#firstinfo").fadeOut(2000, function () {
+                        $("#secondinfo").fadeIn(2000);
+                    });
+                    flag=0;
+                }else {
+                    $("#secondinfo").fadeOut(2000, function () {
+                        $("#firstinfo").fadeIn(2000);
+                    });
+                    flag=1;
+                }
+            })
         })
     </script>
 </head>
 <body>
 <div>
     <div class="top">
-        <div><img src="img/title.png"></div>
+        <div><img src="../img/title.png"></div>
         <div id="topbtn">
-            <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
+            <a href="/">首页</a>
             <a href="#" id="log">登录</a>
             <a href="#" id="username"></a>
         </div>
     </div>
     <div class="banner">
-        <img src="img/back.jpg" alt="#">
-        <div id="firstbtn">
-            <a href="/search/allClub">查找所有社团</a>
-        </div>
+        <img src="../img/back.jpg" alt="#">
         <div id="secondbtn">
             查找个人社团
         </div>
+
+    </div>
+    <div class="mid">
+        <img src="../img/search.gif" alt="#">
         <div id="Dselect1">
             地区:<select style="width: 100px" id="select1">
             <option value="null">--请选择--</option>
@@ -328,13 +391,24 @@
             查找社团
         </div>
     </div>
+    <div class="main" id="main">
+        <img src="../img/about.jpg" alt="#" id="mainimg">
+    </div>
+    <div class="footer">
+        <div id="firstinfo">
+            关于我们
+        </div>
+        <div id="secondinfo">
+            我们的目的是使社团管理更加便捷高效；提高社团成员的主观能动性；
+            通过网络平台使社团活动打破条件限制进行跨校跨区域的社团活动；
+            通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
+            我们的目的是使社团管理更加便捷高效；提高社团成员的主观能动性；
+            通过网络平台使社团活动打破条件限制进行跨校跨区域的社团活动；
+            通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
+        </div>
+    </div>
+</div>
 
-</div>
-<div class="main">
-
-</div>
-<div class="footer"></div>
-</div>
 
 </body>
 </html>
