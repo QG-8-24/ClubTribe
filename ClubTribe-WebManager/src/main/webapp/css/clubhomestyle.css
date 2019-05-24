@@ -76,7 +76,6 @@ a {
     border: 6px solid skyblue;
     text-align: center;
     line-height: 40px;
-    -webkit-border-radius: 50px;
     border-radius: 50px;
     font-size: 24px;
     cursor: pointer;
@@ -160,14 +159,25 @@ a {
     position: absolute;
 }
 
-#show1,#show4{
+#show1, #show4 {
     background: #444444;
+    position: relative;
 }
 
 #show1 table td {
     height: 24px;
     font-size: 16px;
     text-align: center;
+}
+
+#show4 #msgboard {
+    height: 40px;
+    width: 40%;
+    display: block;
+    position: absolute;
+    bottom: 5%;
+    left: 30%;
+    border-radius: 50px;
 }
 
 .gold {
