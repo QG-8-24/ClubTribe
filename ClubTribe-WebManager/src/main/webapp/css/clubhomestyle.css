@@ -153,14 +153,14 @@ a {
     position: relative;
 }
 
-#show2, #show3, #show4, #show5, #show6, #show7 {
+#show2, #show3, #show1, #show5, #show6, #show7 {
     width: 100%;
     height: 100%;
     display: none;
     position: absolute;
 }
 
-#show1 {
+#show1,#show4{
     background: #444444;
 }
 
