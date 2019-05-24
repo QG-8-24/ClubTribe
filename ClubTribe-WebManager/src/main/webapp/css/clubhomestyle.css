@@ -182,7 +182,20 @@ a {
     outline: none;
     font-weight: bold;
     font-size: 16px;
-    background:#444444;
+    background: #444444;
+}
+
+#show4 #msgboard:hover {
+    background: white;
+}
+
+#show4 h1 {
+    width: 600px;
+    overflow: hidden;
+    text-align: left;
+    right: 0;
+    top: 10%;
+    color: white;
 }
 
 .gold {

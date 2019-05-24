@@ -156,8 +156,23 @@
                     }
                 });
             });
+            var barrageColorArray = [
+                '#0099CC', '#333333', '#009966', '#FFFF66', '#9933FF', '#FFFF99', '#CCCCFF', '#CC9933', '#FFFF66'
+            ];
 
+            function sendmsg(msg) {
+                $("#show4").append(" <h1 style=\"position: absolute\"> " + msg + "</h1>");
+                $("#show4 h1").animate({right: '100%'}, 10000);
+            }
 
+            $("#msgboard").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    var msg = $("#msgboard").val();
+                    $("#msgboard").val("");
+                    sendmsg(msg);
+                    console.log("sadas");
+                }
+            });
             $("#function").on("click", "div", function () {
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
                 $(sel).siblings().fadeOut(2000, function () {
@@ -176,7 +191,7 @@
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
 </div>
-<div style="height: 4px;width: 100%;background: deepskyblue;"></div>
+<div style="height: 6px;width: 100%;background: deepskyblue;"></div>
 <div id="context">
     <div id="clubbg">
         <img id="img" src="../img/bg.jpg" alt="#">
@@ -229,15 +244,16 @@
     </div>
     <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
     <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
-    <div id="show4" style="height: 100%;width: 100%;">
-        <input id="msgboard" type="text" value="Enter 发送留言" onfocus="if (value =='Enter 发送留言'){value =''}" onblur="if (value ==''){value='Enter 发送留言'}">
+    <div id="show4" style="height: 100%;width: 100%;overflow: hidden">
+        <input id="msgboard" type="text" placeholder="Enter 发送留言">
     </div>
     <div id="show5" style="height: 100%;width: 100%;background:deepskyblue;"></div>
     <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
 </div>
 <div style="height: 24px;width: 100%;margin:5px auto;font-size: 24px">
- ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 </div>
 </body>
 </html>
