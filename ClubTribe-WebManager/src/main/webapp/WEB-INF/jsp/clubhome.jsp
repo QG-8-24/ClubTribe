@@ -230,7 +230,7 @@
     <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
     <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
     <div id="show4" style="height: 100%;width: 100%;">
-        <input id="msgboard" type="text">
+        <input id="msgboard" type="text" value="Enter 发送留言" onfocus="if (value =='Enter 发送留言'){value =''}" onblur="if (value ==''){value='Enter 发送留言'}">
     </div>
     <div id="show5" style="height: 100%;width: 100%;background:deepskyblue;"></div>
     <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
