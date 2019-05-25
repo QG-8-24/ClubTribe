@@ -41,9 +41,18 @@
             margin-left: 10px;
             font-weight: bolder;
         }
+        .banner{
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+        }
         table.imagetable {
-            height: 300px;
-            width: 600px;
+            height: 600px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
             font-family: verdana,arial,sans-serif;
             font-size:25px;
             color:#333333;
