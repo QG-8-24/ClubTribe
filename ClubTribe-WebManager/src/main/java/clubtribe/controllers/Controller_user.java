@@ -136,7 +136,7 @@ public class Controller_user {
     @ResponseBody
     public String ifadmin(String userid, String clubid) {
         String[] admin = clubsServices.getadmin(Integer.parseInt(clubid)).split("@");
-        if (Arrays.asList(admin).contains(userid)) {
+        if (Arrays.asList(admin).contains(userid) && !userid.equals("") && userid != null) {
             return "true";
         }
         return "false";
@@ -207,6 +207,42 @@ public class Controller_user {
                 }
             }
         }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(list);
+    }
+
+    @RequestMapping(value = "msgboard")
+    @ResponseBody
+    public String msgboard(String clubid, String msg) throws IOException, ClassNotFoundException {
+        String filepath = clubsServices.getmsgboard(Integer.parseInt(clubid));
+        ArrayList<String> list = null;
+        if (filepath == null || filepath.length() == 0) {
+            filepath = "D:/clubtribefile/clubmsg/msgboard" + clubid + ".txt";
+            File file = new File(filepath);
+            if (!file.exists()) {
+                file.createNewFile();
+                Club club = new Club();
+                club.setMsgboard(file.toString());
+                club.setClubid(clubid);
+                clubsServices.initmsgboard(club);
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+                list = new ArrayList<>();
+                oos.writeObject(list);
+                oos.close();
+            }
+        }
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+        list = (ArrayList<String>) ois.readObject();
+        if (msg != null && !msg.equals("")) {
+            if (list.size() >= 100) {
+                list.remove(0);
+            }
+            list.add(msg);
+        }
+        ois.close();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+        oos.writeObject(list);
+        oos.close();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(list);
     }

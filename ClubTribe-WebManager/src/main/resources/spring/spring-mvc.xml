@@ -19,23 +19,23 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-<!--    &lt;!&ndash; 处理请求返回json字符串的中文乱码问题 &ndash;&gt;-->
-<!--    <mvc:annotation-driven>-->
-<!--        <mvc:message-converters>-->
-<!--            <bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
-<!--                <property name="supportedMediaTypes">-->
-<!--                    <list>-->
-<!--                        <value>application/json;charset=UTF-8</value>-->
-<!--                    </list>-->
-<!--                </property>-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-<!--    </mvc:annotation-driven>-->
+    <!-- 处理请求返回json字符串的中文乱码问题 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <!--声明拦截器-->
-<!--    <mvc:interceptors>-->
-<!--        <mvc:interceptor>-->
-<!--            <mvc:mapping path="/user/interadmin"/>-->
-<!--            <bean class=""></bean>-->
-<!--        </mvc:interceptor>-->
-<!--    </mvc:interceptors>-->
+    <!--    <mvc:interceptors>-->
+    <!--        <mvc:interceptor>-->
+    <!--            <mvc:mapping path="/user/interadmin"/>-->
+    <!--            <bean class=""></bean>-->
+    <!--        </mvc:interceptor>-->
+    <!--    </mvc:interceptors>-->
 </beans>

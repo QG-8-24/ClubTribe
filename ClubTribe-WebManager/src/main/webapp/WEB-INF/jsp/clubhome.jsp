@@ -9,6 +9,8 @@
         $(function () {
             var uid = '${userid}';
             var cid = '${clubid}';
+            var msgboards = ["!没有任何留言!"];
+            var index = 0;
 
             function init() {
                 $.ajax({
@@ -44,7 +46,8 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        if (resp == "true") {
+                        if (resp == true) {
+                            console.log("fhe");
                             $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}");
                             $("#admin").removeAttr("onclick");
                         }
@@ -54,6 +57,20 @@
 
             init();
             ifadmin();
+            msgboaard("");
+            initmsgb();
+
+            function initmsgb() {
+                setInterval(function () {
+                    msgboaard("");
+                    sendmsg(msgboards[index]);
+                    index++;
+                    if (index == msgboards.length) {
+                        index = 0;
+                    }
+                }, 3000);
+            }
+
             $("#context #aboutus #btn").click(function () {
                 $("#context #aboutus #btn").fadeOut(2000, function () {
                     $("#context #aboutus #data").fadeIn(2000);
@@ -114,7 +131,7 @@
                             } else if (i == 2) {
                                 $("#sign table").append("<tr class='bronze'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
                             } else {
-                                $("#sign table").append("<tr class='white><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
+                                $("#sign table").append("<tr class='white'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
                             }
                         });
                         var resp2 = resp;
@@ -157,22 +174,45 @@
                 });
             });
             var barrageColorArray = [
-                '#0099CC', '#333333', '#009966', '#FFFF66', '#9933FF', '#FFFF99', '#CCCCFF', '#CC9933', '#FFFF66'
+                '#0099CC', 'deeppink', '#009966', '#FFFF66', '#9933FF', '#FFFF99', '#CCCCFF', '#CC9933', '#FFFF66', 'skyblue',
+                '#CC0000'
             ];
 
             function sendmsg(msg) {
-                $("#show4").append(" <h1 style=\"position: absolute\"> " + msg + "</h1>");
-                $("#show4 h1").animate({right: '100%'}, 10000);
+                var rand0 = parseInt(Math.random() * 10 + 0);
+                var top = parseInt(Math.random() * 80 + 0);
+                var col = barrageColorArray[rand0];
+                $("#show4").append(" <h1 style=\"position: absolute;color: " + col + ";top:" + top + "%\"> " + msg + "</h1>");
+                $("#show4 h1").animate({right: '100%'}, parseInt(Math.random() * 20000 + 5000), function () {
+                    $(this).remove();
+                });
             }
 
             $("#msgboard").keyup(function (e) {
                 if (e.keyCode == 13) {
                     var msg = $("#msgboard").val();
                     $("#msgboard").val("");
-                    sendmsg(msg);
-                    console.log("sadas");
+                    msgboaard(msg);
                 }
             });
+
+            //留言
+            function msgboaard(msg) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/msgboard",
+                    data: {
+                        "clubid": cid,
+                        "msg": msg
+                    },
+                    success: function (resp) {
+                        if (resp.length != 0) {
+                            msgboards = resp;
+                        }
+                        sendmsg(msg);
+                    }
+                });
+            }
+
             $("#function").on("click", "div", function () {
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
                 $(sel).siblings().fadeOut(2000, function () {

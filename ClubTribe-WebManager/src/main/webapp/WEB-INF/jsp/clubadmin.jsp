@@ -17,9 +17,9 @@
                         "userid": uid,
                         "clubid": cid,
                     },
+                    dataType: "json",
                     success: function (resp) {
-                        var str = jQuery.parseJSON(resp);
-                        $.each(str, function (i, item) {
+                        $.each(resp, function (i, item) {
                             $("#msg").prepend("<li id='" + item + "'>用户" + item + "申请加入社团<span class='agree'>同意</span><span class='reject'>拒绝</span></li>");
                         });
                     }
@@ -37,7 +37,7 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        if (resp == "true") {
+                        if (resp == true) {
                             alert("成功!");
                             var str = "#" + userid;
                             $(str).remove();
@@ -57,7 +57,7 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        if (resp == "true") {
+                        if (resp == true) {
                             alert("已拒绝!");
                             var str = "#" + userid;
                             $(str).remove();

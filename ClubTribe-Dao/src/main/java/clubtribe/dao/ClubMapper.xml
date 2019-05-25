@@ -10,7 +10,13 @@
     <update id="initmsg" parameterType="clubtribe.pojo.Club">
          update t_clubs set msg=#{msg} where clubid=#{clubid}
     </update>
+    <update id="initmsgboard" parameterType="clubtribe.pojo.Club">
+         update t_clubs set msgboard=#{msgboard} where clubid=#{clubid}
+    </update>
     <select id="getadminids" resultType="java.lang.String">
         select adminid from t_clubs where clubid=#{?}
+    </select>
+    <select id="getmsgboard" resultType="java.lang.String">
+        select msgboard from t_clubs where clubid=#{?};
     </select>
 </mapper>

@@ -5,8 +5,6 @@ import clubtribe.pojo.Club;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author MQ
  */
@@ -32,8 +30,18 @@ public class ClubServicesImpl implements ClubServices {
     }
 
     @Override
+    public int initmsgboard(Club club) {
+        return clubMapper.initmsgboard(club);
+    }
+
+    @Override
     public String getadmin(Integer clubid) {
         return clubMapper.getadminids(clubid);
+    }
+
+    @Override
+    public String getmsgboard(Integer clubid) {
+        return clubMapper.getmsgboard(clubid);
     }
 
 }
