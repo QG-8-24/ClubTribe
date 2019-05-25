@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,8 @@ public class ClubSearchController_CJN {
      */
     @RequestMapping("myClub")
     @ResponseBody
-    public String searchMyClub(String userid, Model model) {
+    public ModelAndView searchMyClub(String userid, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
         System.out.println("my club..........");
         System.out.println(userid);
         String clubids = clubSearchServices_cjn.getclubs(Integer.parseInt(userid));
@@ -61,13 +63,13 @@ public class ClubSearchController_CJN {
                     clubList.add(club);
                 }
             }
-            model.addAttribute("clubList", clubList);
-            model.addAttribute("username", username);
-            model.addAttribute("userid", userid);
-
-
+            modelAndView.addObject("clubList", clubList);
+            modelAndView.addObject("username", username);
+            modelAndView.addObject("userid", userid);
+            modelAndView.setViewName("myclub_CJN");
         }
-        return "myclub_CJN";
+
+        return modelAndView;
     }
 
     @RequestMapping(value = "firstData", produces = "text/plain;charset=utf-8")
