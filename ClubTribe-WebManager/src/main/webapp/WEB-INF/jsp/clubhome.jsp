@@ -185,7 +185,7 @@
 <div id="top">
     <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
     <div id="topbtn">
-        <a href="${pageContext.request.contextPath}/index.jsp">首页</a>
+        <a href="/">首页</a>
         <a href="#" id="log">登录</a>
         <a href="#" id="username"></a>
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
