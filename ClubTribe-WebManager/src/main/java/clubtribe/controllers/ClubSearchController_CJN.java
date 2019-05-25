@@ -21,6 +21,7 @@ public class ClubSearchController_CJN {
 
     @Autowired
     private ClubSearchServices_CJN clubSearchServices_cjn;
+
     /**
      * 判断登录
      *
@@ -29,13 +30,14 @@ public class ClubSearchController_CJN {
      */
     @RequestMapping(value = "init", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String init(String userid){
-        String username=clubSearchServices_cjn.getUsername(userid);
-        if (username!=null){
+    public String init(String userid) {
+        String username = clubSearchServices_cjn.getUsername(userid);
+        if (username != null) {
             return username;
         }
         return "";
     }
+
     /**
      * 查找个人社团
      *
@@ -49,16 +51,16 @@ public class ClubSearchController_CJN {
         System.out.println("my club..........");
         System.out.println(userid);
         String clubids = clubSearchServices_cjn.getclubs(Integer.parseInt(userid));
-        String username=clubSearchServices_cjn.getUsername(userid);
+        String username = clubSearchServices_cjn.getUsername(userid);
         System.out.println(clubids);
-        if (clubids!=null){
+        if (clubids != null) {
             String[] clubidList = clubids.split("@");
             List<Club> clubList = new ArrayList<>();
             int count = clubidList.length;
             for (int i = 0; i < count; i++) {
                 String clubid = clubidList[i];
                 System.out.println(clubid);
-                if (clubid!=null){
+                if (clubid != null) {
                     Club club = clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
                     clubList.add(club);
                 }

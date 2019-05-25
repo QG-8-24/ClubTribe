@@ -13,14 +13,7 @@
             list-style: none; /*取消列表默认样式*/
         }
 
-        .all{
-            background: url("../img/allback.jpg") no-repeat;
-            background-size: 100% 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;/*-1 可以当背景*/
-            /*filter: blur(3px);*/
-        }
+
         .top {
             border-bottom: 4px solid deepskyblue;
             height: 60px;
@@ -51,17 +44,20 @@
 
         .banner {
             height: 600px;
-            width: 100%;
+            width: 80%;
             margin: 10px auto;
-            margin-top: 0px;
             background-color: skyblue;
+            border-radius: 10px;
             position: relative;
+
         }
+
         .banner img {
             text-align: center;
             display: block;
             height: 100%;
             width: 100%;
+            border-radius: 10px;
             position: absolute;
         }
 
@@ -176,7 +172,7 @@
         }
         .mid {
             height: 100px;
-            width: 100%;
+            width: 80%;
             margin: 10px auto;
             background-color: skyblue;
             border-radius: 10px;
@@ -189,6 +185,7 @@
             display: block;
             height: 100%;
             width: 100%;
+            border-radius: 10px;
             position: absolute;
         }
         .main {
@@ -209,16 +206,12 @@
         }
         .footer {
             height: 300px;
-            width: 80%;
-            margin: 10px auto;
-            margin-bottom: 0px;
-            border-radius: 10px;
+            width: 100%;
             position: relative;
             background:url("../img/footer.jpg") no-repeat;
             background-size: 100%;
         }
         .footer #firstinfo{
-            font-family: verdana,arial,sans-serif;
             height: 300px;
             text-align: center;
             line-height: 300px;
@@ -230,13 +223,13 @@
             margin-left: 45%;
         }
         .footer #secondinfo{
-            font-family: "Microsoft YaHei UI";
             display: none;
             text-align: center;
-            line-height: 100px;
+            line-height: 60px;
+            font-weight: bold;
             color: white;
             font-size: 24px;
-            margin: 0 0;
+            margin: 0 100px;
             position: absolute;
         }
     </style>
@@ -252,7 +245,7 @@
                     },
                     success: function (resp) {
                         var username=resp;
-                        if (username != "") {
+                        if (username != 'null') {
                             $("#log").css({
                                 "display": "none"
                             });
@@ -266,7 +259,7 @@
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             };
             $("#secondbtn").click(function () {
-                if (userid == "") {
+                if (userid == null) {
                     alert('请先登录');
                 }else {
                     searchMyClub();
@@ -329,7 +322,7 @@
                 var sel1=$("#select1 option:selected").val();
                 var sel2=$("#select2 option:selected").val();
                 var sel3=$("#select3 option:selected").val();
-                if (sel1==""||sel3==""||sel2=="") {
+                if (sel1==null||sel3==null||sel2==null) {
                     alert('请查看是否有未选择的选项');
                 }else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
@@ -363,7 +356,6 @@
 <body>
 <div>
     <div class="top">
-
         <div><img src="../img/title.png"></div>
         <div id="topbtn">
             <a href="/">首页</a>
@@ -371,52 +363,50 @@
             <a href="#" id="username"></a>
         </div>
     </div>
-    <div class="all">
-        <div class="banner">
-            <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
-                C L U B T R I B E
-            </div>
-            <img src="../img/back.jpg" alt="#">
-            <div id="secondbtn">
-                查找个人社团
-            </div>
+    <div class="banner">
+        <img src="../img/back.jpg" alt="#">
+        <div id="secondbtn">
+            查找个人社团
         </div>
-        <div class="mid">
-            <img src="../img/search.gif" alt="#">
-            <div id="Dselect1">
-                地区:<select style="width: 100px" id="select1">
-                <option value="null">--请选择--</option>
-            </select>
-            </div>
-            <div id="Dselect2">
-                学校:<select style="width: 100px" id="select2">
-                <option value="null">--请选择--</option>
-            </select>
-            </div>
-            <div id="Dselect3">
-                社团:<select style="width: 100px" id="select3">
-                <option value="null">--请选择--</option>
-            </select>
-            </div>
-            <div id="searchClub">
-                查找社团
-            </div>
+
+    </div>
+    <div class="mid">
+        <img src="../img/search.gif" alt="#">
+        <div id="Dselect1">
+            地区:<select style="width: 100px" id="select1">
+            <option value="null">--请选择--</option>
+        </select>
         </div>
-        <div class="main" id="main">
-            <img src="../img/about.jpg" alt="#" id="mainimg">
+        <div id="Dselect2">
+            学校:<select style="width: 100px" id="select2">
+            <option value="null">--请选择--</option>
+        </select>
         </div>
-        <div class="footer">
-            <div id="firstinfo">
-                关于我们
-            </div>
-            <div id="secondinfo">
-                ClubTribe的目的是使社团管理更加便捷高效；提高社团成员的主观能动性,使社团管理更加便捷高效
-                通过网络平台使社团活动打破条件限制进行跨校跨区域的社团活动,提高社团成员的主观能动性
-                通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
-            </div>
+        <div id="Dselect3">
+            社团:<select style="width: 100px" id="select3">
+            <option value="null">--请选择--</option>
+        </select>
+        </div>
+        <div id="searchClub">
+            查找社团
         </div>
     </div>
-
+    <div class="main" id="main">
+        <img src="../img/about.jpg" alt="#" id="mainimg">
+    </div>
+    <div class="footer">
+        <div id="firstinfo">
+            关于我们
+        </div>
+        <div id="secondinfo">
+            我们的目的是使社团管理更加便捷高效；提高社团成员的主观能动性；
+            通过网络平台使社团活动打破条件限制进行跨校跨区域的社团活动；
+            通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
+            我们的目的是使社团管理更加便捷高效；提高社团成员的主观能动性；
+            通过网络平台使社团活动打破条件限制进行跨校跨区域的社团活动；
+            通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
+        </div>
+    </div>
 </div>
 
 

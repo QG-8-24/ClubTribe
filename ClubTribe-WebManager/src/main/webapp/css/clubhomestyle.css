@@ -45,7 +45,7 @@ a {
 
 
 #context #clubbg {
-    height: 640px;
+    height: 750px;
     position: relative;
 }
 
@@ -59,6 +59,7 @@ a {
     left: 0;
     z-index: -1;
     position: absolute;
+
 }
 
 

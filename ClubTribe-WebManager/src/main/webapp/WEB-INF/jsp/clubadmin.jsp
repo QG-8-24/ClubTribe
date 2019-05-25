@@ -93,11 +93,10 @@
 <div id="context">
     <div id="leftbox">
         <ul>
-            <li id="sel1">加入申请</li>
-            <li id="sel2">2</li>
-            <li id="sel3">3</li>
-            <li id="sel4">4</li>
-            <li id="sel5">5</li>
+            <li id="sel1">加 入 申 请</li>
+            <li id="sel2">社 员 管 理</li>
+            <li id="sel3">群 发 通 知</li>
+
         </ul>
     </div>
     <div id="rightbox">
@@ -106,8 +105,6 @@
         </div>
         <div id="box2" style="background: skyblue"></div>
         <div id="box3" style="background: pink"></div>
-        <div id="box4" style="background: green"></div>
-        <div id="box5" style="background: yellow"></div>
     </div>
 </div>
 </body>

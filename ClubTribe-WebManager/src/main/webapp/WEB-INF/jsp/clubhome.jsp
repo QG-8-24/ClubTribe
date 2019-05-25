@@ -191,7 +191,9 @@
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
 </div>
-<div style="height: 6px;width: 100%;background: deepskyblue;"></div>
+<div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
+    C L U B T R I B E
+</div>
 <div id="context">
     <div id="clubbg">
         <img id="img" src="../img/bg.jpg" alt="#">
@@ -245,15 +247,14 @@
     <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
     <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
     <div id="show4" style="height: 100%;width: 100%;overflow: hidden">
-        <input id="msgboard" type="text" placeholder="Enter 发送留言">
+        <input id="msgboard" type="text" placeholder="  Enter 发送留言">
     </div>
     <div id="show5" style="height: 100%;width: 100%;background:deepskyblue;"></div>
     <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
 </div>
-<div style="height: 24px;width: 100%;margin:5px auto;font-size: 24px">
-    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-    ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+<div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
+    C L U B T R I B E
 </div>
 </body>
 </html>
