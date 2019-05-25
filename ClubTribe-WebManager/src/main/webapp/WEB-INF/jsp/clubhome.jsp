@@ -182,6 +182,7 @@
         });
     </script>
 </head>
+<body>
 <div id="top">
     <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
     <div id="topbtn">
