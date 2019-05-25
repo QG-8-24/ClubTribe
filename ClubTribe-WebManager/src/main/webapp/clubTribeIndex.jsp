@@ -13,14 +13,15 @@
             list-style: none; /*取消列表默认样式*/
         }
 
-        .all{
+        .all {
             background: url("../img/allback.jpg") no-repeat;
             background-size: 100% 100%;
             top: 0;
             left: 0;
-            z-index: -1;/*-1 可以当背景*/
+            z-index: -1; /*-1 可以当背景*/
             /*filter: blur(3px);*/
         }
+
         .top {
             border-bottom: 4px solid deepskyblue;
             height: 60px;
@@ -57,6 +58,7 @@
             background-color: skyblue;
             position: relative;
         }
+
         .banner img {
             text-align: center;
             display: block;
@@ -174,6 +176,7 @@
             text-decoration: none;
             display: inline-block;
         }
+
         .mid {
             height: 100px;
             width: 100%;
@@ -184,6 +187,7 @@
             /*background:url("../img/search.gif") no-repeat;*/
             /*background-size:100% 100%;*/
         }
+
         .mid img {
             text-align: center;
             display: block;
@@ -191,6 +195,7 @@
             width: 100%;
             position: absolute;
         }
+
         .main {
             width: 80%;
             height: 200px;
@@ -199,6 +204,7 @@
             border-radius: 10px;
             position: relative;
         }
+
         .main img {
             text-align: center;
             display: block;
@@ -207,6 +213,7 @@
             border-radius: 10px;
             position: absolute;
         }
+
         .footer {
             height: 300px;
             width: 80%;
@@ -214,11 +221,12 @@
             margin-bottom: 0px;
             border-radius: 10px;
             position: relative;
-            background:url("../img/footer.jpg") no-repeat;
+            background: url("../img/footer.jpg") no-repeat;
             background-size: 100%;
         }
-        .footer #firstinfo{
-            font-family: verdana,arial,sans-serif;
+
+        .footer #firstinfo {
+            font-family: verdana, arial, sans-serif;
             height: 300px;
             text-align: center;
             line-height: 300px;
@@ -229,7 +237,8 @@
             float: left;
             margin-left: 45%;
         }
-        .footer #secondinfo{
+
+        .footer #secondinfo {
             font-family: "Microsoft YaHei UI";
             display: none;
             text-align: center;
@@ -240,10 +249,12 @@
             position: absolute;
         }
     </style>
+
     <script>
         $(function () {
-            var userid = '222222222';
-            var flag=1;
+            var userid = '${userid}';
+            var flag = 1;
+
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -251,7 +262,7 @@
                         "userid": userid
                     },
                     success: function (resp) {
-                        var username=resp;
+                        var username = resp;
                         if (username != "") {
                             $("#log").css({
                                 "display": "none"
@@ -261,14 +272,17 @@
                     }
                 })
             }
+
             init();
+
             function searchMyClub() {
-                $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
+                $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=870830369');
             };
             $("#secondbtn").click(function () {
+                var userid='870830369';
                 if (userid == "") {
                     alert('请先登录');
-                }else {
+                } else {
                     searchMyClub();
                 }
             });
@@ -326,19 +340,19 @@
                 });
             });
             $("#searchClub").click(function () {
-                var sel1=$("#select1 option:selected").val();
-                var sel2=$("#select2 option:selected").val();
-                var sel3=$("#select3 option:selected").val();
-                if (sel1==""||sel3==""||sel2=="") {
+                var sel1 = $("#select1 option:selected").val();
+                var sel2 = $("#select2 option:selected").val();
+                var sel3 = $("#select3 option:selected").val();
+                if (sel1 == "" || sel3 == "" || sel2 == "") {
                     alert('请查看是否有未选择的选项');
-                }else {
+                } else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
                         var club = data;
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
                             alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=870830369' + '&clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -349,12 +363,12 @@
                     $("#firstinfo").fadeOut(2000, function () {
                         $("#secondinfo").fadeIn(2000);
                     });
-                    flag=0;
-                }else {
+                    flag = 0;
+                } else {
                     $("#secondinfo").fadeOut(2000, function () {
                         $("#firstinfo").fadeIn(2000);
                     });
-                    flag=1;
+                    flag = 1;
                 }
             })
         })
@@ -367,7 +381,7 @@
         <div><img src="../img/title.png"></div>
         <div id="topbtn">
             <a href="/">首页</a>
-            <a href="#" id="log">登录</a>
+            <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
             <a href="#" id="username"></a>
         </div>
     </div>

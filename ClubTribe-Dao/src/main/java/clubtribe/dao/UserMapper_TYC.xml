@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="clubtribe.dao.UserMapper_TYC">
+    <select id="findUser" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select userid from t_user where username=#{username} and password=#{password}
+    </select>
+    <select id="insertUser" parameterType="java.util.Map" resultType="java.lang.Integer">
+        insert into t_user(userid,username,password,useremail) values(#{userid},#{username},#{password},#{useremail})
+    </select>
+    <select id="findUserById" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select userid from t_user where userid=#{userid}
+    </select>
+    <select id="selectPasswordByName" parameterType="java.lang.String" resultType="java.lang.String">
+        select password from t_user where username=#{username}
+    </select>
+    <select id="findSchoolID" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select Schoolid from t_school where Schoolname=#{schoolname} and SchoolAddress=#{schooladress}
+    </select>
+</mapper>

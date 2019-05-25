@@ -68,7 +68,7 @@
             border-color: #999999;
         }
         table.imagetable td {
-            background:#dcddc0 url('../img/bg.jpg');
+            background:#dcddc0 url('../img/footer.jpg');
             border-width: 1px;
             padding: 8px;
             border-style: solid;

@@ -56,11 +56,10 @@ public class ClubSearchController_CJN {
         if (clubids != null) {
             String[] clubidList = clubids.split("@");
             List<Club> clubList = new ArrayList<>();
-            int count = clubidList.length;
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < clubidList.length; i++) {
                 String clubid = clubidList[i];
-                System.out.println(clubid);
-                if (clubid != null) {
+                System.out.println("++++++++"+clubid);
+                if (clubid != "" && clubid != null) {
                     Club club = clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
                     clubList.add(club);
                 }
