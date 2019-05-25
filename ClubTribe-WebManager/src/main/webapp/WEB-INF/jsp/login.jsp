@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core_1_1" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <HTML>
@@ -6,10 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>clubtribe用户登录</title>
-    <script type="application/javascript" src="../../js/jquery-3.3.1.min.js"></script>
-    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../bootstrap/css/font-awesome.min.css">
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../bootstrap/css/all-skins.min.css">
     <link rel="stylesheet" href="../bootstrap/css/main.css">
