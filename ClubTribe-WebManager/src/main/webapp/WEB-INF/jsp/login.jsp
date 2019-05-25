@@ -38,7 +38,7 @@
     <div class="login-page">
         <a href="${pageContext.request.contextPath}/user/toPassword" class="attachment-img">忘记密码>></a>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        &nbsp&nbsp
         <a href="${pageContext.request.contextPath}/user/toRegister" class="attachment-img">注册？成为新用户>></a>
     </div>
 

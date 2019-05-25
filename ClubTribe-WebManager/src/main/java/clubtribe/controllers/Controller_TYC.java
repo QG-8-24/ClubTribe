@@ -141,10 +141,13 @@ public class Controller_TYC {
      */
     @RequestMapping(value = "userFindPassword")
     @ResponseBody
-    public String findPassword(String username,String useremail)
+    public String findPassword(String username,String useremail,String code)
     {
+        System.out.println("进入findPassword函数");
         String password= userServicesTYC.findPassword(username);
-        System.out.println(password);
+        if(!code.trim().equals(session.getAttribute("vcode"))){
+            return "false";
+        }
         if(password!=null){
             mailUtil.send(useremail,"找回密码",password);
             return "true";
@@ -155,8 +158,7 @@ public class Controller_TYC {
     @RequestMapping(value ="schoolAccr")
     @ResponseBody
     public String schoolAccr(String schoolname,String schooladress,String clubids) throws IOException {
-        String url="D:\\clubtribe\\ClubTribe-WebManager\\src\\main\\" +
-                "resources\\resource\\info-store\\school-accr-info";
+        String url="D:\\clubtribefile\\schoolfile\\school-accr-info.txt";
         Integer status;
         Integer id=userServicesTYC.findSchoolId(schoolname,schooladress);
         System.out.println("查询到的id:..........."+id);

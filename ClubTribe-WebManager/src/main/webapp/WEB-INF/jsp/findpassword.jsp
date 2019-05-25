@@ -44,6 +44,7 @@
       </div>
 </div>
 </div>
+<a href="${basePath}/user/toCompusAccr">校园认证</a>
 </body>
 </HTML>
 
@@ -56,7 +57,7 @@ $(document).ready(function(){
 		}
 	});
 	//点击登录按钮
-    $('#btn-mailbox').click(sendCode);
+   $('#btn-mailbox').click(sendCode);
 	$('#btn-password').click(findPassword);
 })
 function sendCode() {
@@ -88,7 +89,8 @@ function sendCode() {
 function findPassword(){
 	var userName = $('#username').val();
 	var mailbox = $('#mailbox').val();
-	alert(mailbox);
+    var errorMessage=$('#errorMessage');
+    var code=$('#vcode').val();
 	if(userName==''){
 		$('#errorMessage').parent().parent().css('display','block');
 		$('#errorMessage').text('登录名不能为空！');
@@ -101,13 +103,13 @@ function findPassword(){
 	}
     errorMessage.parent().parent().css('display','none');
 	var url = '${pageContext.request.contextPath}/user/userFindPassword';
-	var params = {'username':userName,'useremail':mailbox};
+	var params = {'username':userName,'useremail':mailbox,'code':code};
 	$.post(url,params,function(result){
 		if(result == "true"){
 			location.href='${pageContext.request.contextPath}/user/toLogin';
 		}else{
 			$('#errorMessage').parent().parent().css('display','block');
-			$('#errorMessage').text("请检查您输入的用户名!");
+			$('#errorMessage').text("请检查您输入的用户名或验证码");
 		}
 	})
 }
