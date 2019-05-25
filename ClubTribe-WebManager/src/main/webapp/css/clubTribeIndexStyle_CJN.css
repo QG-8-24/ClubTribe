@@ -1,26 +1,40 @@
-*{
+* {
     margin: 0;
-   padding: 0;
- }
-ul{
-    list-style: none;/*取消列表默认样式*/
+    padding: 0;
 }
-.top{
+
+ul {
+    list-style: none; /*取消列表默认样式*/
+}
+
+.all{
+    background: url("../img/allback.jpg") no-repeat;
+    background-size: 100% 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;/*-1 可以当背景*/
+    /*filter: blur(3px);*/
+}
+.top {
     border-bottom: 4px solid deepskyblue;
     height: 60px;
     text-align: center;
     position: relative;
 }
-.top img{
+
+.top img {
     float: left;
+    margin-left: 60px;
 }
-.top #topbtn{
+
+.top #topbtn {
     float: right;
     height: 60px;
     margin-right: 30px;
     line-height: 60px;
 }
-.top #topbtn a{
+
+.top #topbtn a {
     float: left;
     display: inline-block;
     text-decoration: none;
@@ -28,23 +42,24 @@ ul{
     margin-left: 10px;
     font-weight: bolder;
 }
-.banner{
-    height: 800px;
-    width: 1400px;
+
+.banner {
+    height: 600px;
+    width: 100%;
     margin: 10px auto;
+    margin-top: 0px;
     background-color: skyblue;
-    border-radius: 10px;
     position: relative;
 }
-.banner img{
+.banner img {
     text-align: center;
     display: block;
     height: 100%;
     width: 100%;
-    border-radius: 10px;
     position: absolute;
 }
-.banner #firstbtn a{
+
+.banner #secondbtn {
     height: 60px;
     width: 200px;
     border: 6px solid skyblue;
@@ -56,13 +71,14 @@ ul{
     cursor: pointer;
     position: absolute;
     top: 40%;
-    left: 80%;
+    left: 70%;
     font-weight: bold;
     color: white;
     text-decoration: none;
     display: inline-block;
 }
-.banner #secondbtn a{
+
+.mid #Dselect1 {
     height: 60px;
     width: 200px;
     border: 6px solid skyblue;
@@ -73,23 +89,147 @@ ul{
     font-size: 24px;
     cursor: pointer;
     position: absolute;
-    top: 60%;
-    left: 80%;
+    top: 10%;
+    left: 10%;
     font-weight: bold;
     color: white;
     text-decoration: none;
     display: inline-block;
 }
-.main{
-    width: 1400px;
-    height: 800px;
+
+.mid #Dselect1 select {
+    background: none;
+    font-size: 15px;
+}
+
+.mid #Dselect2 {
+    height: 60px;
+    width: 200px;
+    border: 6px solid skyblue;
+    text-align: center;
+    line-height: 60px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.mid #Dselect2 select {
+    background: none;
+    font-size: 15px;
+}
+
+.mid #Dselect3 {
+    height: 60px;
+    width: 200px;
+    border: 6px solid skyblue;
+    text-align: center;
+    line-height: 60px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.mid #Dselect3 select {
+    background: none;
+    font-size: 15px;
+}
+
+.mid #searchClub {
+    height: 60px;
+    width: 200px;
+    border: 6px solid skyblue;
+    text-align: center;
+    line-height: 60px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    left: 70%;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+.mid {
+    height: 100px;
+    width: 100%;
+    margin: 10px auto;
+    background-color: skyblue;
+    border-radius: 10px;
+    position: relative;
+    /*background:url("../img/search.gif") no-repeat;*/
+    /*background-size:100% 100%;*/
+}
+.mid img {
+    text-align: center;
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.main {
+    width: 80%;
+    height: 200px;
     margin: 10px auto;
     background-color: skyblue;
     border-radius: 10px;
     position: relative;
 }
-.footer{
+.main img {
+    text-align: center;
+    display: block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    position: absolute;
+}
+.footer {
     height: 300px;
-    background-color: black;
+    width: 80%;
+    margin: 10px auto;
+    margin-bottom: 0px;
+    border-radius: 10px;
     position: relative;
+    background:url("../img/footer.jpg") no-repeat;
+    background-size: 100%;
+}
+.footer #firstinfo{
+    font-family: verdana,arial,sans-serif;
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+    font-weight: bold;
+    display: inline-block;
+    color: white;
+    font-size: 24px;
+    float: left;
+    margin-left: 45%;
+}
+.footer #secondinfo{
+    font-family: "Microsoft YaHei UI";
+    display: none;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+    font-size: 24px;
+    margin: 0 0;
+    position: absolute;
 }
