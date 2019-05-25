@@ -190,12 +190,11 @@ a {
     background: white;
 }
 
-#show4 h1 {
-    width: 600px;
+#show4 h1, h2, h3 {
+    width: 50%;
     overflow: hidden;
     text-align: left;
-    right: 0;
-    top: 10%;
+    right: -50%;
     color: white;
 }
 

@@ -8,8 +8,9 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>clubtribe用户登录</title>
     <script type="application/javascript" src="../js/jquery-3.3.1.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../bootstrap/css/font-awesome.min.css">
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../bootstrap/css/all-skins.min.css">
     <link rel="stylesheet" href="../bootstrap/css/main.css">
@@ -82,7 +83,12 @@
                 "password": userPwd,
             },
             success: function (resp) {
-                location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid=870830369";
+                console.log(resp);
+                if (resp ==true) {
+                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid+" + userName;
+                } else {
+                    alert("密码错误！");
+                }
             }
         });
     }

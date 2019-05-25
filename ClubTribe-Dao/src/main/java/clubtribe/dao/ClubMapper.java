@@ -3,9 +3,6 @@ package clubtribe.dao;
 
 import clubtribe.pojo.Club;
 
-import java.util.List;
-import java.lang.String;
-
 /**
  * @author MQ
  */
@@ -35,6 +32,14 @@ public interface ClubMapper {
     int initmsg(Club club);
 
     /**
+     * 初始化社团留言墙
+     *
+     * @param club
+     * @return
+     */
+    int initmsgboard(Club club);
+
+    /**
      * 获取社团管理员
      *
      * @param clubid
@@ -42,4 +47,11 @@ public interface ClubMapper {
      */
     String getadminids(Integer clubid);
 
+    /**
+     * 获取留言墙
+     *
+     * @param clubid
+     * @return
+     */
+    String getmsgboard(Integer clubid);
 }
