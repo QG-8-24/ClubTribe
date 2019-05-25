@@ -392,6 +392,7 @@
                 学校:<select style="width: 100px" id="select2">
                 <option value="null">--请选择--</option>
             </select>
+
             </div>
             <div id="Dselect3">
                 社团:<select style="width: 100px" id="select3">
