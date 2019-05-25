@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="../css/clubTribeIndexStyle_CJN.css">
     <script>
         $(function () {
-            var userid = '222222222';
+            var userid = '${userid}';
             var flag=1;
             function init() {
                 $.ajax({
@@ -131,7 +131,7 @@
         <div><img src="../img/title.png"></div>
         <div id="topbtn">
             <a href="/">首页</a>
-            <a href="#" id="log">登录</a>
+            <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
             <a href="#" id="username"></a>
         </div>
     </div>
