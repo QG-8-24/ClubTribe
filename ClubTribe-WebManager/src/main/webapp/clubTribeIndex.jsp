@@ -6,7 +6,9 @@
     <link rel="stylesheet" type="text/css" href="../css/clubTribeIndexStyle_CJN.css">
     <script>
         $(function () {
-            var userid = '${userid}';
+            //
+            var params=getParamsByGet();
+            var userid=params.get("userid");
             var flag=1;
             function init() {
                 $.ajax({
@@ -57,7 +59,18 @@
                     $("#select1").append(res);
                 });
             }
-
+            //获取get请求参数封装成一个map集合
+            function getParamsByGet(){
+                var map=new Map();
+               var paramsStr=location.search.split('?')[1];
+               var paramsArr=paramsStr.split('&');
+                $.each(paramsArr,function (index,item) {
+                    var itemArr=item.split("=");
+                    alert(itemArr[0]+"..."+itemArr[1]);
+                    map.set(itemArr[0],itemArr[1]);
+                })
+                return map;
+            }
             findFirstData();
             $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
@@ -185,7 +198,5 @@
     </div>
 
 </div>
-
-
 </body>
 </html>

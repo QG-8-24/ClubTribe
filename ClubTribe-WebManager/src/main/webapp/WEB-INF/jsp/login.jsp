@@ -85,7 +85,7 @@
             success: function (resp) {
                 console.log(resp);
                 if (resp ==true) {
-                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid+" + userName;
+                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid=111111111";
                 } else {
                     alert("密码错误！");
                 }
