@@ -129,14 +129,11 @@ function doRegister()
     }
     if(userPwd==userPwd2)
     {
-        alert("vcode:"+vcode);
-        alert("密码已确认！");
         var url = '${pageContext.request.contextPath}/user/userRegister';
         var params = {'username':userName,'useremail':useremail,'password':userPwd,"vcodeWritted":vcode};
         $.post(url,params,function(result)
         {
-            alert(result);
-            if(result == "true")
+            if($.trim(result) == "true")
             {   //用户校验成功，跳转到登录页面
                 alert("注册成功！")
                 location.href='${pageContext.request.contextPath}/user/toLogin';

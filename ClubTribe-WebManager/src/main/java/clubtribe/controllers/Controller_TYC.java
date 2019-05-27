@@ -76,10 +76,10 @@ public class Controller_TYC {
     @RequestMapping(value="userLogin")
     @ResponseBody
     public String login(String username,String password){
-        Integer status= userServicesTYC.userLogin(username,password);
-        System.out.println("key:"+status);
-        if(status!= null){
-            return "true";
+        Integer userid= userServicesTYC.userLogin(username,password);
+        System.out.println("userid:"+userid);
+        if(userid!= null){
+            return String.valueOf(userid);
         }
         return "false";
     }

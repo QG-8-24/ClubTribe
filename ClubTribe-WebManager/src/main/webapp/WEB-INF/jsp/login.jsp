@@ -61,8 +61,8 @@
     })
 
     function doLogin() {
-        var userName = $('#username').val();
-        var userPwd = $('#userpwd').val();
+        var userName = $('#username').val().trim();
+        var userPwd = $('#userpwd').val().trim();
         var errorMessage = $('#errorMessage');
         if (userName == '') {
             $('#errorMessage').parent().parent().css('display', 'block');
@@ -82,12 +82,15 @@
                 "username": userName,
                 "password": userPwd,
             },
-            success: function (resp) {
-                console.log(resp);
-                if (resp ==true) {
-                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid=111111111";
-                } else {
-                    alert("密码错误！");
+            success: function (result) {
+                if ($.trim(result) == "false")
+                {
+                    $('#errorMessage').parent().parent().css('display', 'block');
+                    $('#errorMessage').text('用户不存在！');
+                    return false;
+                } else
+                {
+                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;
                 }
             }
         });
