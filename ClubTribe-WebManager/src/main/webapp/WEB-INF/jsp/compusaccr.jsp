@@ -30,6 +30,11 @@
         <label>学校地址</label>
         <input type="text" class="form-control" id="schooladress">
     </div>
+    <input id="lefile" type="file" style="display:none">
+    <div class="input-append">
+        <input id="photoCover" class="input-large" type="text" style="height:30px;">
+        <a class="btn" onclick="$('input[id=lefile]').click();">Browse</a>
+    </div>
     <div class="form-group">
         <button class="btn btn-primary btn-block" id="idenify">认证</button>
     </div>
@@ -48,11 +53,15 @@
                     }
                 )
                 $('#idenify').click(doAccr)
+                $('input[id=lefile]').change(function() {
+                    $('#photoCover').val($(this).val());
+                });
             }
     )
     function doAccr() {
         var schoolname=$("#schoolname").val();
         var schooladress=$("#schooladress").val();
+        var img=$('#photoCover').val();
         var errorMessage=$("#errorMessage");
         if(schoolname==''){
             errorMessage.parent().parent().css('display','block');
@@ -66,7 +75,7 @@
         }
         errorMessage.parent().parent().css('display','none');
         var url="${basePath}/user/schoolAccr";
-        var params={"schoolname":schoolname,"schooladress":schooladress};
+        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img};
         $.post(url,params,function (result) {
             if(result=='false'){
                 errorMessage.parent().parent().css('display','block');
@@ -74,7 +83,7 @@
                 return false;
             }else if(result=='existed'){
                 errorMessage.parent().parent().css('display','block');
-                errorMessage.text("校园已认证过！");
+                errorMessage.text("此学校已认证过！");
                 return false;
             }else {
                 alert("已发送认证！");

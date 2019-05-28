@@ -76,10 +76,10 @@ public class Controller_TYC {
     @RequestMapping(value="userLogin")
     @ResponseBody
     public String login(String username,String password){
-        Integer userid= userServicesTYC.userLogin(username,password);
+        String userid= userServicesTYC.userLogin(username,password);
         System.out.println("userid:"+userid);
         if(userid!= null){
-            return String.valueOf(userid);
+            return userid;
         }
         return "false";
     }
@@ -157,7 +157,7 @@ public class Controller_TYC {
     }
     @RequestMapping(value ="schoolAccr")
     @ResponseBody
-    public String schoolAccr(String schoolname,String schooladress,String clubids) throws IOException {
+    public String schoolAccr(String schoolname,String schooladress,String img) throws IOException {
         String url="D:\\clubtribefile\\schoolfile\\school-accr-info.txt";
         Integer status;
         Integer id=userServicesTYC.findSchoolId(schoolname,schooladress);
@@ -169,6 +169,7 @@ public class Controller_TYC {
             Map<String,String> map=new HashMap<>();
             map.put("schoolname",schoolname);
             map.put("schooladress",schooladress);
+            map.put("img",img);
             status=userServicesTYC.auditRequest(url,map);
         }
         if (status==0){

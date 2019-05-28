@@ -12,7 +12,7 @@ public interface UserMapper_TYC {
      * @return
      */
 
-    Integer findUser(Map<String, String> map);
+    String findUser(Map<String, String> map);
 
     /**
      *

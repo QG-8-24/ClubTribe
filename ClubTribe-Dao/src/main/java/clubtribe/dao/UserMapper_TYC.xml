@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="clubtribe.dao.UserMapper_TYC">
-    <select id="findUser" parameterType="java.util.Map" resultType="java.lang.Integer">
-        select userid from t_user where username=#{username} and password=#{password}
+    <select id="findUser" parameterType="java.util.Map" resultType="java.lang.String">
+        select userid from t_user where username=#{username} or userid=#{username} and password=#{password}
     </select>
     <select id="insertUser" parameterType="java.util.Map" resultType="java.lang.Integer">
         insert into t_user(userid,username,password,useremail) values(#{userid},#{username},#{password},#{useremail})

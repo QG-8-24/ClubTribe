@@ -27,7 +27,7 @@ public class UserServicesTYCImpl implements UserServices_TYC {
      * @return
      */
     @Override
-    public Integer userLogin(String username, String password) {
+    public String userLogin(String username, String password) {
         Map<String,String> map=new HashMap<>();
         map.put("username",username);
         map.put("password",password);
@@ -49,7 +49,7 @@ public class UserServicesTYCImpl implements UserServices_TYC {
         }
         System.out.println("id:"+userid);
         usermap.put("userid",userid);
-        Integer status= userMapperTYC.findUser(usermap);
+        String status= userMapperTYC.findUser(usermap);
         if(status!=null){
             return null;
         }
@@ -90,13 +90,13 @@ public class UserServicesTYCImpl implements UserServices_TYC {
     @Override
     public Integer auditRequest(String url, Map<String, String> map) throws IOException {
         File file=new File(url);
-        if(!file.exists()){
+        if(!file.exists()| !file.isFile()){
             System.out.println("不存在指定路径");
             return 0;
         }
         FileWriter fileWriter=new FileWriter(file,true);
         String sep="@";
-        String content=map.get("schoolname")+sep+map.get("schooladress")+"\n";
+        String content=map.get("schoolname")+sep+map.get("schooladress")+sep+map.get("img")+"\n";
         fileWriter.write(content);
         fileWriter.close();
         return 1;

@@ -18,11 +18,11 @@
                     },
                     success: function (resp) {
                         var username=resp;
-                        if (username != "") {
+                        if (username.trim() != "") {
                             $("#log").css({
                                 "display": "none"
                             });
-                            $("#username").append(username);
+                            $("#username").html(username);
                         }
                     }
                 })
@@ -48,8 +48,9 @@
                             res += "<option>" + school[i].schoolAddress + "</option>";
                         }
                         for (var j = 0; j <= i - 1; j++) {
-                            if (school[j].schoolAddress == school[i].schoolAddress) {
-
+                            if (school[j].schoolAddress.trim() == school[i].schoolAddress.trim()) {
+                                alert("有重复！"+school[j].schoolAddress.trim());
+                                continue;
                             } else {
                                 res += "<option>" + school[i].schoolAddress + "</option>";
                             }
@@ -59,21 +60,10 @@
                     $("#select1").append(res);
                 });
             }
-            //获取get请求参数封装成一个map集合
-            function getParamsByGet(){
-                var map=new Map();
-               var paramsStr=location.search.split('?')[1];
-               var paramsArr=paramsStr.split('&');
-                $.each(paramsArr,function (index,item) {
-                    var itemArr=item.split("=");
-                    alert(itemArr[0]+"..."+itemArr[1]);
-                    map.set(itemArr[0],itemArr[1]);
-                })
-                return map;
-            }
+            //地区下拉框设置初始化
             findFirstData();
             $("#select1").change(function () {
-                var seled = $("#select1 option:selected").val();
+                var seled = $("#select1").val();
                 $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {
                     // $("#select2").html("");
                     $("#select2").empty();
@@ -159,7 +149,7 @@
             </div>
         </div>
         <div class="mid">
-            <img src="../img/search.gif" alt="#">
+            <img src="../img/search.jpg" alt="#">
             <div id="Dselect1">
                 地区:<select style="width: 100px" id="select1">
                 <option value="null">--请选择--</option>
@@ -200,3 +190,16 @@
 </div>
 </body>
 </html>
+<script>
+    //获取get请求参数封装成一个map集合
+    function getParamsByGet(){
+        var map=new Map();
+        var paramsStr=location.search.split('?')[1];
+        var paramsArr=paramsStr.split('&');
+        $.each(paramsArr,function (index,item) {
+            var itemArr=item.split("=");
+            map.set(itemArr[0],itemArr[1]);
+        })
+        return map;
+    }
+</script>
