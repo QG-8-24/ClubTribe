@@ -77,7 +77,9 @@ public class ClubSearchController_CJN {
     @ResponseBody
     public String searchFirstData() {
         List<School> firstData = clubSearchServices_cjn.searchFirstData();
+
         int count = firstData.size();
+        System.out.println(JSONArray.fromObject(firstData).toString());
         return JSONArray.fromObject(firstData).toString();
     }
 
@@ -94,7 +96,6 @@ public class ClubSearchController_CJN {
         System.out.println(JSONArray.fromObject(secondData).toString());
         return JSONArray.fromObject(secondData).toString();
     }
-
     /**
      * @param Schoolname
      * @return
@@ -113,7 +114,6 @@ public class ClubSearchController_CJN {
         }
         return JSONArray.fromObject(clubList).toString();
     }
-
     /**
      * @param Clubname
      * @return

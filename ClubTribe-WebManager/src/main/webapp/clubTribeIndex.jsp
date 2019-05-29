@@ -4,12 +4,24 @@
     <title>Title</title>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/clubTribeIndexStyle_CJN.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- CSS -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/supersized.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/jquery-1.8.2.min.js"></script>
+    <script src="../assets/js/supersized.3.2.7.min.js"></script>
+    <script src="../assets/js/supersized-init.js"></script>
+    <script src="../assets/js/scripts.js"></script>
     <script>
         $(function () {
-            //
-            var params=getParamsByGet();
-            var userid=params.get("userid");
+            var map=getParamsByGet();
+            var userid = map.get('userid');
             var flag=1;
+            var check=1
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -18,11 +30,11 @@
                     },
                     success: function (resp) {
                         var username=resp;
-                        if (username.trim() != "") {
+                        if (username != "") {
                             $("#log").css({
                                 "display": "none"
                             });
-                            $("#username").html(username);
+                            $("#username").append(username);
                         }
                     }
                 })
@@ -47,28 +59,29 @@
                         if (i == 0) {
                             res += "<option>" + school[i].schoolAddress + "</option>";
                         }
-                        for (var j = 0; j <= i - 1; j++) {
-                            if (school[j].schoolAddress.trim() == school[i].schoolAddress.trim()) {
-                                alert("有重复！"+school[j].schoolAddress.trim());
-                                continue;
-                            } else {
-                                res += "<option>" + school[i].schoolAddress + "</option>";
+                        else{
+                            for (var j = 0; j <= i - 1; j++) {
+                                if (school[j].schoolAddress == school[i].schoolAddress) {
+                                    break;
+                                } else {
+                                    res += "<option>" + school[i].schoolAddress + "</option>";
+                                }
                             }
-
                         }
+
                     }
                     $("#select1").append(res);
                 });
             }
-            //地区下拉框设置初始化
             findFirstData();
             $("#select1").change(function () {
-                var seled = $("#select1").val();
+                var seled = $("#select1 option:selected").val();
                 $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {
-                    // $("#select2").html("");
-                    $("#select2").empty();
+                    $("#select2").html("");
+                    // $("#select2").empty();
                     $("#select2").append("<option>--请选择--</option>");
-                    $("#select3").empty();
+                    $("#select3").html("");
+                    // $("#select3").empty();
                     $("#select3").append("<option>--请选择--</option>");
                     var school = data;
                     var res = "";
@@ -81,8 +94,8 @@
             $("#select2").change(function () {
                 var seled = $("#select2 option:selected").val();
                 $.getJSON("${pageContext.request.contextPath}/search/thirdData?Schoolname=" + seled, function (data) {
-                    // $("#select3").html("");
-                    $("#select3").empty();
+                    $("#select3").html("");
+                    // $("#select3").empty();
                     $("#select3").append("<option>--请选择--</option>");
                     var club = data;
                     var res = "";
@@ -96,7 +109,7 @@
                 var sel1=$("#select1 option:selected").val();
                 var sel2=$("#select2 option:selected").val();
                 var sel3=$("#select3 option:selected").val();
-                if (sel1==""||sel3==""||sel2=="") {
+                if (sel1=="--请选择--"||sel3=="--请选择--"||sel2=="--请选择--") {
                     alert('请查看是否有未选择的选项');
                 }else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
@@ -110,18 +123,30 @@
                     });
                 }
             });
-            $("#mainimg").click(function () {
-
+            $("#footer").click(function () {
                 if (flag == 1) {
-                    $("#firstinfo").fadeOut(2000, function () {
+                    $("#aboutimg").fadeOut(2000, function () {
                         $("#secondinfo").fadeIn(2000);
                     });
                     flag=0;
                 }else {
                     $("#secondinfo").fadeOut(2000, function () {
-                        $("#firstinfo").fadeIn(2000);
+                        $("#aboutimg").fadeIn(2000);
                     });
                     flag=1;
+                }
+            })
+            $("#ourwork").click(function () {
+                if (check == 1) {
+                    $("#ourworkimg #our #work").fadeOut(2000, function () {
+                        $("#workinfo").fadeIn(2000);
+                    });
+                    check=0;
+                }else {
+                    $("#workinfo").fadeOut(2000, function () {
+                        $("#ourworkimg #our #work").fadeIn(2000);
+                    });
+                    check=1;
                 }
             })
         })
@@ -131,14 +156,17 @@
 <div>
     <div class="top">
 
-        <div><img src="../img/title.png"></div>
+        <%--<div><img src="../img/title.png"></div>--%>
+        <div id="indextitle">
+            ClubTribe
+        </div>
         <div id="topbtn">
             <a href="/">首页</a>
             <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
             <a href="#" id="username"></a>
         </div>
     </div>
-    <div class="all">
+    <div  class="no-js">
         <div class="banner">
             <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
                 C L U B T R I B E
@@ -149,7 +177,7 @@
             </div>
         </div>
         <div class="mid">
-            <img src="../img/search.jpg" alt="#">
+            <img src="../img/search.gif" alt="#">
             <div id="Dselect1">
                 地区:<select style="width: 100px" id="select1">
                 <option value="null">--请选择--</option>
@@ -159,9 +187,6 @@
                 学校:<select style="width: 100px" id="select2">
                 <option value="null">--请选择--</option>
             </select>
-
-
-
             </div>
             <div id="Dselect3">
                 社团:<select style="width: 100px" id="select3">
@@ -172,12 +197,9 @@
                 查找社团
             </div>
         </div>
-        <div class="main" id="main">
-            <img src="../img/about.jpg" alt="#" id="mainimg">
-        </div>
-        <div class="footer">
+        <div class="footer" id="footer">
             <div id="firstinfo">
-                关于我们
+                <img src="../img/about.jpg" alt="#" id="aboutimg">
             </div>
             <div id="secondinfo">
                 ClubTribe的目的是使社团管理更加便捷高效；提高社团成员的主观能动性,使社团管理更加便捷高效
@@ -185,9 +207,31 @@
                 通过提供诸如英语等多种语言的支持，这个平台也可以作为国内普通高校与国外院校的交流的工具。
             </div>
         </div>
+        <div class="ourwork" id="ourwork">
+            <img src="../img/ourwork.jpg" alt="#" id="ourworkimg">
+            <div id="workinfo">
+                ClubTribe的工作是使社团高效管理
+                跨校的社团活动建设平台
+                将不同社团不同高校的资源整合，
+                建立合理的权限分配机制
+            </div>
+            <div id="our">OUR</div>
+            <div id="work">WORK</div>
+        </div>
+        <div class="tail" id="tail">
+            <div id="lookus">
+                关注我们
+                <a href="#" id="qq">QQ</a>
+            </div>
+            <div id="Designer">
+                @2019 ClubTribe Designer By MQ,CJN,TYC
+            </div>
+        </div>
     </div>
 
 </div>
+
+
 </body>
 </html>
 <script>
