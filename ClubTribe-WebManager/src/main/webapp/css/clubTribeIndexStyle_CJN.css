@@ -7,14 +7,7 @@ ul {
     list-style: none; /*取消列表默认样式*/
 }
 
-.all{
-    background: url("../img/allback.jpg") no-repeat;
-    background-size: 100% 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;/*-1 可以当背景*/
-    /*filter: blur(3px);*/
-}
+
 .top {
     border-bottom: 4px solid deepskyblue;
     height: 60px;
@@ -22,9 +15,16 @@ ul {
     position: relative;
 }
 
-.top img {
+/*.top img {*/
+    /*float: left;*/
+    /*margin-left: 60px;*/
+/*}*/
+.top #indextitle{
+    line-height: 60px;
+    font-size: 50px;
     float: left;
     margin-left: 60px;
+    font-family: "Microsoft YaHei UI";
 }
 
 .top #topbtn {
@@ -45,9 +45,8 @@ ul {
 
 .banner {
     height: 600px;
-    width: 100%;
-    margin: 10px auto;
-    margin-top: 0px;
+    width: 80%;
+    margin: 0px auto;
     background-color: skyblue;
     position: relative;
 }
@@ -170,11 +169,11 @@ ul {
 }
 .mid {
     height: 100px;
-    width: 100%;
-    margin: 10px auto;
+    width: 80%;
+    margin: 0px auto;
     background-color: skyblue;
-    border-radius: 10px;
     position: relative;
+
     /*background:url("../img/search.gif") no-repeat;*/
     /*background-size:100% 100%;*/
 }
@@ -185,43 +184,19 @@ ul {
     width: 100%;
     position: absolute;
 }
-.main {
-    width: 80%;
-    height: 200px;
-    margin: 10px auto;
-    background-color: skyblue;
-    border-radius: 10px;
-    position: relative;
-}
-.main img {
-    text-align: center;
-    display: block;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-    position: absolute;
-}
+
 .footer {
     height: 300px;
     width: 80%;
-    margin: 10px auto;
-    margin-bottom: 0px;
-    border-radius: 10px;
+    margin: 0px auto;
     position: relative;
-    background:url("../img/footer.jpg") no-repeat;
-    background-size: 100%;
 }
-.footer #firstinfo{
-    font-family: verdana,arial,sans-serif;
-    height: 300px;
+.footer #aboutimg{
+    height: 100%;
+    width: 100%;
+    position: absolute;
     text-align: center;
-    line-height: 300px;
-    font-weight: bold;
-    display: inline-block;
-    color: white;
-    font-size: 24px;
-    float: left;
-    margin-left: 45%;
+    display: block;
 }
 .footer #secondinfo{
     font-family: "Microsoft YaHei UI";
@@ -232,4 +207,66 @@ ul {
     font-size: 24px;
     margin: 0 0;
     position: absolute;
+}
+.ourwork {
+    height: 300px;
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+}
+.ourwork #ourworkimg{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    display: block;
+}
+.ourwork #workinfo{
+    font-family: "Microsoft YaHei UI";
+    display: none;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+    font-size: 24px;
+    margin: 0 0;
+    position: absolute;
+}
+.ourwork #our{
+    color: greenyellow;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    font-size: 50px;
+    font-weight: bold;
+}
+.ourwork #work{
+    color: black;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    font-size: 50px;
+    font-weight: bold;
+}
+.tail {
+    height: 150px;
+    width: 100%;
+    margin: 0px auto;
+    position: relative;
+    background-color: black;
+}
+.tail #lookus{
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 80%;
+    right: 5%;
+}
+.tail #qq{
+    font-family: "Goudy Old Style";
+}
+.tail #Designer{
+    position: absolute;
+    top: 80%;
+    right: 40%;
 }

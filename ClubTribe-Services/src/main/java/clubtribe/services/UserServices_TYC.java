@@ -6,7 +6,7 @@ import java.util.Map;
 public interface UserServices_TYC {
 
 
-    Integer userLogin(String username, String password);
+    String userLogin(String username, String password);
 
     Integer userRegister(Map<String, String> usermap);
 

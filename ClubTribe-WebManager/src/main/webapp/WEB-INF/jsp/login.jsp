@@ -23,7 +23,7 @@
             <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle" id="errorMessage"></i></h4>
         </div>
         <div class="form-group has-feedback">
-            <input type="text" class="form-control" id="username" placeholder="账号">
+            <input type="text" class="form-control" id="username" placeholder="账号/ID">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
@@ -37,10 +37,10 @@
         </div>
     </div>
     <div class="login-page">
-        <a href="${pageContext.request.contextPath}/user/toPassword" class="attachment-img">忘记密码>></a>
+        <a href="${pageContext.request.contextPath}/user/toPassword" class="attachment-img">忘记密码</a>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        &nbsp&nbsp
-        <a href="${pageContext.request.contextPath}/user/toRegister" class="attachment-img">注册？成为新用户>></a>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <a href="${pageContext.request.contextPath}/user/toRegister" class="attachment-img">注册？成为新用户</a>
     </div>
 
 </div>
@@ -82,16 +82,22 @@
                 "username": userName,
                 "password": userPwd,
             },
+            type:'post',
+            async:true,
             success: function (result) {
                 if ($.trim(result) == "false")
                 {
                     $('#errorMessage').parent().parent().css('display', 'block');
                     $('#errorMessage').text('用户不存在！');
-                    return false;
                 } else
                 {
                     location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;
                 }
+            },
+            error:function (XMLHttpRequest ,textStatus,errorThrown) {
+                $('#errorMessage').parent().parent().css('display', 'block');
+                $('#errorMessage').text('系统错误！');
+
             }
         });
     }

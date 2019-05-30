@@ -106,7 +106,7 @@ function findPassword(){
 	var url = '${pageContext.request.contextPath}/user/userFindPassword';
 	var params = {'username':userName,'useremail':mailbox,'code':code};
 	$.post(url,params,function(result){
-		if(result == "true"){
+		if($.trim(result) == "true"){
 			location.href='${pageContext.request.contextPath}/user/toLogin';
 		}else{
 			$('#errorMessage').parent().parent().css('display','block');
