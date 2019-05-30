@@ -14,7 +14,7 @@
         </select>
 
         <select id="searchFirstData" resultType="clubtribe.pojo.School">
-            select *from t_school;
+            select * from t_school;
         </select>
         <select id="searchSecondDataByAddress" resultType="clubtribe.pojo.School">
             select *from t_school where SchoolAddress=#{SchoolAddress};
