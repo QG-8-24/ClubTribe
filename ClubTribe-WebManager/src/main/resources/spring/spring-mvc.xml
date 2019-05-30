@@ -10,6 +10,14 @@
 
     <!--注册注解驱动-->
     <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:default-servlet-handler/>
+    <mvc:resources location="/clubtribefile/" mapping="/clubtribefile/**"/>
+    <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/dist/" mapping="/dist/**"/>
+    <mvc:resources location="/img/" mapping="/img/**"/>
+    <mvc:resources location="/js/" mapping="/js/**"/>
+
 
     <!--声明组件扫描器-->
     <context:component-scan base-package="clubtribe.controllers"></context:component-scan>
@@ -38,4 +46,9 @@
     <!--            <bean class=""></bean>-->
     <!--        </mvc:interceptor>-->
     <!--    </mvc:interceptors>-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="20000000"/>
+        <property name="defaultEncoding" value="utf-8"></property>
+    </bean>
+
 </beans>

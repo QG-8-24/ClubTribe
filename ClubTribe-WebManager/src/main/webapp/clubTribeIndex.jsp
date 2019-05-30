@@ -27,6 +27,7 @@
                     }
                 })
             }
+            findFirstData();
             init();
             function searchMyClub() {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
@@ -71,7 +72,6 @@
                 })
                 return map;
             }
-            findFirstData();
             $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
                 $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {

@@ -11,6 +11,10 @@
             var cid = '${clubid}';
             var msgboards = ["!没有任何留言!"];
             var index = 0;
+            var albums = ["!没有任何照片!"];
+            var ifmember = false;
+            var ifadmin = false;
+            var autoplaytime;
 
             function init() {
                 $.ajax({
@@ -38,7 +42,7 @@
             };
 
             //验证是否为管理员
-            function ifadmin() {
+            function ifadmins() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/ifadmin",
                     data: {
@@ -47,7 +51,7 @@
                     },
                     success: function (resp) {
                         if (resp == true) {
-                            console.log("fhe");
+                            ifadmin = true;
                             $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}");
                             $("#admin").removeAttr("onclick");
                         }
@@ -55,8 +59,25 @@
                 });
             }
 
+            //验证是否为成员
+            function ifmembers() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/ifmember",
+                    data: {
+                        "userid": uid,
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        if (resp == true) {
+                            ifmember = true;
+                        }
+                    }
+                });
+            }
+
             init();
-            ifadmin();
+            ifadmins();
+            ifmembers();
             msgboaard("");
             initmsgb();
 
@@ -188,6 +209,16 @@
                 });
             }
 
+            //相册轮播
+            function albumplay() {
+                var wit = $("#show3 ul").css("width");
+                $("#show3 ul").animate({left: '-' + wit},autoplaytime,function () {
+                    $("#show3 ul").animate({left: '0px'},autoplaytime,function () {
+                        albumplay();
+                    });
+                });
+            }
+
             $("#msgboard").keyup(function (e) {
                 if (e.keyCode == 13) {
                     var msg = $("#msgboard").val();
@@ -213,10 +244,73 @@
                 });
             }
 
+            // 初始化相册
+            function initalbum() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/initalbum",
+                    data: {
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        if (resp != 'null') {
+                            albums = resp;
+                        }
+                        autoplaytime = albums.length * 1500;
+                        ulwidth = (albums.length * 500) + "px";
+                        $("#show3 ul").css({
+                            "width": ulwidth
+                        });
+                        $.each(albums, function (i, it) {
+                            path = "../clubtribefile/clubalbum/album" + cid + "/" + it;
+                            addpicture(path);
+                        })
+                    }
+                });
+            }
+
+            function addpicture(str) {
+                $("#show3 ul").append("<li><img src='" + str + "' alt=\"#\"></li>");
+            }
+
+            //相册点击事件
             $("#function").on("click", "div", function () {
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
-                $(sel).siblings().fadeOut(2000, function () {
-                    $(sel).fadeIn(2000);
+                if (sel == "#show3") {
+                    initalbum();
+                    albumplay();
+                }
+                $(sel).siblings().fadeOut(500, function () {
+                    $(sel).fadeIn(500);
+                });
+            });
+
+            //上传图片点击事件
+            $("#uploadpic").click(function () {
+                if (ifmember == false) {
+                    alert("仅限社团成员操作!");
+                } else {
+                    $("#uploadbox").fadeIn(1500);
+                }
+            });
+
+            $("#uploadsure").click(function () {
+                var formData = new FormData($('#uploadform')[0]);
+                formData.append("clubid", "${clubid}");
+                $.ajax({
+                    type: 'post',
+                    url: "${pageContext.request.contextPath}/user/uploadFiles",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        alert(data);
+                        $("#uploadbox").fadeOut(1500);
+                        initalbum();
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
                 });
             });
         });
@@ -227,7 +321,7 @@
     <div id="clubtribe"><img src="../img/title.png" alt="#"></div>
     <div id="topbtn">
         <a href="/">首页</a>
-        <a href="#" id="log">登录</a>
+        <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
         <a href="#" id="username"></a>
         <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
     </div>
@@ -259,7 +353,7 @@
     </div>
 </div>
 <div id="bot">
-    <div id="show1" style="height: 100%;width: 100%;">
+    <div id="show1" style="height: 600px;width: 100%;">
         <div id="sign" style="float: left;width: 50%;height: 100%;">
             <div style="margin:10px auto;font-size: 24px;width: 50%;text-align: center" class="white">今 日 签 到 榜</div>
             <div style="width: 100%;height: 92%;">
@@ -285,14 +379,31 @@
             </div>
         </div>
     </div>
-    <div id="show2" style="height: 100%;width: 100%;background:green;"></div>
-    <div id="show3" style="height: 100%;width: 100%;background:skyblue;"></div>
-    <div id="show4" style="height: 100%;width: 100%;overflow: hidden">
+    <div id="show2" style="height: 600px;width: 100%;background:green;"></div>
+    <div id="show3" style="height: 600px;width:100%;background:black;position: relative;overflow: hidden">
+        <ul style="height: 100%;position: absolute">
+        </ul>
+        <div style="height: 30%;width: 100%;position:absolute;top:0;background: black;border-radius: 0 0  100% 50% / 100%;"></div>
+        <div style="height: 30%;width: 100%;position:absolute;bottom:0;background: black;border-radius: 50% / 100% 100% 0 0;">
+            <span id="uploadpic"
+                  style="color: white;display: block;position: absolute;bottom: 0;right: 10%;cursor: pointer;">上 传 图 片</span>
+        </div>
+        <div id="uploadbox"
+             style="border: 1px solid #000000;display: none;position: absolute;bottom: 0;right: 20%;background: white">
+            <div style="height: 100%;width: 100%">
+                <form id="uploadform" enctype="multipart/form-data">
+                    <input type="file" accept='image/*' multiple="multiple" name="file">
+                    <input type="button" value="上传" id="uploadsure">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="show4" style="height: 600px;width: 100%;overflow: hidden">
         <input id="msgboard" type="text" placeholder="  Enter 发送留言">
     </div>
-    <div id="show5" style="height: 100%;width: 100%;background:deepskyblue;"></div>
-    <div id="show6" style="height: 100%;width: 100%;background:palegreen;"></div>
-    <div id="show7" style="height: 100%;width: 100%;background:peru;"></div>
+    <div id="show5" style="height: 600px;width: 100%;background:deepskyblue;"></div>
+    <div id="show6" style="height: 600px;width: 100%;background:palegreen;"></div>
+    <div id="show7" style="height: 600px;width: 100%;background:peru;"></div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
     C L U B T R I B E

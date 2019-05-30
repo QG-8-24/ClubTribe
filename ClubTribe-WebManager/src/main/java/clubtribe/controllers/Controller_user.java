@@ -11,14 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -93,7 +97,7 @@ public class Controller_user {
                 str = "你已是该社团成员 无需再次擦操作！";
             } else {
                 if (clubsServices.getmsg(Integer.parseInt(clubid)) == null || clubsServices.getmsg(Integer.parseInt(clubid)).length() == 0) {
-                    String filename = "D:/clubtribefile/clubmsg/msg" + clubid + ".txt";
+                    String filename = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/msg" + clubid + ".txt";
                     File file = new File(filename);
                     if (!file.exists()) {
                         file.createNewFile();
@@ -138,6 +142,26 @@ public class Controller_user {
         String[] admin = clubsServices.getadmin(Integer.parseInt(clubid)).split("@");
         if (Arrays.asList(admin).contains(userid) && !userid.equals("") && userid != null) {
             return "true";
+        }
+        return "false";
+    }
+
+    /**
+     * 判断是否为社团成员
+     *
+     * @param userid
+     * @param clubid
+     * @return
+     */
+    @RequestMapping("ifmember")
+    @ResponseBody
+    public String ifmember(String userid, String clubid) {
+        if (userid != null || userid.length() != 0) {
+            String clubids = userServices.getuserclubs(Integer.parseInt(userid));
+            String[] clubs = clubids.split("@");
+            if (Arrays.asList(clubs).contains(clubid)) {
+                return "true";
+            }
         }
         return "false";
     }
@@ -190,6 +214,9 @@ public class Controller_user {
         return flag;
     }
 
+    /**
+     * 获取签到信息
+     */
     @RequestMapping(value = "getsignmsg")
     @ResponseBody
     public String getsignmsg(String clubid) throws ParseException, JsonProcessingException {
@@ -217,7 +244,7 @@ public class Controller_user {
         String filepath = clubsServices.getmsgboard(Integer.parseInt(clubid));
         ArrayList<String> list = null;
         if (filepath == null || filepath.length() == 0) {
-            filepath = "D:/clubtribefile/clubmsg/msgboard" + clubid + ".txt";
+            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/msgboard" + clubid + ".txt";
             File file = new File(filepath);
             if (!file.exists()) {
                 file.createNewFile();
@@ -245,5 +272,54 @@ public class Controller_user {
         oos.close();
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(list);
+    }
+
+    @RequestMapping(value = "initalbum")
+    @ResponseBody
+    public String initalbum(String clubid) throws JsonProcessingException {
+        String filepath = clubsServices.getalbum(clubid);
+        if (filepath == null || filepath.length() == 0) {
+            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubalbum/album" + clubid;
+            new File(filepath).mkdir();
+            Club club = new Club();
+            club.setClubid(clubid);
+            club.setAlbum(filepath);
+            clubsServices.initalbum(club);
+        }
+        filepath = clubsServices.getalbum(clubid);
+        File dir = new File(filepath);
+        String[] files = dir.list();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(files);
+    }
+
+    @RequestMapping(value = "/uploadFiles",produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String uploadFiles(HttpServletRequest request,String clubid) throws IOException {
+        String savePath = clubsServices.getalbum(clubid);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        MultipartFile file = null;
+        BufferedOutputStream stream = null;
+        for (int i = 0; i < files.size(); ++i) {
+            file = files.get(i);
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    File saveFile = new File(savePath, file.getOriginalFilename());
+                    stream = new BufferedOutputStream(new FileOutputStream(saveFile));
+                    stream.write(bytes);
+                    stream.close();
+                } catch (Exception e) {
+                    if (stream != null) {
+                        stream.close();
+                        stream = null;
+                    }
+                    return "第 " + i + " 个文件上传有错误" + e.getMessage();
+                }
+            } else {
+                return "第 " + i + " 个文件为空";
+            }
+        }
+        return "所有文件上传成功";
     }
 }

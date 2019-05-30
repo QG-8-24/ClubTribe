@@ -12,13 +12,13 @@ public class Club {
     private String adminid;
     private String msgboard;
     private String msg;
-    private String ablum;
+    private String album;
 
     public Club() {
         super();
     }
 
-    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String ablum) {
+    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String album) {
         this.schoolid = schoolid;
         this.clubid = clubid;
         this.clubname = clubname;
@@ -26,7 +26,7 @@ public class Club {
         this.adminid = adminid;
         this.msgboard = msgboard;
         this.msg = msg;
-        this.ablum = ablum;
+        this.album = album;
     }
 
     public Integer getSchoolid() {
@@ -85,12 +85,12 @@ public class Club {
         this.msg = msg;
     }
 
-    public String getAblum() {
-        return ablum;
+    public String getAlbum() {
+        return album;
     }
 
-    public void setAblum(String ablum) {
-        this.ablum = ablum;
+    public void setAlbum(String album) {
+        this.album = album;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Club {
                 ", adminid='" + adminid + '\'' +
                 ", msgboard='" + msgboard + '\'' +
                 ", msg='" + msg + '\'' +
-                ", ablum='" + ablum + '\'' +
+                ", album='" + album + '\'' +
                 '}';
     }
 }

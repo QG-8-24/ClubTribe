@@ -107,5 +107,17 @@
             <classifier>jdk15</classifier><!-- 指定jdk版本 -->
         </dependency>
         <!-- Json依赖架包下载 -->
+        <!--文件上传依赖-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
     </dependencies>
 </project>

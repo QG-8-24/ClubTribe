@@ -50,4 +50,20 @@ public interface ClubServices {
      * @return
      */
     String getmsgboard(Integer clubid);
+
+    /**
+     * 初始化相册
+     *
+     * @param club
+     * @return
+     */
+    int initalbum(Club club);
+
+    /**
+     * 获取相册
+     *
+     * @param clubid
+     * @return
+     */
+    String getalbum(String clubid);
 }

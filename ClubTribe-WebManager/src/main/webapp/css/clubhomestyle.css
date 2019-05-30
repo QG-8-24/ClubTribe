@@ -150,7 +150,8 @@ a {
 #bot {
     width: 100%;
     height: 600px;
-    position: relative;
+    /*position: relative;*/
+    /*overflow: hidden;*/
 }
 
 #show2, #show3, #show1, #show5, #show6, #show7 {
@@ -212,4 +213,16 @@ a {
 
 .white {
     color: white;
+}
+
+#show3 ul li {
+    list-style: none;
+    float: left;
+    width: 500px;
+}
+
+#show3 ul li img {
+    display: block;
+    height: 100%;
+    width: 100%;
 }
