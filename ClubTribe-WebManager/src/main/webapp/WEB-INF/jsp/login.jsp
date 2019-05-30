@@ -82,7 +82,7 @@
                 "username": userName,
                 "password": userPwd,
             },
-            datatype:'json',
+            type:'post',
             async:true,
             success: function (result) {
                 if ($.trim(result) == "false")
@@ -95,8 +95,6 @@
                 }
             },
             error:function (XMLHttpRequest ,textStatus,errorThrown) {
-                alert(textStatus);
-                alert(errorThrown);
                 $('#errorMessage').parent().parent().css('display', 'block');
                 $('#errorMessage').text('系统错误！');
 
