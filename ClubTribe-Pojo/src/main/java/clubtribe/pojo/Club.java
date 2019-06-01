@@ -11,22 +11,23 @@ public class Club {
     private Integer perid;
     private String adminid;
     private String msgboard;
+    private String notice;
     private String msg;
-    private String ablum;
+    private String album;
 
     public Club() {
-        super();
     }
 
-    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String ablum) {
+    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String notice, String msg, String album) {
         this.schoolid = schoolid;
         this.clubid = clubid;
         this.clubname = clubname;
         this.perid = perid;
         this.adminid = adminid;
         this.msgboard = msgboard;
+        this.notice = notice;
         this.msg = msg;
-        this.ablum = ablum;
+        this.album = album;
     }
 
     public Integer getSchoolid() {
@@ -77,6 +78,14 @@ public class Club {
         this.msgboard = msgboard;
     }
 
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -85,25 +94,11 @@ public class Club {
         this.msg = msg;
     }
 
-    public String getAblum() {
-        return ablum;
+    public String getAlbum() {
+        return album;
     }
 
-    public void setAblum(String ablum) {
-        this.ablum = ablum;
-    }
-
-    @Override
-    public String toString() {
-        return "Clubs{" +
-                "schoolid=" + schoolid +
-                ", clubsid='" + clubid + '\'' +
-                ", clubname='" + clubname + '\'' +
-                ", perid=" + perid +
-                ", adminid='" + adminid + '\'' +
-                ", msgboard='" + msgboard + '\'' +
-                ", msg='" + msg + '\'' +
-                ", ablum='" + ablum + '\'' +
-                '}';
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }
