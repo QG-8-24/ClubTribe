@@ -32,8 +32,9 @@
     </div>
     <input id="lefile" type="file" style="display:none">
     <div class="input-append">
+        <img display="none" id="img" border="black">
         <input id="photoCover" class="input-large" type="text" style="height:30px;">
-        <a class="btn" onclick="$('input[id=lefile]').click();">Browse</a>
+        <a class="btn" onclick="$('#lefile').click();">上传图片认证资料</a>
     </div>
     <div class="form-group">
         <button class="btn btn-primary btn-block" id="idenify">认证</button>
@@ -53,8 +54,12 @@
                     }
                 )
                 $('#idenify').click(doAccr)
-                $('input[id=lefile]').change(function() {
+                $('#lefile').change(function() {
                     $('#photoCover').val($(this).val());
+                    $('#img').removeAttr('display');
+                    var src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+                    $('#img').attr('src',src);
+                    $('#img').css('border','black');
                 });
             }
     )

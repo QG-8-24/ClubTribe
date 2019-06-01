@@ -1,6 +1,7 @@
 package commom;
 
 import clubtribe.dao.UserMapper_TYC;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
