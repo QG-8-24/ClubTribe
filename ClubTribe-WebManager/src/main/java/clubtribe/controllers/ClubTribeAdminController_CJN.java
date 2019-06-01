@@ -31,7 +31,7 @@ public class ClubTribeAdminController_CJN {
     @RequestMapping(value = "toLogin")
     public ModelAndView toLoginPage(){
         ModelAndView modelAndView=new ModelAndView();
-        modelAndView.setViewName("adminlogin");
+        modelAndView.setViewName("adminlogin_CJN");
         return modelAndView;
     }
 
