@@ -48,8 +48,6 @@ public class ClubSearchController_CJN {
     @ResponseBody
     public ModelAndView searchMyClub(String userid, Model model) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println("my club..........");
-        System.out.println(userid);
         String clubids = clubSearchServices_cjn.getclubs(Integer.parseInt(userid));
         String username = clubSearchServices_cjn.getUsername(userid);
         System.out.println(clubids);
@@ -58,7 +56,6 @@ public class ClubSearchController_CJN {
             List<Club> clubList = new ArrayList<>();
             for (int i = 0; i < clubidList.length; i++) {
                 String clubid = clubidList[i];
-                System.out.println("++++++++"+clubid);
                 if (clubid != "" && clubid != null) {
                     Club club = clubSearchServices_cjn.findnamebyid(Integer.parseInt(clubid));
                     clubList.add(club);
@@ -69,21 +66,23 @@ public class ClubSearchController_CJN {
             modelAndView.addObject("userid", userid);
             modelAndView.setViewName("myclub_CJN");
         }
-
         return modelAndView;
     }
 
+    /**
+     * 查找地区
+     * @return
+     */
     @RequestMapping(value = "firstData", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String searchFirstData() {
         List<School> firstData = clubSearchServices_cjn.searchFirstData();
-
         int count = firstData.size();
-        System.out.println(JSONArray.fromObject(firstData).toString());
         return JSONArray.fromObject(firstData).toString();
     }
 
     /**
+     * 查找学校
      * @param SchoolAddress
      * @return
      */
@@ -97,6 +96,7 @@ public class ClubSearchController_CJN {
         return JSONArray.fromObject(secondData).toString();
     }
     /**
+     * 查找社团名
      * @param Schoolname
      * @return
      */
@@ -115,6 +115,7 @@ public class ClubSearchController_CJN {
         return JSONArray.fromObject(clubList).toString();
     }
     /**
+     * 通过社团名查找社团
      * @param Clubname
      * @return
      */
