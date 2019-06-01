@@ -185,6 +185,7 @@ a {
     font-weight: bold;
     font-size: 16px;
     background: #444444;
+    text-indent: 2em;
 }
 
 #show4 #msgboard:hover {
@@ -228,10 +229,39 @@ a {
 }
 
 #show5 ul li {
-    padding: 10px;
+    padding: 20px;
     display: block;
     font-size: 20px;
     width: 96%;
     margin: 10px auto;
+    position: relative;
     background: #FEFEFE;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+#show5 #notice {
+    height: 50px;
+    width: 80%;
+    display: block;
+    position: absolute;
+    bottom: 2%;
+    left: 10%;
+    border: 2px solid #333333;
+    border-radius: 50px;
+    outline: none;
+    font-weight: bold;
+    font-size: 16px;
+    background: #F4F5F9;
+    text-indent: 2em;
+}
+
+.removenotice {
+    display: block;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }

@@ -4,7 +4,9 @@
     <title id="tit"></title>
     <title>clubhome</title>
     <link rel="stylesheet" type="text/css" href="../css/clubhomestyle.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mCustomScrollbar.min.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.mCustomScrollbar.js"></script>
     <script>
         $(function () {
             var uid = '${userid}';
@@ -40,6 +42,19 @@
                     }
                 });
             };
+            //自定义滚动条
+            $("#show5 #context1").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
+            $("#show1 #sign").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
+            $("#show1 #msign").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
 
             //验证是否为管理员
             function ifadmins() {
@@ -212,8 +227,8 @@
             //相册轮播
             function albumplay() {
                 var wit = $("#show3 ul").css("width");
-                $("#show3 ul").animate({left: '-' + wit},autoplaytime,function () {
-                    $("#show3 ul").animate({left: '0px'},autoplaytime,function () {
+                $("#show3 ul").animate({left: '-' + wit}, autoplaytime, function () {
+                    $("#show3 ul").animate({left: '0px'}, autoplaytime, function () {
                         albumplay();
                     });
                 });
@@ -272,12 +287,15 @@
                 $("#show3 ul").append("<li><img src='" + str + "' alt=\"#\"></li>");
             }
 
-            //相册点击事件
+            //导航栏事件委派
             $("#function").on("click", "div", function () {
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
                 if (sel == "#show3") {
                     initalbum();
                     albumplay();
+                } else if (sel == "#show5") {
+                    $("#show5 div ul").children().remove();
+                    initnotice();
                 }
                 $(sel).siblings().fadeOut(500, function () {
                     $(sel).fadeIn(500);
@@ -312,6 +330,85 @@
                         alert(data);
                     }
                 });
+            });
+
+            // initnotice
+            function initnotice() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/initnotice",
+                    data: {
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        if (resp != 'null') {
+                            notices = $.parseJSON(resp);
+                        }
+                        $.each(notices, function (i, it) {
+                            $("#show5 div ul").prepend(it);
+                        })
+                    },
+                });
+            }
+
+            function getFormatDate() {
+                var nowDate = new Date();
+                var year = nowDate.getFullYear();
+                var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+                var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+                var hour = nowDate.getHours() < 10 ? "0" + nowDate.getHours() : nowDate.getHours();
+                var minute = nowDate.getMinutes() < 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();
+                var second = nowDate.getSeconds() < 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();
+                return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+            }
+
+            $("#notice").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    var msg = $("#notice").val();
+                    $("#notice").val("");
+                    if (ifadmin) {
+                        addnotice(msg);
+                    } else {
+                        alert("仅限管理员!");
+                    }
+
+                }
+            });
+
+            // addnotice
+            function addnotice(msg) {
+                var pend = "<li>" + msg + "<br>" + getFormatDate() + "<span class=\"removenotice\">×</span></li>";
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/notice",
+                    data: {
+                        "clubid": cid,
+                        "notice": pend,
+                    },
+                    success: function (resp) {
+                        console.log("1" + resp);
+                        $("#show5 div ul").prepend(pend);
+                    },
+                    error: function (resp) {
+                        console.log("2" + resp);
+                        alert("失败");
+                    }
+                })
+            }
+
+            //remove notice
+            $("#show5").on("click", ".removenotice", function () {
+                if (ifadmin) {
+                    $(this).parent().remove();
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/user/removenotice",
+                        data: {
+                            "clubid": cid,
+                            "notice": $(this).parent().html().toString(),
+                        },
+                    });
+                } else {
+                    alert("仅限管理员!");
+                }
+
             });
         });
     </script>
@@ -354,7 +451,7 @@
 </div>
 <div id="bot">
     <div id="show1" style="height: 600px;width: 100%;">
-        <div id="sign" style="float: left;width: 50%;height: 100%;">
+        <div id="sign" style="float: left;width: 50%;height: 100%;overflow: hidden">
             <div style="margin:10px auto;font-size: 24px;width: 50%;text-align: center" class="white">今 日 签 到 榜</div>
             <div style="width: 100%;height: 92%;">
                 <table style="width:100%;">
@@ -366,7 +463,7 @@
                 </table>
             </div>
         </div>
-        <div id="msign" style="float: left;width: 50%;height: 100%;">
+        <div id="msign" style="float: left;width: 50%;height: 100%;overflow: hidden">
             <div style="margin:10px auto;font-size: 24px;width: 50%;text-align: center" class="white">本 月 签 到 榜</div>
             <div style="width: 100%;height: 92%;">
                 <table style="width:100%" cellspacing="0" cellpadding="0">
@@ -402,13 +499,13 @@
         <input id="msgboard" type="text" placeholder="  Enter 发送留言">
     </div>
     <div id="show5" style="height: 600px;width: 100%;background:#F4F5F9;">
-        <ul>
-            <li>AAAAAAAAAAhi噢哇塞吃撒成本撒即可你撒娇肯定会撒娇大时代科技三大傻逼的撒吧 经济本身就是世界就是就是就是就是就是计算机技术设计师是是实际上就是解决实际上就是事件数据江苏省睡觉睡觉睡觉睡觉睡觉睡觉随机数事件是计算机事件事件事件事件事件事件事件事件</br><span>2019-8-8</span></li>
-            <li>AAAAAAAAAA</li>
-            <li>AAAAAAAAAA</li>
-            <li>AAAAAAAAAA</li>
-            <li>AAAAAAAAAA</li>
-        </ul>
+        <div id="context1" style="height: 85%;width: 100%;overflow: hidden">
+            <ul>
+            </ul>
+        </div>
+        <div>
+            <input id="notice" type="text" placeholder="  Enter 发布公告">
+        </div>
     </div>
     <div id="show6" style="height: 600px;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 600px;width: 100%;background:peru;"></div>

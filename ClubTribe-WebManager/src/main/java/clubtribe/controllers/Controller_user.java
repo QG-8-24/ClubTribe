@@ -347,9 +347,17 @@ public class Controller_user {
         return "所有文件上传成功";
     }
 
-    @RequestMapping(value = "notice", produces = "text/plain;charset=utf-8")
+    /**
+     * 初始化公告
+     *
+     * @param clubid
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    @RequestMapping(value = "initnotice", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String notice(String clubid, String notice) throws IOException, ClassNotFoundException {
+    public String initnotice(String clubid) throws IOException, ClassNotFoundException {
         String filepath = clubsServices.getnotice(Integer.parseInt(clubid));
         ArrayList<String> list = null;
         if (filepath == null || filepath.length() == 0) {
@@ -366,9 +374,30 @@ public class Controller_user {
                 oos.writeObject(list);
                 oos.close();
             }
+        } else {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+            list = (ArrayList<String>) ois.readObject();
+            ois.close();
         }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(list);
+    }
+
+    /**
+     * 发布公告
+     *
+     * @param clubid
+     * @param notice
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    @RequestMapping(value = "notice")
+    @ResponseBody
+    public void notice(String clubid, String notice) throws IOException, ClassNotFoundException {
+        String filepath = clubsServices.getnotice(Integer.parseInt(clubid));
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
-        list = (ArrayList<String>) ois.readObject();
+        ArrayList<String> list = (ArrayList<String>) ois.readObject();
         if (notice != null && !notice.equals("")) {
             list.add(notice);
         }
@@ -376,7 +405,21 @@ public class Controller_user {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
         oos.writeObject(list);
         oos.close();
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(list);
+    }
+
+    @RequestMapping(value = "removenotice")
+    @ResponseBody
+    public void removenotice(String clubid, String notice) throws IOException, ClassNotFoundException {
+        String filepath = clubsServices.getnotice(Integer.parseInt(clubid));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+        ArrayList<String> list = (ArrayList<String>) ois.readObject();
+        if (notice != null && !notice.equals("")) {
+            notice = "<li>" + notice + "</li>";
+            list.remove(notice);
+        }
+        ois.close();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+        oos.writeObject(list);
+        oos.close();
     }
 }
