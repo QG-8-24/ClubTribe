@@ -226,3 +226,12 @@ a {
     height: 100%;
     width: 100%;
 }
+
+#show5 ul li {
+    padding: 10px;
+    display: block;
+    font-size: 20px;
+    width: 96%;
+    margin: 10px auto;
+    background: #FEFEFE;
+}

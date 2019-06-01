@@ -54,4 +54,14 @@ public class ClubServicesImpl implements ClubServices {
         return clubMapper.getalbum(clubid);
     }
 
+    @Override
+    public int initnotice(Club club) {
+        return clubMapper.initnotice(club);
+    }
+
+    @Override
+    public String getnotice(Integer clubid) {
+        return clubMapper.getnotice(clubid);
+    }
+
 }

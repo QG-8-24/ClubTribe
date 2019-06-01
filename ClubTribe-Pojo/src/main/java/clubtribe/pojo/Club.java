@@ -11,20 +11,21 @@ public class Club {
     private Integer perid;
     private String adminid;
     private String msgboard;
+    private String notice;
     private String msg;
     private String album;
 
     public Club() {
-        super();
     }
 
-    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String album) {
+    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String notice, String msg, String album) {
         this.schoolid = schoolid;
         this.clubid = clubid;
         this.clubname = clubname;
         this.perid = perid;
         this.adminid = adminid;
         this.msgboard = msgboard;
+        this.notice = notice;
         this.msg = msg;
         this.album = album;
     }
@@ -77,6 +78,14 @@ public class Club {
         this.msgboard = msgboard;
     }
 
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -91,19 +100,5 @@ public class Club {
 
     public void setAlbum(String album) {
         this.album = album;
-    }
-
-    @Override
-    public String toString() {
-        return "Clubs{" +
-                "schoolid=" + schoolid +
-                ", clubsid='" + clubid + '\'' +
-                ", clubname='" + clubname + '\'' +
-                ", perid=" + perid +
-                ", adminid='" + adminid + '\'' +
-                ", msgboard='" + msgboard + '\'' +
-                ", msg='" + msg + '\'' +
-                ", album='" + album + '\'' +
-                '}';
     }
 }

@@ -66,4 +66,21 @@ public interface ClubServices {
      * @return
      */
     String getalbum(String clubid);
+
+    /**
+     * 初始化公告
+     *
+     * @param club
+     * @return
+     */
+
+    int initnotice(Club club);
+
+    /**
+     * 获取公告
+     *
+     * @param clubid
+     * @return
+     */
+    String getnotice(Integer clubid);
 }

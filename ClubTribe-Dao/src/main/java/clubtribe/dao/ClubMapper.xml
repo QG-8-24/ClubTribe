@@ -25,4 +25,10 @@
     <select id="getalbum" resultType="java.lang.String">
         select album from t_clubs where clubid=#{?};
     </select>
+    <select id="getnotice" resultType="java.lang.String">
+        select notice from t_clubs where clubid =#{?}
+    </select>
+    <update id="initnotice" parameterType="clubtribe.pojo.Club">
+         update t_clubs set notice=#{notice} where clubid=#{clubid}
+    </update>
 </mapper>

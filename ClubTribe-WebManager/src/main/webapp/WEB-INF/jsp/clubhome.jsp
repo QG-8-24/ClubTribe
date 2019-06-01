@@ -401,7 +401,15 @@
     <div id="show4" style="height: 600px;width: 100%;overflow: hidden">
         <input id="msgboard" type="text" placeholder="  Enter 发送留言">
     </div>
-    <div id="show5" style="height: 600px;width: 100%;background:deepskyblue;"></div>
+    <div id="show5" style="height: 600px;width: 100%;background:#F4F5F9;">
+        <ul>
+            <li>AAAAAAAAAAhi噢哇塞吃撒成本撒即可你撒娇肯定会撒娇大时代科技三大傻逼的撒吧 经济本身就是世界就是就是就是就是就是计算机技术设计师是是实际上就是解决实际上就是事件数据江苏省睡觉睡觉睡觉睡觉睡觉睡觉随机数事件是计算机事件事件事件事件事件事件事件事件</br><span>2019-8-8</span></li>
+            <li>AAAAAAAAAA</li>
+            <li>AAAAAAAAAA</li>
+            <li>AAAAAAAAAA</li>
+            <li>AAAAAAAAAA</li>
+        </ul>
+    </div>
     <div id="show6" style="height: 600px;width: 100%;background:palegreen;"></div>
     <div id="show7" style="height: 600px;width: 100%;background:peru;"></div>
 </div>

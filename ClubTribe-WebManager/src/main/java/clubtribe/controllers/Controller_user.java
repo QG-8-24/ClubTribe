@@ -238,6 +238,15 @@ public class Controller_user {
         return objectMapper.writeValueAsString(list);
     }
 
+    /**
+     * 留言墙
+     *
+     * @param clubid
+     * @param msg
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @RequestMapping(value = "msgboard")
     @ResponseBody
     public String msgboard(String clubid, String msg) throws IOException, ClassNotFoundException {
@@ -274,6 +283,13 @@ public class Controller_user {
         return objectMapper.writeValueAsString(list);
     }
 
+    /**
+     * 初始化相册
+     *
+     * @param clubid
+     * @return
+     * @throws JsonProcessingException
+     */
     @RequestMapping(value = "initalbum")
     @ResponseBody
     public String initalbum(String clubid) throws JsonProcessingException {
@@ -293,9 +309,17 @@ public class Controller_user {
         return objectMapper.writeValueAsString(files);
     }
 
-    @RequestMapping(value = "/uploadFiles",produces = "text/plain;charset=utf-8")
+    /**
+     * 上传图片
+     *
+     * @param request
+     * @param clubid
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/uploadFiles", produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String uploadFiles(HttpServletRequest request,String clubid) throws IOException {
+    public String uploadFiles(HttpServletRequest request, String clubid) throws IOException {
         String savePath = clubsServices.getalbum(clubid);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         MultipartFile file = null;
@@ -321,5 +345,38 @@ public class Controller_user {
             }
         }
         return "所有文件上传成功";
+    }
+
+    @RequestMapping(value = "notice", produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String notice(String clubid, String notice) throws IOException, ClassNotFoundException {
+        String filepath = clubsServices.getnotice(Integer.parseInt(clubid));
+        ArrayList<String> list = null;
+        if (filepath == null || filepath.length() == 0) {
+            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/notice" + clubid + ".txt";
+            File file = new File(filepath);
+            if (!file.exists()) {
+                file.createNewFile();
+                Club club = new Club();
+                club.setNotice(file.toString());
+                club.setClubid(clubid);
+                clubsServices.initnotice(club);
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+                list = new ArrayList<>();
+                oos.writeObject(list);
+                oos.close();
+            }
+        }
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+        list = (ArrayList<String>) ois.readObject();
+        if (notice != null && !notice.equals("")) {
+            list.add(notice);
+        }
+        ois.close();
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
+        oos.writeObject(list);
+        oos.close();
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(list);
     }
 }
