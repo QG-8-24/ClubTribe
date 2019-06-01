@@ -44,6 +44,13 @@
             $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             });
+            $("#quit").click(function () {
+                if(confirm("确定退出吗")){
+                    alert("退出成功");
+                    return true;
+                }
+                return false;
+            })
             <%--function searchMyClub() {--%>
                 <%--$(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);--%>
             <%--}--%>
@@ -163,6 +170,18 @@
             $("#qq").click(function () {
                 alert('qq:1023707811');
             })
+            $("#open").click(function (){
+                if($("#quitbox").css("display")=="none"){
+                    $("#quitbox").show();
+                }
+            });
+            /*关闭弹出框*/
+            $("#gbaaa").click(function (){
+                if($("#quitbox").css("display")=="block"){
+                    $("#quitbox").hide();
+                }
+            });
+
         })
     </script>
 </head>
@@ -246,7 +265,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
