@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext-dao.xml")
@@ -35,12 +35,15 @@ public class ManagerTest {
 
     @Test
     public void test1() throws IOException {
-        String filename = "D:/clubtribemsg/msg" + 824 + ".txt";
-//        System.out.println(filename);
-        File file = new File(filename);
-        if (!file.exists()) {
-            file.createNewFile();
-            System.out.println(file.toString());
+        ArrayList<String> list = new ArrayList<>();
+        list.add("<li>1<br>2019-06-01 11:42:25<span class=\"removenotice\">×</span></li>");
+        list.add("<li>2<br>2019-06-01 11:54:02<span class=\"removenotice\">×</span></li>)");
+        for (String it:list){
+            System.out.println(it);
+        }
+        list.remove("<li>2<br>2019-06-01 11:54:02<span class=\"removenotice\">×</span></li>)");
+        for (String it:list){
+            System.out.println(it);
         }
     }
 
