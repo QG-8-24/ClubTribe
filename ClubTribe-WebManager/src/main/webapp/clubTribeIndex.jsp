@@ -20,6 +20,7 @@
         $(function () {
             var map=getParamsByGet();
             var userid = map.get('userid');
+            var admin = map.get('admin');
             var flag=1;
             var check=1;
             function init() {
@@ -31,10 +32,17 @@
                     success: function (resp) {
                         var username=resp;
                         if (username != "") {
-                            $("#log").css({
+                            $("#userlog").css({
                                 "display": "none"
                             });
-                            $("#username").append(username);
+                            $("#adminlog").css({
+                                "display": "none"
+                            });
+                            if (admin == ""||admin==null) {
+                                $("#username").append(username);
+                            }else {
+                                $("#admin").append(username);
+                            }
                             $("#quit").append('退出');
                         }
                     }
@@ -44,6 +52,9 @@
             $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             });
+            $("#admin").click(function () {
+                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid+ '&admin=' + admin);
+            });
             $("#quit").click(function () {
                 if(confirm("确定退出吗")){
                     alert("退出成功");
@@ -51,17 +62,6 @@
                 }
                 return false;
             })
-            <%--function searchMyClub() {--%>
-                <%--$(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);--%>
-            <%--}--%>
-            <%--$("#secondbtn").click(function () {--%>
-                <%--if (userid == ""||userid==null) {--%>
-                    <%--alert('请先登录');--%>
-                <%--}else {--%>
-                    <%--searchMyClub();--%>
-                <%--}--%>
-            <%--});--%>
-
             function findFirstData() {
                 $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
                     var school = data;
@@ -195,8 +195,10 @@
         </div>
         <div id="topbtn">
             <a href="#">首页</a>
-            <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
+            <a href="${pageContext.request.contextPath}/clubtribeadmin/toLogin" id="adminlog">管理员登录</a>
+            <a href="${pageContext.request.contextPath}/user/toLogin" id="userlog">用户登录</a>
             <a href="#" id="username"></a>
+            <a href="#" id="admin"></a>
             <a href="/" id="quit"></a>
         </div>
     </div>
