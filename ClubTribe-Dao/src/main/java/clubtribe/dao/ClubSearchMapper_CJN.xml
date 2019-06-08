@@ -12,7 +12,6 @@
         <select id="getclubs" resultType="java.lang.String">
             select clubids from t_user where userid=#{userid}
         </select>
-
         <select id="searchFirstData" resultType="clubtribe.pojo.School">
             select * from t_school;
         </select>

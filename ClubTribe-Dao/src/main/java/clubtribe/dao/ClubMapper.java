@@ -54,4 +54,36 @@ public interface ClubMapper {
      * @return
      */
     String getmsgboard(Integer clubid);
+
+    /**
+     * 初始公告
+     *
+     * @param club
+     * @return
+     */
+    int initnotice(Club club);
+
+    /**
+     * 获取公告
+     *
+     * @param clubid
+     * @return
+     */
+    String getnotice(Integer clubid);
+
+    /**
+     * 初始化相册
+     *
+     * @param club
+     * @return
+     */
+    int initalbum(Club club);
+
+    /**
+     * 获取相册
+     *
+     * @param clubid
+     * @return
+     */
+    String getalbum(String clubid);
 }

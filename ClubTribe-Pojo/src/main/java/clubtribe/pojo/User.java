@@ -6,13 +6,21 @@ public class User {
     private String useremail;
     private String password;
     private String clubids;
-
+    private String admin;
     public User(Integer userid, String username, String useremail, String password, String clubids) {
         this.userid = userid;
         this.username = username;
         this.useremail = useremail;
         this.password = password;
         this.clubids = clubids;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
     }
 
     public User() {

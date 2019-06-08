@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>首页</title>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/clubTribeIndexStyle_CJN.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +20,9 @@
         $(function () {
             var map=getParamsByGet();
             var userid = map.get('userid');
+            var admin = map.get('admin');
             var flag=1;
-            var check=1
+            var check=1;
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -31,26 +32,36 @@
                     success: function (resp) {
                         var username=resp;
                         if (username != "") {
-                            $("#log").css({
+                            $("#userlog").css({
                                 "display": "none"
                             });
-                            $("#username").append(username);
+                            $("#adminlog").css({
+                                "display": "none"
+                            });
+                            if (admin == ""||admin==null) {
+                                $("#username").append(username);
+                            }else {
+                                $("#admin").append(username);
+                            }
+                            $("#quit").append('退出');
                         }
                     }
                 })
             }
             init();
-            function searchMyClub() {
+            $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
-            };
-            $("#secondbtn").click(function () {
-                if (userid == "") {
-                    alert('请先登录');
-                }else {
-                    searchMyClub();
-                }
             });
-
+            $("#admin").click(function () {
+                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid+ '&admin=' + admin);
+            });
+            $("#quit").click(function () {
+                if(confirm("确定退出吗")){
+                    alert("退出成功");
+                    return true;
+                }
+                return false;
+            })
             function findFirstData() {
                 $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
                     var school = data;
@@ -79,10 +90,10 @@
                 $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {
                     $("#select2").html("");
                     // $("#select2").empty();
-                    $("#select2").append("<option>--请选择--</option>");
+                    $("#select2").append("<option value='null'>--请选择--</option>");
                     $("#select3").html("");
                     // $("#select3").empty();
-                    $("#select3").append("<option>--请选择--</option>");
+                    $("#select3").append("<option value='null'>--请选择--</option>");
                     var school = data;
                     var res = "";
                     for (var i = 0; i < school.length; i++) {
@@ -96,7 +107,7 @@
                 $.getJSON("${pageContext.request.contextPath}/search/thirdData?Schoolname=" + seled, function (data) {
                     $("#select3").html("");
                     // $("#select3").empty();
-                    $("#select3").append("<option>--请选择--</option>");
+                    $("#select3").append("<option value='null'>--请选择--</option>");
                     var club = data;
                     var res = "";
                     for (var i = 0; i < club.length; i++) {
@@ -109,7 +120,14 @@
                 var sel1=$("#select1 option:selected").val();
                 var sel2=$("#select2 option:selected").val();
                 var sel3=$("#select3 option:selected").val();
-                if (sel1=="--请选择--"||sel3=="--请选择--"||sel2=="--请选择--") {
+                var select1=document.getElementById("select1").value;
+                var select2=document.getElementById("select2").value;
+                var select3=document.getElementById("select3").value;
+                // alert(sel1);alert(sel2);alert(sel3);
+                if (userid == undefined) {
+                    userid='';
+                }
+                if (select1==="null"||select2==="null"||select3==="null") {
                     alert('请查看是否有未选择的选项');
                 }else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
@@ -138,17 +156,32 @@
             })
             $("#ourwork").click(function () {
                 if (check == 1) {
-                    $("#ourworkimg #our #work").fadeOut(2000, function () {
+                    $("#imginfo").fadeOut(2000, function () {
                         $("#workinfo").fadeIn(2000);
                     });
                     check=0;
                 }else {
                     $("#workinfo").fadeOut(2000, function () {
-                        $("#ourworkimg #our #work").fadeIn(2000);
+                        $("#imginfo").fadeIn(2000);
                     });
                     check=1;
                 }
             })
+            $("#qq").click(function () {
+                alert('qq:1023707811');
+            })
+            $("#open").click(function (){
+                if($("#quitbox").css("display")=="none"){
+                    $("#quitbox").show();
+                }
+            });
+            /*关闭弹出框*/
+            $("#gbaaa").click(function (){
+                if($("#quitbox").css("display")=="block"){
+                    $("#quitbox").hide();
+                }
+            });
+
         })
     </script>
 </head>
@@ -161,9 +194,12 @@
             ClubTribe
         </div>
         <div id="topbtn">
-            <a href="/">首页</a>
-            <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
+            <a href="#">首页</a>
+            <a href="${pageContext.request.contextPath}/clubtribeadmin/toLogin" id="adminlog">管理员登录</a>
+            <a href="${pageContext.request.contextPath}/user/toLogin" id="userlog">用户登录</a>
             <a href="#" id="username"></a>
+            <a href="#" id="admin"></a>
+            <a href="/" id="quit"></a>
         </div>
     </div>
     <div  class="no-js">
@@ -172,9 +208,9 @@
                 C L U B T R I B E
             </div>
             <img src="../img/back.jpg" alt="#">
-            <div id="secondbtn">
-                查找个人社团
-            </div>
+            <%--<div id="secondbtn">--%>
+                <%--查找个人社团--%>
+            <%--</div>--%>
         </div>
         <div class="mid">
             <img src="../img/search.gif" alt="#">
@@ -208,15 +244,18 @@
             </div>
         </div>
         <div class="ourwork" id="ourwork">
-            <img src="../img/ourwork.jpg" alt="#" id="ourworkimg">
             <div id="workinfo">
-                ClubTribe的工作是使社团高效管理
-                跨校的社团活动建设平台
-                将不同社团不同高校的资源整合，
-                建立合理的权限分配机制
+                ClubTribe的工作是使社团高效管理<br>
+                跨校的社团活动建设平台<br>
+                将不同社团不同高校的资源整合<br>
+                建立合理的权限分配机制<br>
             </div>
-            <div id="our">OUR</div>
-            <div id="work">WORK</div>
+            <div id="imginfo">
+                <img src="../img/ourwork.jpg" alt="#" id="ourworkimg">
+                <div id="our">OUR</div>
+                <div id="work">WORK</div>
+            </div>
+
         </div>
         <div class="tail" id="tail">
             <div id="lookus">
@@ -228,7 +267,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -239,7 +277,7 @@
     function getParamsByGet(){
         var map=new Map();
         var paramsStr=location.search.split('?')[1];
-        var paramsArr=paramsStr.split('&');
+        var paramsArr=(paramsStr||"").split('&');
         $.each(paramsArr,function (index,item) {
             var itemArr=item.split("=");
             map.set(itemArr[0],itemArr[1]);
