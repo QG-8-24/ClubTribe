@@ -118,7 +118,7 @@
         }
         errorMessage.parent().parent().css('display','none');
         var url="${basePath}/user/schoolAccr";
-        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img,"URL":URL};
+        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img,"url":URL};
         $.post(url,params,function (result) {
             if(result=='false'){
                 errorMessage.parent().parent().css('display','block');

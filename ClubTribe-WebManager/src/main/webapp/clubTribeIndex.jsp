@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>首页</title>
+    <title>Title</title>
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/clubTribeIndexStyle_CJN.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +18,10 @@
     <script src="../assets/js/scripts.js"></script>
     <script>
         $(function () {
-            var userid = '${userid}';
-            var map = getParamsByGet();
-            var admin = map.get('admin');
-            var flag = 1;
-            var check = 1;
-
+            var map=getParamsByGet();
+            var userid = map.get('userid');
+            var flag=1;
+            var check=1
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -31,40 +29,26 @@
                         "userid": userid
                     },
                     success: function (resp) {
-                        var username = resp;
+                        var username=resp;
                         if (username != "") {
-                            $("#userlog").css({
+                            $("#log").css({
                                 "display": "none"
                             });
-                            $("#adminlog").css({
-                                "display": "none"
-                            });
-                            if (admin == "" || admin == null) {
-                                $("#username").append(username);
-                            } else {
-                                $("#admin").append(username);
-                            }
-                            $("#quit").append('退出');
+                            $("#username").append(username);
                         }
                     }
                 })
             }
-
             init();
-            $("#username").click(function () {
+            function searchMyClub() {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
-            });
-            $("#admin").click(function () {
-                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid + '&admin=' + admin);
-            });
-            $("#quit").click(function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/user/logout",
-                    success: function () {
-                        alert("退出成功!");
-                        window.location.reload();
-                    }
-                });
+            };
+            $("#secondbtn").click(function () {
+                if (userid == "") {
+                    alert('请先登录');
+                }else {
+                    searchMyClub();
+                }
             });
 
             function findFirstData() {
@@ -74,7 +58,8 @@
                     for (var i = 0; i < school.length; i++) {
                         if (i == 0) {
                             res += "<option>" + school[i].schoolAddress + "</option>";
-                        } else {
+                        }
+                        else{
                             for (var j = 0; j <= i - 1; j++) {
                                 if (school[j].schoolAddress == school[i].schoolAddress) {
                                     break;
@@ -88,17 +73,16 @@
                     $("#select1").append(res);
                 });
             }
-
             findFirstData();
             $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
                 $.getJSON("${pageContext.request.contextPath}/search/secondData?SchoolAddress=" + seled, function (data) {
                     $("#select2").html("");
                     // $("#select2").empty();
-                    $("#select2").append("<option value='null'>--请选择--</option>");
+                    $("#select2").append("<option>--请选择--</option>");
                     $("#select3").html("");
                     // $("#select3").empty();
-                    $("#select3").append("<option value='null'>--请选择--</option>");
+                    $("#select3").append("<option>--请选择--</option>");
                     var school = data;
                     var res = "";
                     for (var i = 0; i < school.length; i++) {
@@ -112,7 +96,7 @@
                 $.getJSON("${pageContext.request.contextPath}/search/thirdData?Schoolname=" + seled, function (data) {
                     $("#select3").html("");
                     // $("#select3").empty();
-                    $("#select3").append("<option value='null'>--请选择--</option>");
+                    $("#select3").append("<option>--请选择--</option>");
                     var club = data;
                     var res = "";
                     for (var i = 0; i < club.length; i++) {
@@ -122,26 +106,19 @@
                 });
             });
             $("#searchClub").click(function () {
-                var sel1 = $("#select1 option:selected").val();
-                var sel2 = $("#select2 option:selected").val();
-                var sel3 = $("#select3 option:selected").val();
-                var select1 = document.getElementById("select1").value;
-                var select2 = document.getElementById("select2").value;
-                var select3 = document.getElementById("select3").value;
-                // alert(sel1);alert(sel2);alert(sel3);
-                if (userid == undefined) {
-                    userid = '';
-                }
-                if (select1 === "null" || select2 === "null" || select3 === "null") {
+                var sel1=$("#select1 option:selected").val();
+                var sel2=$("#select2 option:selected").val();
+                var sel3=$("#select3 option:selected").val();
+                if (sel1=="--请选择--"||sel3=="--请选择--"||sel2=="--请选择--") {
                     alert('请查看是否有未选择的选项');
-                } else {
+                }else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
                         var club = data;
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
                             alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -151,42 +128,27 @@
                     $("#aboutimg").fadeOut(2000, function () {
                         $("#secondinfo").fadeIn(2000);
                     });
-                    flag = 0;
-                } else {
+                    flag=0;
+                }else {
                     $("#secondinfo").fadeOut(2000, function () {
                         $("#aboutimg").fadeIn(2000);
                     });
-                    flag = 1;
+                    flag=1;
                 }
             })
             $("#ourwork").click(function () {
                 if (check == 1) {
-                    $("#imginfo").fadeOut(2000, function () {
+                    $("#ourworkimg #our #work").fadeOut(2000, function () {
                         $("#workinfo").fadeIn(2000);
                     });
-                    check = 0;
-                } else {
+                    check=0;
+                }else {
                     $("#workinfo").fadeOut(2000, function () {
-                        $("#imginfo").fadeIn(2000);
+                        $("#ourworkimg #our #work").fadeIn(2000);
                     });
-                    check = 1;
+                    check=1;
                 }
             })
-            $("#qq").click(function () {
-                alert('qq:1023707811');
-            })
-            $("#open").click(function () {
-                if ($("#quitbox").css("display") == "none") {
-                    $("#quitbox").show();
-                }
-            });
-            /*关闭弹出框*/
-            $("#gbaaa").click(function () {
-                if ($("#quitbox").css("display") == "block") {
-                    $("#quitbox").hide();
-                }
-            });
-
         })
     </script>
 </head>
@@ -199,26 +161,23 @@
             ClubTribe
         </div>
         <div id="topbtn">
-            <a href="#">首页</a>
-            <a href="${pageContext.request.contextPath}/clubtribeadmin/toLogin" id="adminlog">管理员登录</a>
-            <a href="${pageContext.request.contextPath}/user/toLogin" id="userlog">用户登录</a>
+            <a href="/">首页</a>
+            <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
             <a href="#" id="username"></a>
-            <a href="#" id="admin"></a>
-            <a href="/" id="quit"></a>
         </div>
     </div>
-    <div class="no-js">
+    <div  class="no-js">
         <div class="banner">
             <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
                 C L U B T R I B E
             </div>
             <img src="../img/back.jpg" alt="#">
-            <%--<div id="secondbtn">--%>
-            <%--查找个人社团--%>
-            <%--</div>--%>
+            <div id="secondbtn">
+                查找个人社团
+            </div>
         </div>
         <div class="mid">
-            <img src="../img/search.gif" alt="#" style="width: 20%;width: 100%">
+            <img src="../img/search.gif" alt="#">
             <div id="Dselect1">
                 地区:<select style="width: 100px" id="select1">
                 <option value="null">--请选择--</option>
@@ -249,18 +208,15 @@
             </div>
         </div>
         <div class="ourwork" id="ourwork">
+            <img src="../img/ourwork.jpg" alt="#" id="ourworkimg">
             <div id="workinfo">
-                ClubTribe的工作是使社团高效管理<br>
-                跨校的社团活动建设平台<br>
-                将不同社团不同高校的资源整合<br>
-                建立合理的权限分配机制<br>
+                ClubTribe的工作是使社团高效管理
+                跨校的社团活动建设平台
+                将不同社团不同高校的资源整合，
+                建立合理的权限分配机制
             </div>
-            <div id="imginfo">
-                <img src="../img/ourwork.jpg" alt="#" id="ourworkimg">
-                <div id="our">OUR</div>
-                <div id="work">WORK</div>
-            </div>
-
+            <div id="our">OUR</div>
+            <div id="work">WORK</div>
         </div>
         <div class="tail" id="tail">
             <div id="lookus">
@@ -272,6 +228,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 
@@ -279,14 +236,17 @@
 </html>
 <script>
     //获取get请求参数封装成一个map集合
-    function getParamsByGet() {
-        var map = new Map();
-        var paramsStr = location.search.split('?')[1];
-        var paramsArr = (paramsStr || "").split('&');
-        $.each(paramsArr, function (index, item) {
-            var itemArr = item.split("=");
-            map.set(itemArr[0], itemArr[1]);
-        })
+    function getParamsByGet(){
+        var map=new Map();
+        var paramsStr=location.search.split('?')[1];
+        if(paramsStr!=undefined){
+            var paramsArr=paramsStr.split('&');
+            $.each(paramsArr,function (index,item) {
+                var itemArr=item.split("=");
+                map.set(itemArr[0],itemArr[1]);
+            })
+            return map;
+        }
         return map;
     }
 </script>
