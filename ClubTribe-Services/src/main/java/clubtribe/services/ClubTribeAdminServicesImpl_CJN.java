@@ -1,6 +1,7 @@
 package clubtribe.services;
 
 import clubtribe.dao.ClubTribeAdminMapper_CJN;
+import clubtribe.pojo.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,11 @@ public class ClubTribeAdminServicesImpl_CJN implements ClubTribeAdminServices_CJ
         return  clubTribeAdminMapper_cjn.checkAdmin(userid);
 
     }
+
+    @Override
+    public int insert(String schoolname, String schoolid, String clubids, String message, String schooladdress) {
+        return clubTribeAdminMapper_cjn.insert(schoolname,schoolid,clubids,message,schooladdress);
+    }
+
+
 }

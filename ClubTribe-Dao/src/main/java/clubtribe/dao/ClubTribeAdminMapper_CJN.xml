@@ -4,4 +4,7 @@
     <select id="checkAdmin" resultType="java.lang.String">
         select admin from t_user where userid=#{userid}
     </select>
+    <insert id="insert" parameterType="clubtribe.pojo.School">
+       insert into t_school(Schoolname,Schoolid,Clubids,Message,SchoolAddress) value (#{schoolname},#{schoolid},#{clubids},#{message},#{schooladdress})
+   </insert>
 </mapper>
