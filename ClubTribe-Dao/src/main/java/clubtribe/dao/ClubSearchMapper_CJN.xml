@@ -5,7 +5,6 @@
             select *from t_clubs
         </select>
 
-
         <select id="findnamebyid" resultType="clubtribe.pojo.Club">
             select *from t_clubs where clubid=#{clubid}
         </select>

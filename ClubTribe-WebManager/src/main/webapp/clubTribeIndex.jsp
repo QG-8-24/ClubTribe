@@ -18,11 +18,12 @@
     <script src="../assets/js/scripts.js"></script>
     <script>
         $(function () {
-            var map=getParamsByGet();
-            var userid = map.get('userid');
+            var userid = '${userid}';
+            var map = getParamsByGet();
             var admin = map.get('admin');
-            var flag=1;
-            var check=1;
+            var flag = 1;
+            var check = 1;
+
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -30,7 +31,7 @@
                         "userid": userid
                     },
                     success: function (resp) {
-                        var username=resp;
+                        var username = resp;
                         if (username != "") {
                             $("#userlog").css({
                                 "display": "none"
@@ -38,9 +39,9 @@
                             $("#adminlog").css({
                                 "display": "none"
                             });
-                            if (admin == ""||admin==null) {
+                            if (admin == "" || admin == null) {
                                 $("#username").append(username);
-                            }else {
+                            } else {
                                 $("#admin").append(username);
                             }
                             $("#quit").append('退出');
@@ -48,20 +49,24 @@
                     }
                 })
             }
+
             init();
             $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             });
             $("#admin").click(function () {
-                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid+ '&admin=' + admin);
+                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid + '&admin=' + admin);
             });
             $("#quit").click(function () {
-                if(confirm("确定退出吗")){
-                    alert("退出成功");
-                    return true;
-                }
-                return false;
-            })
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/logout",
+                    success: function () {
+                        alert("退出成功!");
+                        window.location.reload();
+                    }
+                });
+            });
+
             function findFirstData() {
                 $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
                     var school = data;
@@ -69,8 +74,7 @@
                     for (var i = 0; i < school.length; i++) {
                         if (i == 0) {
                             res += "<option>" + school[i].schoolAddress + "</option>";
-                        }
-                        else{
+                        } else {
                             for (var j = 0; j <= i - 1; j++) {
                                 if (school[j].schoolAddress == school[i].schoolAddress) {
                                     break;
@@ -84,6 +88,7 @@
                     $("#select1").append(res);
                 });
             }
+
             findFirstData();
             $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
@@ -117,26 +122,26 @@
                 });
             });
             $("#searchClub").click(function () {
-                var sel1=$("#select1 option:selected").val();
-                var sel2=$("#select2 option:selected").val();
-                var sel3=$("#select3 option:selected").val();
-                var select1=document.getElementById("select1").value;
-                var select2=document.getElementById("select2").value;
-                var select3=document.getElementById("select3").value;
+                var sel1 = $("#select1 option:selected").val();
+                var sel2 = $("#select2 option:selected").val();
+                var sel3 = $("#select3 option:selected").val();
+                var select1 = document.getElementById("select1").value;
+                var select2 = document.getElementById("select2").value;
+                var select3 = document.getElementById("select3").value;
                 // alert(sel1);alert(sel2);alert(sel3);
                 if (userid == undefined) {
-                    userid='';
+                    userid = '';
                 }
-                if (select1==="null"||select2==="null"||select3==="null") {
+                if (select1 === "null" || select2 === "null" || select3 === "null") {
                     alert('请查看是否有未选择的选项');
-                }else {
+                } else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
                         var club = data;
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
                             alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -146,12 +151,12 @@
                     $("#aboutimg").fadeOut(2000, function () {
                         $("#secondinfo").fadeIn(2000);
                     });
-                    flag=0;
-                }else {
+                    flag = 0;
+                } else {
                     $("#secondinfo").fadeOut(2000, function () {
                         $("#aboutimg").fadeIn(2000);
                     });
-                    flag=1;
+                    flag = 1;
                 }
             })
             $("#ourwork").click(function () {
@@ -159,25 +164,25 @@
                     $("#imginfo").fadeOut(2000, function () {
                         $("#workinfo").fadeIn(2000);
                     });
-                    check=0;
-                }else {
+                    check = 0;
+                } else {
                     $("#workinfo").fadeOut(2000, function () {
                         $("#imginfo").fadeIn(2000);
                     });
-                    check=1;
+                    check = 1;
                 }
             })
             $("#qq").click(function () {
                 alert('qq:1023707811');
             })
-            $("#open").click(function (){
-                if($("#quitbox").css("display")=="none"){
+            $("#open").click(function () {
+                if ($("#quitbox").css("display") == "none") {
                     $("#quitbox").show();
                 }
             });
             /*关闭弹出框*/
-            $("#gbaaa").click(function (){
-                if($("#quitbox").css("display")=="block"){
+            $("#gbaaa").click(function () {
+                if ($("#quitbox").css("display") == "block") {
                     $("#quitbox").hide();
                 }
             });
@@ -202,18 +207,18 @@
             <a href="/" id="quit"></a>
         </div>
     </div>
-    <div  class="no-js">
+    <div class="no-js">
         <div class="banner">
             <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
                 C L U B T R I B E
             </div>
             <img src="../img/back.jpg" alt="#">
             <%--<div id="secondbtn">--%>
-                <%--查找个人社团--%>
+            <%--查找个人社团--%>
             <%--</div>--%>
         </div>
         <div class="mid">
-            <img src="../img/search.gif" alt="#">
+            <img src="../img/search.gif" alt="#" style="width: 20%;width: 100%">
             <div id="Dselect1">
                 地区:<select style="width: 100px" id="select1">
                 <option value="null">--请选择--</option>
@@ -274,13 +279,13 @@
 </html>
 <script>
     //获取get请求参数封装成一个map集合
-    function getParamsByGet(){
-        var map=new Map();
-        var paramsStr=location.search.split('?')[1];
-        var paramsArr=(paramsStr||"").split('&');
-        $.each(paramsArr,function (index,item) {
-            var itemArr=item.split("=");
-            map.set(itemArr[0],itemArr[1]);
+    function getParamsByGet() {
+        var map = new Map();
+        var paramsStr = location.search.split('?')[1];
+        var paramsArr = (paramsStr || "").split('&');
+        $.each(paramsArr, function (index, item) {
+            var itemArr = item.split("=");
+            map.set(itemArr[0], itemArr[1]);
         })
         return map;
     }

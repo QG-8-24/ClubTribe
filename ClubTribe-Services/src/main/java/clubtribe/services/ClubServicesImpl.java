@@ -64,4 +64,39 @@ public class ClubServicesImpl implements ClubServices {
         return clubMapper.getnotice(clubid);
     }
 
+    @Override
+    public int initsharefile(Club club) {
+        return clubMapper.initsharefile(club);
+    }
+
+    @Override
+    public String getsharefile(String clubid) {
+        return clubMapper.getsharefile(clubid);
+    }
+
+    @Override
+    public void setadmins(String clubid, String admins) {
+        clubMapper.setadmins(clubid, admins);
+    }
+
+    @Override
+    public String getperid(String clubid) {
+        return clubMapper.getperid(clubid);
+    }
+
+    @Override
+    public int setclubname(Integer clubid, String clubname) {
+        return clubMapper.setclubname(clubid,clubname);
+    }
+
+    @Override
+    public String getitrdc(String clubid) {
+        return clubMapper.getitrdc(clubid);
+    }
+
+    @Override
+    public void setitrdc(String clubid, String itrdc) {
+        clubMapper.setitrdc(clubid,itrdc);
+    }
+
 }

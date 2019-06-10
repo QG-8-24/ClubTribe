@@ -69,6 +69,7 @@ a {
     left: 80%;
     font-size: 36px;
     color: white;
+    text-align: center;
 }
 
 #context #clubbg #join {
@@ -110,9 +111,9 @@ a {
     float: left;
     width: 100%;
     height: 640px;
-    font-size: 16px;
+    font-size: 24px;
     text-align: center;
-    line-height: 520px;
+    line-height:52px;
     display: none;
 }
 
@@ -125,7 +126,7 @@ a {
 
 
 #context #function div {
-    width: 12.5%;
+    width: 14.2%;
     height: 240px;
     float: left;
     font-size: 36px;
@@ -154,7 +155,7 @@ a {
     /*overflow: hidden;*/
 }
 
-#show2, #show3, #show1, #show5, #show6, #show7 {
+#show2, #show3, #show1, #show5, #show6 {
     width: 100%;
     height: 100%;
     display: none;
@@ -219,7 +220,7 @@ a {
 #show3 ul li {
     list-style: none;
     float: left;
-    width: 500px;
+    width: 700px;
 }
 
 #show3 ul li img {
@@ -239,6 +240,29 @@ a {
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
+}
+
+#show6 ul li {
+    padding: 20px;
+    display: block;
+    font-size: 20px;
+    width: 96%;
+    height: 30px;
+    margin: 10px auto;
+    position: relative;
+    background: #FEFEFE;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+#show6 ul li span {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    color: deepskyblue;
+    cursor: pointer;
 }
 
 #show5 #notice {

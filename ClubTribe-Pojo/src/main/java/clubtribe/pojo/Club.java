@@ -14,11 +14,14 @@ public class Club {
     private String notice;
     private String msg;
     private String album;
+    private String sharefile;
+    private String itrdc;
 
     public Club() {
+        super();
     }
 
-    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String notice, String msg, String album) {
+    public Club(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String notice, String msg, String album, String sharefile, String itrdc) {
         this.schoolid = schoolid;
         this.clubid = clubid;
         this.clubname = clubname;
@@ -28,6 +31,16 @@ public class Club {
         this.notice = notice;
         this.msg = msg;
         this.album = album;
+        this.sharefile = sharefile;
+        this.itrdc = itrdc;
+    }
+
+    public String getItrdc() {
+        return itrdc;
+    }
+
+    public void setItrdc(String itrdc) {
+        this.itrdc = itrdc;
     }
 
     public Integer getSchoolid() {
@@ -100,5 +113,13 @@ public class Club {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getSharefile() {
+        return sharefile;
+    }
+
+    public void setSharefile(String sharefile) {
+        this.sharefile = sharefile;
     }
 }

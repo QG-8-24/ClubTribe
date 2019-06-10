@@ -7,7 +7,12 @@ import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -220,7 +225,7 @@ public class Controller_user {
     @RequestMapping(value = "getsignmsg")
     @ResponseBody
     public String getsignmsg(String clubid) throws ParseException, JsonProcessingException {
-        ClubMember[] list = clubMemberServices.getsignmsg(clubid);
+        ClubMember[] list = clubMemberServices.getmembermsg(clubid);
         ClubMember tep = new ClubMember();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (int i = 0; i < list.length; i++) {
@@ -305,6 +310,9 @@ public class Controller_user {
         filepath = clubsServices.getalbum(clubid);
         File dir = new File(filepath);
         String[] files = dir.list();
+        if (files.length == 0) {
+            return "false";
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(files);
     }
@@ -321,6 +329,44 @@ public class Controller_user {
     @ResponseBody
     public String uploadFiles(HttpServletRequest request, String clubid) throws IOException {
         String savePath = clubsServices.getalbum(clubid);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
+        MultipartFile file = null;
+        BufferedOutputStream stream = null;
+        for (int i = 0; i < files.size(); ++i) {
+            file = files.get(i);
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    File saveFile = new File(savePath, file.getOriginalFilename());
+                    stream = new BufferedOutputStream(new FileOutputStream(saveFile));
+                    stream.write(bytes);
+                    stream.close();
+                } catch (Exception e) {
+                    if (stream != null) {
+                        stream.close();
+                        stream = null;
+                    }
+                    return "第 " + i + " 个文件上传有错误" + e.getMessage();
+                }
+            } else {
+                return "第 " + i + " 个文件为空";
+            }
+        }
+        return "所有文件上传成功";
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param request
+     * @param clubid
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "uploadshareFiles", produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String uploadshareFiles(HttpServletRequest request, String clubid) throws IOException {
+        String savePath = clubsServices.getsharefile(clubid);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         MultipartFile file = null;
         BufferedOutputStream stream = null;
@@ -421,5 +467,56 @@ public class Controller_user {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath));
         oos.writeObject(list);
         oos.close();
+    }
+
+    /**
+     * 初始化分享文件
+     *
+     * @param clubid
+     * @return
+     * @throws JsonProcessingException
+     */
+    @RequestMapping(value = "initsharefile")
+    @ResponseBody
+    public String initsharefile(String clubid) throws JsonProcessingException {
+        String filepath = clubsServices.getsharefile(clubid);
+        if (filepath == null || filepath.length() == 0) {
+            filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\clubsharefile\\files" + clubid;
+            new File(filepath).mkdir();
+            Club club = new Club();
+            club.setClubid(clubid);
+            club.setSharefile(filepath);
+            clubsServices.initsharefile(club);
+        }
+        filepath = clubsServices.getsharefile(clubid);
+        File dir = new File(filepath);
+        String[] files = dir.list();
+        if (files.length == 0) {
+            return "false";
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(files);
+    }
+
+    /**
+     * filedownload
+     *
+     * @param
+     * @param
+     * @return
+     */
+    @RequestMapping("filedownload")
+    public ResponseEntity<byte[]> download(String filename, String clubid) throws IOException {
+        String dfileName = new String(filename.getBytes("gb2312"), "iso8859-1");
+        File file = new File(clubsServices.getsharefile(clubid) + "\\" + filename);
+        System.out.println(file.toString());
+        if (file.exists()){
+            System.out.println("exists");
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", dfileName);
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 }

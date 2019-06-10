@@ -15,13 +15,18 @@ public class UserServicesImpl implements UserServices {
     private UserMapper userMapper;
 
     @Override
+    public String getuserid(String username) {
+        return userMapper.getuserid(username);
+    }
+
+    @Override
     public String findnamebyid(Integer userid) {
         return userMapper.getusername(userid);
     }
 
     @Override
     public String getuserclubs(Integer userid) {
-       return userMapper.getuserclubs(userid);
+        return userMapper.getuserclubs(userid);
     }
 
     @Override

@@ -31,4 +31,25 @@
     <update id="initnotice" parameterType="clubtribe.pojo.Club">
          update t_clubs set notice=#{notice} where clubid=#{clubid}
     </update>
+    <select id="getsharefile" resultType="java.lang.String">
+        select sharefile from t_clubs where clubid =#{?}
+    </select>
+    <update id="initsharefile" parameterType="clubtribe.pojo.Club">
+         update t_clubs set sharefile=#{sharefile} where clubid=#{clubid}
+    </update>
+    <update id="setadmins">
+         update t_clubs set adminid=#{admins} where clubid=#{clubid}
+    </update>
+    <select id="getperid" resultType="java.lang.String">
+         select perid from t_clubs where clubid =#{?}
+    </select>
+    <update id="setclubname">
+         update t_clubs set clubname=#{clubname} where clubid=#{clubid}
+    </update>
+    <update id="setitrdc">
+         update t_clubs set itrdc=#{itrdc} where clubid=#{clubid}
+    </update>
+    <select id="getitrdc" resultType="java.lang.String">
+         select itrdc from t_clubs where clubid =#{?}
+    </select>
 </mapper>

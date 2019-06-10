@@ -9,17 +9,28 @@ public class ClubMember {
     private String username;
     private String sign;
     private String msign;
+    private Integer ifadmin;
 
     public ClubMember() {
         super();
     }
 
-    public ClubMember(String clubid, String userid, String username, String sign, String msign) {
+
+    public ClubMember(String clubid, String userid, String username, String sign, String msign, Integer ifadmin) {
         this.clubid = clubid;
         this.userid = userid;
         this.username = username;
         this.sign = sign;
         this.msign = msign;
+        this.ifadmin = ifadmin;
+    }
+
+    public Integer getIfadmin() {
+        return ifadmin;
+    }
+
+    public void setIfadmin(Integer ifadmin) {
+        this.ifadmin = ifadmin;
     }
 
     public String getUsername() {

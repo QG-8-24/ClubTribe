@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ClubMemberServiceslmpl implements ClubMemberServices {
 
@@ -54,7 +52,22 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
     }
 
     @Override
-    public ClubMember[] getsignmsg(String clubid) {
-        return clubMemberMapper.getsignmsg(clubid);
+    public ClubMember[] getmembermsg(String clubid) {
+        return clubMemberMapper.getmembermsg(clubid);
+    }
+
+    @Override
+    public int setadmin(String userid, String clubid) {
+        return clubMemberMapper.setadmin(userid, clubid);
+    }
+
+    @Override
+    public int removeadmin(String userid, String clubid) {
+        return clubMemberMapper.removeadmin(userid, clubid);
+    }
+
+    @Override
+    public void removemember(String userid, String clubid) {
+        clubMemberMapper.removemember(userid,clubid);
     }
 }

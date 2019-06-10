@@ -94,4 +94,92 @@ a {
     cursor: pointer;
 }
 
+#box2 ul li {
+    list-style: none;
+    display: block;
+    height: 50px;
+    width: 100%;
+    border-bottom: 1px solid #333;
+    margin-bottom: 10px;
+}
 
+.box2span1 {
+    display: block;
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+
+.box2span2 {
+    display: block;
+    float: left;
+    width: 25%;
+    text-align: center;
+    line-height: 50px;
+}
+
+.box2span2id {
+    display: block;
+    float: left;
+    width: 25%;
+    text-align: center;
+    line-height: 50px;
+}
+
+.ifadmin {
+    display: block;
+    float: left;
+    width: 25%;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.removemember {
+    display: block;
+    float: left;
+    width: 25%;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    color: deepskyblue;
+}
+
+.album {
+    display: block;
+    height: 150px;
+    width: 250px;
+    float: left;
+    margin: 10px 10px;
+    position: relative;
+    border: 2px solid #333;
+}
+
+.album:hover {
+    transform: scale(2);
+    z-index: 2;
+}
+
+#box4 ul li {
+    padding: 20px;
+    display: block;
+    font-size: 20px;
+    width: 96%;
+    height: 30px;
+    margin: 10px auto;
+    position: relative;
+    background: #FEFEFE;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    background:#F4F5F9;
+}
+
+#box4 ul li span {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    color: deepskyblue;
+    cursor: pointer;
+}

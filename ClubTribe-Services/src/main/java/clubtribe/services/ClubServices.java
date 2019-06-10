@@ -83,4 +83,59 @@ public interface ClubServices {
      * @return
      */
     String getnotice(Integer clubid);
+
+    /**
+     * 初始化共享文件
+     *
+     * @param club
+     * @return
+     */
+    int initsharefile(Club club);
+
+    /**
+     * 获取共享文件
+     *
+     * @param clubid
+     * @return
+     */
+    String getsharefile(String clubid);
+
+    /**
+     * 设置管理员
+     *
+     * @param clubid
+     * @param admins
+     */
+    void setadmins(String clubid, String admins);
+
+    /**
+     * 获取社长id
+     *
+     * @param clubid
+     * @return
+     */
+    String getperid(String clubid);
+
+    /**
+     * 设置社团名
+     *
+     * @param  clubname
+     * @return
+     */
+    int setclubname(Integer clubid,String clubname);
+    /**
+     * 获取社团简介
+     *
+     * @param clubid
+     * @return
+     */
+    String getitrdc(String clubid);
+
+    /**
+     * 设置社团简介
+     *
+     * @param clubid
+     * @return
+     */
+    void setitrdc(String clubid,String itrdc);
 }
