@@ -10,14 +10,6 @@
 
     <!--注册注解驱动-->
     <mvc:annotation-driven></mvc:annotation-driven>
-    <mvc:default-servlet-handler/>
-    <mvc:resources location="/clubtribefile/" mapping="/clubtribefile/**"/>
-    <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
-    <mvc:resources location="/css/" mapping="/css/**"/>
-    <mvc:resources location="/dist/" mapping="/dist/**"/>
-    <mvc:resources location="/img/" mapping="/img/**"/>
-    <mvc:resources location="/js/" mapping="/js/**"/>
-
 
     <!--声明组件扫描器-->
     <context:component-scan base-package="clubtribe.controllers"></context:component-scan>
@@ -26,6 +18,12 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!--声明文件解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!--最大上传文件尺寸为5MB-->
+        <property name="maxUploadSize" value="5242880"/>
     </bean>
     <!-- 处理请求返回json字符串的中文乱码问题 -->
     <mvc:annotation-driven>
@@ -46,9 +44,4 @@
     <!--            <bean class=""></bean>-->
     <!--        </mvc:interceptor>-->
     <!--    </mvc:interceptors>-->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="20000000"/>
-        <property name="defaultEncoding" value="utf-8"></property>
-    </bean>
-
 </beans>

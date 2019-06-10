@@ -14,9 +14,11 @@
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../bootstrap/css/all-skins.min.css">
     <link rel="stylesheet" href="../bootstrap/css/main.css">
+    <style type="text/css">
+    </style>
 </head>
 <body >
-<div class="container header ">
+<div class="container header " style="border: solid black">
     <div class="text-center"><h1>校园认证</h1></div>
     <div class="alert alert-danger alert-dismissible" style="display:none">
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle" id="errorMessage"></i></h4>
@@ -30,11 +32,12 @@
         <label>学校地址</label>
         <input type="text" class="form-control" id="schooladress">
     </div>
-    <input id="lefile" type="file" style="display:none">
-    <div class="input-append">
-        <img display="none" id="img" border="black">
-        <input id="photoCover" class="input-large" type="text" style="height:30px;">
-        <a class="btn" onclick="$('#lefile').click();">上传图片认证资料</a>
+    <div id="photobox" style="width: 1132px;height: 500px;display: none">
+       <img id="img">
+    </div>
+    <div class="input-append;" style="margin-bottom: 5px">
+        <input id="lefile" type="file" style="display:none" accept="image/jpg">
+        <a onclick="$('#lefile').click();"><img src="../img/upload.jpeg" alt="upload"/></a>
     </div>
     <div class="form-group">
         <button class="btn btn-primary btn-block" id="idenify">认证</button>
@@ -54,20 +57,55 @@
                     }
                 )
                 $('#idenify').click(doAccr)
-                $('#lefile').change(function() {
-                    $('#photoCover').val($(this).val());
-                    $('#img').removeAttr('display');
-                    var src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
-                    $('#img').attr('src',src);
-                    $('#img').css('border','black');
-                });
+                $('#lefile').change(photoSwitch);
             }
     )
+    function fileUpload() {
+        var formdata=new FormData();
+        formdata.append("img",$('#lefile').prop("files")[0]);
+        $.ajax({
+            type:'post',
+            url:'${basePath}/user/fileUpload',
+            async:true,
+            data:formdata,
+            processData:false,
+            contentType:false,
+            success:function (result) {
+                var photobox=$('#photobox');
+                var img=$('#img');
+                photobox.removeAttr("style");
+                img.attr('src',result);
+            },
+            error:function (msg) {
+                alert(msg);
+            }
+        });
+    }
+    function photoSwitch() {
+        var errorMessage=$("#errorMessage");
+        var photobox=$('#photobox');
+        var src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+        var image=new Image();
+        image.src=src;
+        $('#photoCover').val($(this).val());
+        image.onload=function () {
+            if(this.width>photobox.width() || this.height>photobox.height()){
+                errorMessage.parent().parent().css('display','block');
+                errorMessage.text("图片过大无法上传，请压缩图片！");
+            }else {
+                alert("上传成功！");
+                fileUpload();
+            }
+        }
+    }
+
     function doAccr() {
         var schoolname=$("#schoolname").val();
         var schooladress=$("#schooladress").val();
         var img=$('#photoCover').val();
         var errorMessage=$("#errorMessage");
+        var URL=$('#img').attr('src');
+        alert(URL);
         if(schoolname==''){
             errorMessage.parent().parent().css('display','block');
             errorMessage.text("学校名称为空！");
@@ -80,7 +118,7 @@
         }
         errorMessage.parent().parent().css('display','none');
         var url="${basePath}/user/schoolAccr";
-        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img};
+        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img,"URL":URL};
         $.post(url,params,function (result) {
             if(result=='false'){
                 errorMessage.parent().parent().css('display','block');

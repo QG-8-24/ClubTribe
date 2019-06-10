@@ -5,13 +5,17 @@ import commom.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("user")
@@ -73,7 +77,7 @@ public class Controller_TYC {
      * @param password
      * @return
      */
-    @RequestMapping(value="userLogin")
+    @RequestMapping(value="userLogin",produces = "text/plain")
     @ResponseBody
     public String login(String username,String password){
         String userid= userServicesTYC.userLogin(username,password);
@@ -155,10 +159,43 @@ public class Controller_TYC {
             return "false";
         }
     }
+
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "fileUpload" ,produces = "text/plain")
+    @ResponseBody
+    public String fileUpload(@RequestParam("img")MultipartFile file){
+        String orignalName=file.getOriginalFilename();
+        String realPath="D:\\clubtribefile\\schoolphotos\\";
+        String uuidName=UUID.randomUUID().toString();
+        String newFilePath=realPath+uuidName+orignalName.substring(orignalName.lastIndexOf("."));
+        File newFile=new File(newFilePath);
+        try {
+            file.transferTo(newFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
+        }
+        return "http://localhost:8080//schoolphotos//"+uuidName+orignalName.substring(orignalName.lastIndexOf("."));
+    }
+
+    /**
+     * 学校认证
+     * @param schoolname
+     * @param schooladress
+     * @param img
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value ="schoolAccr")
     @ResponseBody
-    public String schoolAccr(String schoolname,String schooladress,String img) throws IOException {
+    public String schoolAccr(String schoolname,String schooladress,String URL) throws IOException {
         String url="D:\\clubtribefile\\schoolfile\\school-accr-info.txt";
+        System.out.println("URL:"+URL);
         Integer status;
         Integer id=userServicesTYC.findSchoolId(schoolname,schooladress);
         System.out.println("查询到的id:..........."+id);
@@ -169,7 +206,7 @@ public class Controller_TYC {
             Map<String,String> map=new HashMap<>();
             map.put("schoolname",schoolname);
             map.put("schooladress",schooladress);
-            map.put("img",img);
+            map.put("img",URL);
             status=userServicesTYC.auditRequest(url,map);
         }
         if (status==0){
