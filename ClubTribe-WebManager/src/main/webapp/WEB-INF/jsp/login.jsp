@@ -90,7 +90,8 @@
                     $('#errorMessage').text('用户不存在！');
                 } else
                 {
-                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;
+                    <%--location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;--%>
+                    window.location.href=document.referrer;
                 }
             },
             error:function (XMLHttpRequest ,textStatus,errorThrown) {

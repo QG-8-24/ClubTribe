@@ -17,8 +17,11 @@
             var ifmember = false;
             var ifadmin = false;
             var autoplaytime;
+            var bg = "../img/bg" + cid + ".jpg";
+            $("#clubbg #img").attr("src", bg);
 
             function init() {
+                initclubmsg();
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/init",
                     data: {
@@ -42,16 +45,39 @@
                     }
                 });
             };
+
+            function initclubmsg() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/initmsg",
+                    data: {
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        str = resp.split("@@");
+                        $("#data").html(str[1]);
+                    },
+                });
+            }
+
             //自定义滚动条
             $("#show5 #context1").mCustomScrollbar({
                 autoHideScrollbar: true,
                 theme: "dark"
+            });
+            $("#data").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "white"
             });
             $("#show1 #sign").mCustomScrollbar({
                 autoHideScrollbar: true,
                 theme: "dark"
             });
             $("#show1 #msign").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
+            $("#show6 #show6con1").mCustomScrollbar({
                 autoHideScrollbar: true,
                 theme: "dark"
             });
@@ -67,7 +93,7 @@
                     success: function (resp) {
                         if (resp == true) {
                             ifadmin = true;
-                            $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?userid=${userid}&clubid=${clubid}");
+                            $("#admin").attr("href", "${pageContext.request.contextPath}/user/interadmin?clubid=${clubid}");
                             $("#admin").removeAttr("onclick");
                         }
                     }
@@ -267,11 +293,11 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        if (resp != 'null') {
+                        if (resp != false) {
                             albums = resp;
                         }
-                        autoplaytime = albums.length * 1500;
-                        ulwidth = (albums.length * 500) + "px";
+                        autoplaytime = albums.length * 3000;
+                        ulwidth = (albums.length * 700) + "px";
                         $("#show3 ul").css({
                             "width": ulwidth
                         });
@@ -296,6 +322,8 @@
                 } else if (sel == "#show5") {
                     $("#show5 div ul").children().remove();
                     initnotice();
+                } else if (sel == "#show6") {
+                    initsharefile();
                 }
                 $(sel).siblings().fadeOut(500, function () {
                     $(sel).fadeIn(500);
@@ -308,6 +336,15 @@
                     alert("仅限社团成员操作!");
                 } else {
                     $("#uploadbox").fadeIn(1500);
+                }
+            });
+
+            //上传文件点击事件
+            $("#uploadfile").click(function () {
+                if (ifmember == false) {
+                    alert("仅限社团成员操作!");
+                } else {
+                    $("#uploadfilebox").fadeIn(1500);
                 }
             });
 
@@ -332,6 +369,27 @@
                 });
             });
 
+            $("#uploadfilesure").click(function () {
+                var formData = new FormData($('#uploadfileform')[0]);
+                formData.append("clubid", "${clubid}");
+                $.ajax({
+                    type: 'post',
+                    url: "${pageContext.request.contextPath}/user/uploadshareFiles",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        alert(data);
+                        $("#uploadfilebox").fadeOut(1500);
+                        initsharefile();
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+
             // initnotice
             function initnotice() {
                 $.ajax({
@@ -344,8 +402,26 @@
                             notices = $.parseJSON(resp);
                         }
                         $.each(notices, function (i, it) {
-                            $("#show5 div ul").prepend(it);
+                            $("#show5 #context1 ul").prepend(it);
                         })
+                    },
+                });
+            }
+
+            // initsharefile
+            function initsharefile() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/initsharefile",
+                    data: {
+                        "clubid": cid,
+                    },
+                    success: function (resp) {
+                        if (resp != false) {
+                            $("#show6 #show6con1 ul").children().remove();
+                            $.each(resp, function (i, it) {
+                                $("#show6 #show6con1 ul").prepend("<li>" + it + "<span>[下载]</span></li>");
+                            })
+                        }
                     },
                 });
             }
@@ -384,11 +460,9 @@
                         "notice": pend,
                     },
                     success: function (resp) {
-                        console.log("1" + resp);
                         $("#show5 div ul").prepend(pend);
                     },
                     error: function (resp) {
-                        console.log("2" + resp);
                         alert("失败");
                     }
                 })
@@ -410,6 +484,29 @@
                 }
 
             });
+            //logout
+            $("#logout").click(function () {
+                if (uid.length == 0) {
+                    alert("请先登录!");
+                }
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/logout",
+                    success: function () {
+                        alert("退出成功!");
+                        window.location.reload();
+                    }
+                });
+            });
+            $("#vote").click(function () {
+                $("#show6con2").fadeIn(500);
+            });
+
+            //filedownload
+            $("#show6con1 ul").on("click", "li span", function () {
+                var filename = $(this).parent().html().split("<span>[下载]</span>")[0];
+                var url = "${pageContext.request.contextPath}/user/filedownload?filename=" + filename + "&clubid=" + cid;
+                window.location.href = url;
+            });
         });
     </script>
 </head>
@@ -420,7 +517,7 @@
         <a href="/">首页</a>
         <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
         <a href="#" id="username"></a>
-        <%--            <a href="${pageContext.request.contextPath}/user/logout">退出</a>--%>
+        <a id="logout" href="${pageContext.request.contextPath}/user/logout" onclick="return false">退出</a>
     </div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
@@ -428,14 +525,14 @@
 </div>
 <div id="context">
     <div id="clubbg">
-        <img id="img" src="../img/bg.jpg" alt="#">
+        <img id="img" src="#" alt="#">
         <div id="imgm"></div>
         <div id="title"></div>
         <div id="join">JOIN&nbspUS</div>
     </div>
     <div id="aboutus">
         <div id="btn">关于我们>>></div>
-        <div id="data">景德镇火箭队 休斯顿碰瓷队 火箭没搞了</div>
+        <div id="data" style="width: 100%;height: 100%;overflow: auto"></div>
     </div>
     <div id="function">
         <div class="sign" id="fun1"><span>签到</span></div>
@@ -443,8 +540,7 @@
         <div id="fun3"><span>相册</span></div>
         <div id="fun4"><span>留言墙</span></div>
         <div id="fun5"><span>公告</span></div>
-        <div id="fun6"><span>投票</span></div>
-        <div id="fun7"><span>抽奖</span></div>
+        <div id="fun6"><span>文件分享</span></div>
         <div><a id="admin" href="#" onclick="return false;"><span style="color: white">管理员操作</span></a>
         </div>
     </div>
@@ -507,11 +603,34 @@
             <input id="notice" type="text" placeholder="  Enter 发布公告">
         </div>
     </div>
-    <div id="show6" style="height: 600px;width: 100%;background:palegreen;"></div>
-    <div id="show7" style="height: 600px;width: 100%;background:peru;"></div>
+    <div id="show6" style="height: 600px;width: 100%;background:#F4F5F9;">
+
+        <div style="height: 10%;width: 100%;position: relative;background:#333;text-align: center;font-size: 20px;color: white;line-height:56px;font-weight: bold">
+            文 件 目 录
+            <span id="uploadfile"
+                  style="color: white;display: block;font-size:36px;position: absolute;top:0px;right: 20px;cursor: pointer;"
+                  title="上传新文件">＋</span>
+            <div id="uploadfilebox"
+                 style="display: none;position: absolute;top:0px;right: 60px;">
+                <div style="height: 20px;width: 100%">
+                    <form id="uploadfileform" enctype="multipart/form-data">
+                        <input type="file" multiple="multiple" name="file">
+                        <input type="button" value="上传" id="uploadfilesure">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="show6con1" style="height: 90%;width: 100%;overflow: hidden">
+            <ul>
+            </ul>
+        </div>
+    </div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
     C L U B T R I B E
+</div>
+<div style="height: 36px;width: 100%;margin:0px auto;font-size: 16px;background: black;text-align: center;color: white">
+    @2019 ClubTribe Designer By MQ,CJN,TYC
 </div>
 </body>
 </html>

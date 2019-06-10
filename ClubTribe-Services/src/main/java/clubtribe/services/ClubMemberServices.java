@@ -36,6 +36,32 @@ public interface ClubMemberServices {
      */
     void updataEM();
 
-    //获取社团成员信息
-    ClubMember[] getsignmsg(String clubid);
+    /**
+     * 获取社团成员信息
+     */
+    ClubMember[] getmembermsg(String clubid);
+
+    /**
+     * 设置管理员
+     *
+     * @param userid
+     * @return
+     */
+    int setadmin(String userid, String clubid);
+
+    /**
+     * remove管理员
+     *
+     * @param userid
+     * @return
+     */
+    int removeadmin(String userid, String clubid);
+
+    /**
+     * 删除成员
+     *
+     * @param clubid
+     * @param userid
+     */
+    void removemember(String userid, String clubid);
 }

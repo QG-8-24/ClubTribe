@@ -7,7 +7,16 @@ import clubtribe.pojo.User;
  */
 public interface UserMapper {
     /**
+     * 获取用户id
+     *
+     * @param
+     * @return
+     */
+    String getuserid(String username);
+
+    /**
      * 获取用户名
+     *
      * @param userid
      * @return
      */
@@ -15,6 +24,7 @@ public interface UserMapper {
 
     /**
      * 获取社团id集合
+     *
      * @param userid
      * @return
      */
@@ -22,6 +32,7 @@ public interface UserMapper {
 
     /**
      * 加入社团
+     *
      * @return
      */
     int joinclub(User user);
