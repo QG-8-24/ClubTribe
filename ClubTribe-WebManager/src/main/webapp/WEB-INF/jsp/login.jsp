@@ -90,11 +90,10 @@
                     $('#errorMessage').text('用户不存在！');
                 } else
                 {
-                    <%--location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;--%>
-                    window.location.href=document.referrer;
+                    window.location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;
                 }
             },
-            error:function (XMLHttpRequest ,textStatus,errorThrown) {
+            error:function () {
                 $('#errorMessage').parent().parent().css('display', 'block');
                 $('#errorMessage').text('系统错误！');
 
