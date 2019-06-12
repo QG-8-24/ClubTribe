@@ -490,9 +490,6 @@
             });
             //logout
             $("#logout").click(function () {
-                if (uid.length == 0) {
-                    alert("请先登录!");
-                }
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/logout",
                     success: function () {

@@ -384,7 +384,7 @@
             <li id="sel2">社 员 管 理</li>
             <li id="sel3">相 册 管 理</li>
             <li id="sel4">文 件 管 理</li>
-            <li id="sel5">主 页 更 改</li>
+            <li id="sel5">资 料 更 改</li>
         </ul>
     </div>
     <div id="rightbox">

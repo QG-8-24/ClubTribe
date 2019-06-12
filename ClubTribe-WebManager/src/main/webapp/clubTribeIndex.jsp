@@ -151,7 +151,22 @@
                     });
                     check = 1;
                 }
-            })
+            });
+            //logout
+            $("#logout").click(function () {
+                if (userid.length == 0) {
+                    alert("请先登录!");
+                } else {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/user/logout",
+                        success: function () {
+                            alert("退出成功!");
+                            window.location.reload();
+                        }
+                    });
+                }
+
+            });
         })
     </script>
 </head>
@@ -167,6 +182,7 @@
             <a href="/">首页</a>
             <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
             <a href="#" id="username"></a>
+            <a id="logout" href="${pageContext.request.contextPath}/user/logout" onclick="return false">退出</a>
         </div>
     </div>
     <div class="no-js">
