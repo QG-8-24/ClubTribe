@@ -37,6 +37,10 @@
                                 "display": "none"
                             });
                             $("#username").append(username);
+                        } else {
+                            $("#logout").css({
+                                "display": "none"
+                            });
                         }
                         if (clubname != 'null') {
                             $("#title").append(clubname);
@@ -518,6 +522,7 @@
         <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
         <a href="#" id="username"></a>
         <a id="logout" href="${pageContext.request.contextPath}/user/logout" onclick="return false">退出</a>
+        <a href="${pageContext.request.contextPath}/user/toRegister">注册</a>
     </div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">

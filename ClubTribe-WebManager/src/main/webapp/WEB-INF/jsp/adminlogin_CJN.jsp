@@ -80,19 +80,17 @@
             // async:true,
             success: function (result) {
 
-                if ($.trim(result) == "false")
-                {
+                if ($.trim(result) == "false") {
                     $('#errorMessage').parent().parent().css('display', 'block');
                     $('#errorMessage').text('管理员不存在或密码错误！');
-                } else
-                {
+                } else {
                     var str = result.split("@");
                     var username = str[0];
                     var admin = str[1];
-                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+username+ '&admin=' + admin;
+                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid=" + username + '&admin=' + admin;
                 }
             },
-            error:function (XMLHttpRequest ,textStatus,errorThrown) {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert(XMLHttpRequest);
                 alert(textStatus);
                 $('#errorMessage').parent().parent().css('display', 'block');

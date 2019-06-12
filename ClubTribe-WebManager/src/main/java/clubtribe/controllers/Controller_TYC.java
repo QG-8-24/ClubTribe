@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -79,13 +80,24 @@ public class Controller_TYC {
      */
     @RequestMapping(value="userLogin",produces = "text/plain")
     @ResponseBody
-    public String login(String username,String password){
+    public String login(String username, String password, HttpSession session){
         String userid= userServicesTYC.userLogin(username,password);
+        session.setAttribute("userid",userid);
         System.out.println("userid:"+userid);
         if(userid!= null){
             return userid;
         }
         return "false";
+    }
+
+    /**
+     * 退出
+     * @param request
+     */
+    @RequestMapping(value = "logout")
+    @ResponseBody
+    public void login(HttpServletRequest request) {
+        request.getSession(true).removeAttribute("userid");
     }
 
     /**

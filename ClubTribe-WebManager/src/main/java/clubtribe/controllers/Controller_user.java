@@ -43,15 +43,13 @@ public class Controller_user {
     /**
      * 登录进入社团主页
      *
-     * @param userid
      * @param clubid
      * @return
      */
     @RequestMapping("clubhome")
-    public ModelAndView inter(String userid, String clubid) {
+    public ModelAndView inter(String clubid) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("clubhome");
-        modelAndView.addObject("userid", userid);
         modelAndView.addObject("clubid", clubid);
         return modelAndView;
     }

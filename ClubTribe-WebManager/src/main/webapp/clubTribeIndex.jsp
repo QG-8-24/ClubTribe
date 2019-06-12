@@ -18,10 +18,11 @@
     <script src="../assets/js/scripts.js"></script>
     <script>
         $(function () {
-            var map=getParamsByGet();
-            var userid = map.get('userid');
-            var flag=1;
-            var check=1
+            var map = getParamsByGet();
+            var userid = '${userid}'
+            var flag = 1;
+            var check = 1
+
             function init() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/search/init",
@@ -29,7 +30,7 @@
                         "userid": userid
                     },
                     success: function (resp) {
-                        var username=resp;
+                        var username = resp;
                         if (username != "") {
                             $("#log").css({
                                 "display": "none"
@@ -39,14 +40,16 @@
                     }
                 })
             }
+
             init();
+
             function searchMyClub() {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             };
             $("#secondbtn").click(function () {
                 if (userid == "") {
                     alert('请先登录');
-                }else {
+                } else {
                     searchMyClub();
                 }
             });
@@ -58,8 +61,7 @@
                     for (var i = 0; i < school.length; i++) {
                         if (i == 0) {
                             res += "<option>" + school[i].schoolAddress + "</option>";
-                        }
-                        else{
+                        } else {
                             for (var j = 0; j <= i - 1; j++) {
                                 if (school[j].schoolAddress == school[i].schoolAddress) {
                                     break;
@@ -73,6 +75,7 @@
                     $("#select1").append(res);
                 });
             }
+
             findFirstData();
             $("#select1").change(function () {
                 var seled = $("#select1 option:selected").val();
@@ -106,19 +109,19 @@
                 });
             });
             $("#searchClub").click(function () {
-                var sel1=$("#select1 option:selected").val();
-                var sel2=$("#select2 option:selected").val();
-                var sel3=$("#select3 option:selected").val();
-                if (sel1=="--请选择--"||sel3=="--请选择--"||sel2=="--请选择--") {
+                var sel1 = $("#select1 option:selected").val();
+                var sel2 = $("#select2 option:selected").val();
+                var sel3 = $("#select3 option:selected").val();
+                if (sel1 == "--请选择--" || sel3 == "--请选择--" || sel2 == "--请选择--") {
                     alert('请查看是否有未选择的选项');
-                }else {
+                } else {
                     $.getJSON("${pageContext.request.contextPath}/search/searchClubByName?Clubname=" + sel3, function (data) {
                         var club = data;
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
                             alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -128,12 +131,12 @@
                     $("#aboutimg").fadeOut(2000, function () {
                         $("#secondinfo").fadeIn(2000);
                     });
-                    flag=0;
-                }else {
+                    flag = 0;
+                } else {
                     $("#secondinfo").fadeOut(2000, function () {
                         $("#aboutimg").fadeIn(2000);
                     });
-                    flag=1;
+                    flag = 1;
                 }
             })
             $("#ourwork").click(function () {
@@ -141,12 +144,12 @@
                     $("#ourworkimg #our #work").fadeOut(2000, function () {
                         $("#workinfo").fadeIn(2000);
                     });
-                    check=0;
-                }else {
+                    check = 0;
+                } else {
                     $("#workinfo").fadeOut(2000, function () {
                         $("#ourworkimg #our #work").fadeIn(2000);
                     });
-                    check=1;
+                    check = 1;
                 }
             })
         })
@@ -166,7 +169,7 @@
             <a href="#" id="username"></a>
         </div>
     </div>
-    <div  class="no-js">
+    <div class="no-js">
         <div class="banner">
             <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
                 C L U B T R I B E
@@ -236,14 +239,14 @@
 </html>
 <script>
     //获取get请求参数封装成一个map集合
-    function getParamsByGet(){
-        var map=new Map();
-        var paramsStr=location.search.split('?')[1];
-        if(paramsStr!=undefined){
-            var paramsArr=paramsStr.split('&');
-            $.each(paramsArr,function (index,item) {
-                var itemArr=item.split("=");
-                map.set(itemArr[0],itemArr[1]);
+    function getParamsByGet() {
+        var map = new Map();
+        var paramsStr = location.search.split('?')[1];
+        if (paramsStr != undefined) {
+            var paramsArr = paramsStr.split('&');
+            $.each(paramsArr, function (index, item) {
+                var itemArr = item.split("=");
+                map.set(itemArr[0], itemArr[1]);
             })
             return map;
         }
