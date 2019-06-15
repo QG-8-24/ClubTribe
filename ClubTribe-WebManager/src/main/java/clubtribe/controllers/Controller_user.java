@@ -1,12 +1,15 @@
 package clubtribe.controllers;
 
+import clubtribe.pojo.Activity;
 import clubtribe.pojo.Club;
 import clubtribe.pojo.ClubMember;
+import clubtribe.services.ActivityServices;
 import clubtribe.services.ClubMemberServices;
 import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import commom.Generator;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,10 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("user")
@@ -39,6 +39,8 @@ public class Controller_user {
     private UserServices userServices;
     @Autowired
     private ClubMemberServices clubMemberServices;
+    @Autowired
+    private ActivityServices activityServices;
 
     /**
      * 登录进入社团主页
@@ -159,7 +161,7 @@ public class Controller_user {
     @RequestMapping("ifmember")
     @ResponseBody
     public String ifmember(String userid, String clubid) {
-        if (userid != null || userid.length() != 0) {
+        if (userid != null && userid.length() != 0) {
             String clubids = userServices.getuserclubs(Integer.parseInt(userid));
             String[] clubs = clubids.split("@");
             if (Arrays.asList(clubs).contains(clubid)) {
@@ -508,7 +510,7 @@ public class Controller_user {
         String dfileName = new String(filename.getBytes("gb2312"), "iso8859-1");
         File file = new File(clubsServices.getsharefile(clubid) + "\\" + filename);
         System.out.println(file.toString());
-        if (file.exists()){
+        if (file.exists()) {
             System.out.println("exists");
         }
 
@@ -516,5 +518,64 @@ public class Controller_user {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", dfileName);
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping("createNewActivity")
+    @ResponseBody
+    public String createNewActivity(String clubid, String aname, String begintime, String endtime, String atype, String aplace, String itrdc) throws IOException, ClassNotFoundException {
+        String filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile";
+        File file = new File(filepath + "\\activity.txt");
+        Map<Integer, ArrayList<String>> map = new HashMap<>();
+        if (!file.exists()) {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(map);
+            oos.close();
+        }
+        Integer id = Integer.parseInt(new Generator().gRanId());
+        ArrayList<Integer> ids = activityServices.getids();
+        while (ids.contains(id)) {
+            id = Integer.parseInt(new Generator().gRanId());
+        }
+        ArrayList<String> member = new ArrayList<>();
+        Activity activity = new Activity(clubid, id, aname, begintime, endtime, 1, member, aplace, itrdc, Integer.parseInt(atype));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+        map = (Map<Integer, ArrayList<String>>) ois.readObject();
+        ois.close();
+        map.put(id, member);
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+        oos.writeObject(map);
+        oos.close();
+        if (activityServices.insertNewActivity(activity) != 0) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString("创建成功!");
+        }
+        return null;
+    }
+
+    @RequestMapping("getallactivity")
+    @ResponseBody
+    public String getallactivity() throws IOException, ClassNotFoundException {
+        ArrayList<Activity> acs = activityServices.getallactivity();
+        ObjectInputStream oos = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) oos.readObject();
+        oos.close();
+        for (Activity it : acs) {
+            it.setMemberid(map.get(it.getId()));
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(acs);
+    }
+
+    @RequestMapping("joinactivity")
+    @ResponseBody
+    public String joinactivity(String id, String userid) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
+        ois.close();
+        map.get(Integer.parseInt(id)).add(userid);
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        oos.writeObject(map);
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString("加入成功!");
     }
 }

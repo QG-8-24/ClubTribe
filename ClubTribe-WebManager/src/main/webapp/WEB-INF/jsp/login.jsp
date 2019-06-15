@@ -90,7 +90,7 @@
                     $('#errorMessage').text('用户不存在！');
                 } else
                 {
-                    window.location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid="+result;
+                   window.location.href=document.referrer;
                 }
             },
             error:function () {

@@ -85,6 +85,14 @@
                 autoHideScrollbar: true,
                 theme: "dark"
             });
+            $("#s2c1").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
+            $("#s2c2").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
 
             //验证是否为管理员
             function ifadmins() {
@@ -227,17 +235,21 @@
 
             //签到
             $(".sign").click(function () {
-                $.ajax({
-                    url: "${pageContext.request.contextPath}/user/sign",
-                    data: {
-                        "userid": uid,
-                        "clubid": cid,
-                    },
-                    success: function (resp) {
-                        alert(resp);
-                        getsignmsg();
-                    }
-                });
+                if (uid.length == 0) {
+                    alert("请先登录!");
+                } else {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/user/sign",
+                        data: {
+                            "userid": uid,
+                            "clubid": cid,
+                        },
+                        success: function (resp) {
+                            alert(resp);
+                            getsignmsg();
+                        }
+                    });
+                }
             });
             var barrageColorArray = [
                 '#0099CC', 'deeppink', '#009966', '#FFFF66', '#9933FF', '#FFFF99', '#CCCCFF', '#CC9933', '#FFFF66', 'skyblue',
@@ -328,6 +340,8 @@
                     initnotice();
                 } else if (sel == "#show6") {
                     initsharefile();
+                } else if (sel == "#show2") {
+                    getallactivity();
                 }
                 $(sel).siblings().fadeOut(500, function () {
                     $(sel).fadeIn(500);
@@ -441,6 +455,14 @@
                 return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
             }
 
+            function getFormatDate1() {
+                var nowDate = new Date();
+                var year = nowDate.getFullYear();
+                var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+                var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+                return year + "-" + month + "-" + date;
+            }
+
             $("#notice").keyup(function (e) {
                 if (e.keyCode == 13) {
                     var msg = $("#notice").val();
@@ -508,6 +530,144 @@
                 var url = "${pageContext.request.contextPath}/user/filedownload?filename=" + filename + "&clubid=" + cid;
                 window.location.href = url;
             });
+            //
+            $("#show2sel1").click(function () {
+                $("#s2c1").siblings().fadeOut(500);
+                $("#s2c1").fadeIn(500);
+            });
+            $("#show2sel2").click(function () {
+                $("#s2c2").siblings().fadeOut(500);
+                $("#s2c2").fadeIn(500);
+            });
+            $("#creatNewActivity").click(function () {
+                $("#s2c3").siblings().fadeOut(500);
+                $("#s2c3").fadeIn(500);
+                $("#begintime").val(getFormatDate1());
+                $("#endtime").val(getFormatDate1());
+            });
+            //creatNewActivity
+            $("#creatNewActivitysure").click(function () {
+                var aname = $("#aname").val();
+                var begintime = $("#begintime").val();
+                var endtime = $("#endtime").val();
+                var atype = $("#atype").val();
+                var itrdc = $("#itrdc").val();
+                var aplace = $("#aplace").val();
+                if (ifadmin) {
+                    if (aname.length == 0 || aname == null) {
+                        alert("活动名称不能为空!");
+                    } else if (begintime.length == 0 || begintime == null || endtime.length == 0 || endtime == null) {
+                        alert("时间不能为空!");
+                    } else if (aplace.length == 0 || aplace == null) {
+                        alert("活动地址不能为空!");
+                    } else if (itrdc.length == 0 || itrdc == null) {
+                        alert("活动介绍最好不要为空!");
+                    } else {
+                        var time1 = Date.parse(begintime);
+                        var time2 = Date.parse(endtime);
+                        var time3 = Date.parse(getFormatDate1());
+                        if (time1 < time3 || time2 < time3) {
+                            alert("不能回到过去展开活动!");
+                        } else if (time1 > time2) {
+                            alert("请认真填写时间");
+                        } else {
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/user/createNewActivity",
+                                data: {
+                                    "clubid": cid,
+                                    "aname": aname,
+                                    "begintime": begintime,
+                                    "endtime": endtime,
+                                    "atype": atype,
+                                    "aplace": aplace,
+                                    "itrdc": itrdc,
+                                },
+                                success: function (resp) {
+                                    alert(resp);
+                                }
+                            })
+                            ;
+                        }
+                    }
+
+                } else {
+                    alert("仅限管理员");
+                }
+
+            });
+
+            function getallactivity() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/getallactivity",
+                    success: function (resp) {
+                        $.each(resp, function (i, it) {
+                            if (it.type == 1) {
+                                $("#s2c1 ul").children().remove();
+                            } else if (it.type == 2) {
+                                $("#s2c2 ul").children().remove();
+                            }
+                        });
+                        $.each(resp, function (i, it) {
+                            if (it.type == 1) {
+                                $("#s2c1 ul").prepend(" <li>\n" +
+                                    "<div class=\"sld1\">\n" +
+                                    "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +
+                                    "<div style=\"font-size: 24px;font-weight: bold\">" + it.name + "</div>\n" +
+                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团活动<br>简介:" + it.itrdc + "</div>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
+                                    "</li>");
+                            } else {
+                                $("#s2c2 ul").prepend("<li>\n" +
+                                    "<div class=\"sld1\">\n" +
+                                    "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +
+                                    "<div style=\"font-size: 24px;font-weight: bold\">" + it.name + "</div>\n" +
+                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团联合活动<br>简介:\"+it.itrdc+\"</div>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
+                                    "</li>");
+                            }
+                        });
+                    }
+                });
+            }
+
+            $("#s2c1 ul").on("click", ".joinactivity", function () {
+                var id = $(this).parent().siblings().children()[0].innerHTML;
+                if (uid.length == 0) {
+                    alert("请先登录!");
+                } else if (ifmember) {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/user/joinactivity",
+                        data: {
+                            "id": id,
+                            "userid": uid
+                        },
+                        success: function (re) {
+                            alert(re)
+                        }
+                    });
+                } else {
+                    alert("本活动仅限社团成员参加!");
+                }
+            });
+            $("#s2c2 ul").on("click", ".joinactivity", function () {
+                var id = $(this).parent().siblings().children()[0].innerHTML;
+                if (uid.length == 0) {
+                    alert("请先登录!");
+                } else {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/user/joinactivity",
+                        data: {
+                            "id": id,
+                            "userid": uid
+                        },
+                        success: function (re) {
+                            alert(re)
+                        }
+                    });
+                }
+            });
         });
     </script>
 </head>
@@ -574,7 +734,81 @@
             </div>
         </div>
     </div>
-    <div id="show2" style="height: 600px;width: 100%;background:green;"></div>
+    <div id="show2" style="height: 600px;width: 100%;">
+        <div id="show2title" style="height: 80px;width: 100%;font-size: 24px">
+            <div style="margin: 0 auto;width: 480px;height: 80px">
+                <div id="show2sel1">社团活动</div>
+                <div id="show2sel2">联合活动</div>
+                <div id="creatNewActivity">创建活动</div>
+            </div>
+        </div>
+        <div id="show2con" style="height: 520px;width: 100%;position: relative">
+            <div id="s2c1">
+                <ul>
+                    <div style="height:100px;width: 300px;margin: 210px auto;line-height: 60px;font-size: 36px;text-align: center">
+                        暂时没有活动
+                    </div>
+                </ul>
+            </div>
+            <div id="s2c2">
+                <ul>
+                    <div style="height:100px;width: 300px;margin: 210px auto;line-height: 60px;font-size: 36px;text-align: center">
+                        暂时没有活动
+                    </div>
+                </ul>
+            </div>
+            <div id="s2c3">
+                <div style="width: 100%;height: 50%;position: relative">
+                    <div style="margin-bottom: 20px;margin-top:10px;width: 100%; height: 30px;">
+                        <div style="font-size: 18px;width: 10%;height: 30px;line-height: 30px;text-align: center;float: left">
+                            名称
+                        </div>
+                        <input id="aname" type="text"
+                               style="font-size: 18px;width: 50%;height: 30px;line-height: 30px;float: left"
+                               placeholder="活动名称（30子以内）" maxlength="30">
+                    </div>
+                    <div style="margin-bottom: 20px;width: 100%; height: 30px;">
+                        <div style="font-size: 18px;width: 10%;height: 30px;line-height: 30px;text-align: center;float: left">
+                            时间
+                        </div>
+                        <input id="begintime" type="date" value="2019-01-01"
+                               style=" display:block;font-size: 18px;width: 200px;height: 30px;line-height: 30px;float: left"/>
+                        <span style=" display:block;font-size: 18px;text-align:center;width: 2%;height: 30px;line-height: 30px;float: left">&nbsp至&nbsp</span>
+                        <input id="endtime" type="date" value="2019-01-01"
+                               style=" display:block;font-size: 18px;width: 200px;height: 30px;line-height: 30px;float: left"/>
+                    </div>
+                    <div style="margin-bottom: 20px;width: 100%; height: 30px;">
+                        <div style="font-size: 18px;width: 10%;height: 30px;line-height: 30px;text-align: center;float: left">
+                            地点
+                        </div>
+                        <input id="aplace" type="text"
+                               style="font-size: 18px;width: 50%;height: 30px;line-height: 30px;float: left"
+                               placeholder="举办活动地点">
+                    </div>
+                    <div style="margin-bottom: 20px;width: 100%; height: 30px;">
+                        <div style="font-size: 18px;width: 10%;height: 30px;line-height: 30px;text-align: center;float: left">
+                            类型
+                        </div>
+                        <select id="atype"
+                                style=" display:block;font-size: 18px;width: 10%;height: 30px;line-height: 30px;float: left">
+                            <option value="1">社团活动</option>
+                            <option value="2">联合活动</option>
+                        </select>
+                    </div>
+                    <span style="position: absolute;bottom: 0;left: 1%;font-size: 18px;">活动介绍</span>
+
+                </div>
+                <div style="width: 100%;height: 30%">
+                    <textarea id="itrdc"
+                              style="display: block;resize: none;height: 100%;width: 98%;font-size: 18px;margin:0 auto"
+                              maxlength="500" placeholder="最多500字"></textarea>
+                </div>
+                <div style="width: 100%;height: 20%;position: relative"><span id="creatNewActivitysure"
+                                                                              style="display: block;height: 30px;width: 100px;line-height: 30px;text-align: center;font-size: 18px;background: deepskyblue;position: absolute;right: 20px;top: 20px;cursor: pointer">创建活动</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="show3" style="height: 600px;width:100%;background:black;position: relative;overflow: hidden">
         <ul style="height: 100%;position: absolute">
         </ul>

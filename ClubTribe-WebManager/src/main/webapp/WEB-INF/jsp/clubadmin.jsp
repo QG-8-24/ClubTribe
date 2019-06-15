@@ -345,7 +345,7 @@
                         console.log(resp);
                         str = resp.split("@@");
                         $("#clubname").val(str[0]);
-                        $("#clubmsg").val(str[1].replace(/<br>/g,"\n"));
+                        $("#clubmsg").val(str[1].replace(/<br>/g, "\n"));
                     },
                 });
             }
@@ -360,7 +360,7 @@
                     data: {
                         "clubid": cid,
                         "clubname": $("#clubname").val(),
-                        "itrdc": $("#clubmsg").val().replace(/\n/g,"<br>")
+                        "itrdc": $("#clubmsg").val().replace(/\n/g, "<br>")
                     },
                     success: function (re) {
                         alert(re)
@@ -407,15 +407,9 @@
             </ul>
         </div>
         <div id="box5">
-            <span style="display: block;float: left">社 团 名 :</span><input id="clubname" type="text"
-                                                                          style="display: block;width: 200px;height: 26px;float: left "><br><br>
-            <span style="display: block;float: left">社团简介:</span><textarea id="clubmsg"
-                                                                           style="resize: none;width: 600px;height: 200px;"
-                                                                           placeholder="最多500字"
-                                                                           maxlength="500"></textarea><br><br>
-            <span style="display: block;float: left">主页图片:</span><img id="bg"
-                                                                      style="display: block;width: 600px;height: 300px;border: 1px solid #333"
-                                                                      src="#">
+            <span style="display: block;float: left">社 团 名&nbsp&nbsp</span><input id="clubname" type="text" style="display: block;width: 200px;height: 26px;float: left "><br><br>
+            <span style="display: block;float: left">社团简介&nbsp&nbsp</span><textarea id="clubmsg" style="resize: none;width: 600px;height: 200px;" placeholder="最多500字" maxlength="500"></textarea><br><br>
+            <span style="display: block;float: left">主页图片&nbsp&nbsp</span><img id="bg" style="display: block;width: 600px;height: 300px;border: 1px solid #333" src="#">
             <span id="change" style="display: block;float: left;cursor: pointer">更换图片&nbsp</span>
             <div id="uploadbox"
                  style="display: none;background: white;width: 500px;height: 22px;float: left">
