@@ -17,19 +17,28 @@
                         var reject='拒绝';
                         var agreeid = 'agree' + i;
                         var rejectid = 'reject' + i;
+                        var check='查看图片';
+                        var photoid='photo'+i;
                         var res = "";
                         res+="<tr>";
                         res += "<td>" + schoolname + "</td>";
                         res += "<td>" + schooladdress + "</td>";
-                        res += "<td>" + photopath + "</td>";
+                        res += "<td><a id='"+photoid+"'>" + check + "</a></td>";
                         // res += "<td><a id='"+"agree_"+i+"'>" + agree + "</a></td>";
                         res += "<td><a id='"+agreeid+"'>" + agree + "</a></td>";
                         res += "<td><a id='"+rejectid+"'>" + reject + "</a></td>";
                         res+="</tr>";
                         $("#" + agreeid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/agree?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
                         $("#" + rejectid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/reject?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
-
+                        $("#" + photoid + "").attr("href",photopath);
                         $("#info").append(res);
+                        $("#" + photoid + "").click(function () {
+                            if(confirm("查看图片吗")){
+                                $(this).attr("href",photopath);
+                                return true;
+                            }
+                            return false;
+                        })
                         $("#" + agreeid + "").click(function () {
                             if(confirm("确定认证吗")){
                                 $(this).attr("href","${pageContext.request.contextPath}/clubtribeadmin/agree?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
