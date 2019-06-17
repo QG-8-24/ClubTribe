@@ -57,7 +57,6 @@
                         "clubid": cid,
                     },
                     success: function (resp) {
-                        console.log(resp);
                         str = resp.split("@@");
                         $("#data").html(str[1]);
                     },
@@ -601,14 +600,19 @@
                     url: "${pageContext.request.contextPath}/user/getallactivity",
                     success: function (resp) {
                         $.each(resp, function (i, it) {
-                            if (it.type == 1) {
+                            if (it.type == 1 && it.clubid == cid) {
                                 $("#s2c1 ul").children().remove();
-                            } else if (it.type == 2) {
+                            } else {
                                 $("#s2c2 ul").children().remove();
                             }
                         });
                         $.each(resp, function (i, it) {
-                            if (it.type == 1) {
+                            if (it.type == 1 && it.clubid == cid) {
+                                if (it.ifjoin != "1") {
+                                    $(".joinactivity").css({"display": "none"});
+                                } else {
+                                    $(".joinactivity").css({"display": "block"});
+                                }
                                 $("#s2c1 ul").prepend(" <li>\n" +
                                     "<div class=\"sld1\">\n" +
                                     "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +
@@ -618,6 +622,11 @@
                                     "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
                                     "</li>");
                             } else {
+                                if (it.ifjoin != "1") {
+                                    $(".joinactivity").css({"display": "none"});
+                                } else {
+                                    $(".joinactivity").css({"display": "block"});
+                                }
                                 $("#s2c2 ul").prepend("<li>\n" +
                                     "<div class=\"sld1\">\n" +
                                     "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +

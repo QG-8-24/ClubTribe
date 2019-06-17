@@ -520,12 +520,25 @@ public class Controller_user {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
+    /**
+     * 创建活动
+     * @param clubid
+     * @param aname
+     * @param begintime
+     * @param endtime
+     * @param atype
+     * @param aplace
+     * @param itrdc
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @RequestMapping("createNewActivity")
     @ResponseBody
     public String createNewActivity(String clubid, String aname, String begintime, String endtime, String atype, String aplace, String itrdc) throws IOException, ClassNotFoundException {
         String filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile";
         File file = new File(filepath + "\\activity.txt");
-        Map<Integer, ArrayList<String>> map = new HashMap<>();
+        Map<Integer, ArrayList<String>> map = new TreeMap<>();
         if (!file.exists()) {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(map);
@@ -552,6 +565,12 @@ public class Controller_user {
         return null;
     }
 
+    /**
+     * 获取所有活动
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @RequestMapping("getallactivity")
     @ResponseBody
     public String getallactivity() throws IOException, ClassNotFoundException {
@@ -566,16 +585,35 @@ public class Controller_user {
         return objectMapper.writeValueAsString(acs);
     }
 
+    /**
+     * 加入活动
+     * @param id
+     * @param userid
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @RequestMapping("joinactivity")
     @ResponseBody
     public String joinactivity(String id, String userid) throws IOException, ClassNotFoundException {
+        String result="加入成功!";
+        boolean ifjoin=false;
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
-        map.get(Integer.parseInt(id)).add(userid);
+        for (String it : map.get(Integer.parseInt(id))){
+            if (!userid.equals(it)){
+               ifjoin=true;
+            }
+        }
+        if (ifjoin||map.get(Integer.parseInt(id)).size()==0){
+            map.get(Integer.parseInt(id)).add(userid);
+        }else{
+            result="请不要重复加入!";
+        }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
         oos.writeObject(map);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString("加入成功!");
+        return objectMapper.writeValueAsString(result);
     }
 }

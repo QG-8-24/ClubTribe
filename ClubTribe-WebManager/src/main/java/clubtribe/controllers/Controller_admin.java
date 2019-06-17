@@ -1,7 +1,9 @@
 package clubtribe.controllers;
 
+import clubtribe.pojo.Activity;
 import clubtribe.pojo.ClubMember;
 import clubtribe.pojo.User;
+import clubtribe.services.ActivityServices;
 import clubtribe.services.ClubMemberServices;
 import clubtribe.services.ClubServices;
 import clubtribe.services.UserServices;
@@ -16,9 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("admin")
@@ -30,6 +30,8 @@ public class Controller_admin {
     private ClubMemberServices clubMemberServices;
     @Autowired
     private UserServices userServices;
+    @Autowired
+    private ActivityServices activityServices;
 
     @RequestMapping("ifper")
     @ResponseBody
@@ -309,12 +311,50 @@ public class Controller_admin {
         return objectMapper.writeValueAsString(str);
     }
 
+    /**
+     * 修改社团信息
+     *
+     * @param clubid
+     * @param clubname
+     * @param itrdc
+     * @return
+     * @throws JsonProcessingException
+     */
     @RequestMapping("chagemsg")
     @ResponseBody
     public String chagemsg(String clubid, String clubname, String itrdc) throws JsonProcessingException {
         clubServices.setclubname(Integer.parseInt(clubid), clubname);
         clubServices.setitrdc(clubid, itrdc);
-        ObjectMapper objectMapper=new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString("修改成功!");
+    }
+
+    /**
+     * 获取活动成员
+     *
+     * @param clubid
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    @RequestMapping("initact")
+    @ResponseBody
+    public String initact(String clubid) throws IOException, ClassNotFoundException {
+        Map<Activity, ArrayList<User>> result = new HashMap<>();
+        ArrayList<Activity> list = activityServices.getactivitbyid(clubid);
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
+        ois.close();
+        for (Activity it : list) {
+            ArrayList<User>userlist=new ArrayList<>();
+           for (String itt:map.get(it.getId())){
+               User user=userServices.getuserbyid(Integer.parseInt(itt));
+               System.out.println(user);
+               userlist.add(user);
+           }
+            result.put(it,userlist);
+        }
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(result);
     }
 }

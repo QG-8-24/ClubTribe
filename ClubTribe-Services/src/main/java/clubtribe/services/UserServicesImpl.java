@@ -33,4 +33,9 @@ public class UserServicesImpl implements UserServices {
     public int joinclub(User user) {
         return userMapper.joinclub(user);
     }
+
+    @Override
+    public User getuserbyid(Integer userid) {
+        return userMapper.getuserbyid(userid);
+    }
 }

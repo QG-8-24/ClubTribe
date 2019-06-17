@@ -37,4 +37,10 @@ public interface UserMapper {
      */
     int joinclub(User user);
 
+    /**
+     * 获取用户信息
+     * @param userid
+     * @return
+     */
+    User getuserbyid(Integer userid);
 }

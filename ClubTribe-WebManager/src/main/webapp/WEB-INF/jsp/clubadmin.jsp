@@ -58,6 +58,10 @@
             gitmsg();
             init();
             //自定义滚动条
+            $("#box1").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
             $("#box3").mCustomScrollbar({
                 autoHideScrollbar: true,
                 theme: "dark"
@@ -70,7 +74,14 @@
                 autoHideScrollbar: true,
                 theme: "dark"
             });
-
+            $("#box6ul").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
+            $("#box7ul").mCustomScrollbar({
+                autoHideScrollbar: true,
+                theme: "dark"
+            });
 
             //同意加入
             function agree(userid) {
@@ -132,6 +143,37 @@
                 });
             }
 
+            // 活动成员
+            function initact() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/initact",
+                    data: {
+                        "clubid": cid
+                    },
+                    success: function (resp) {
+                        $("#box6ul").children().remove();
+                        $("#box7ul").children().remove();
+                        $.each(resp, function (i, it) {
+                            var type = i.split("type=")[1].split("}")[0];
+                            var acname = i.split("name=")[1].split("'")[1];
+                            // var acid
+                            console.log(i.split("id"));
+                            if (type == 1) {
+                                $.each(it, function (ii, itt) {
+                                        $("#box6ul").append("<li><span style='displsy:none' class='dd'></span><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                                    }
+                                )
+                            } else {
+                                $.each(it, function (ii, itt) {
+                                        $("#box7ul").append(" <li><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                                    }
+                                )
+                            }
+                        })
+                    }
+                });
+            }
+
             //设置管理员
             function setadmin(id) {
                 $.ajax({
@@ -174,6 +216,20 @@
                 });
             }
 
+            //删除活动成员
+            function removemember(id, userid) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/removeacmember",
+                    data: {
+                        "id": id,
+                        "userid": userid,
+                    },
+                    success: function (resp) {
+                        alert(resp);
+                    }
+                });
+            }
+
             $("#box2ul").on("click", "li .ifadmin", function () {
                 var id = $(this).siblings(".box2span2id").html();
                 if (id == perid) {
@@ -192,6 +248,26 @@
                     }
                 }
             });
+
+            // $("#box6ul").on("click", "li .removemember", function () {
+            //     var id = $(this).siblings(".box2span2id").html();
+            //     var userid=
+            //     if (id == perid) {
+            //         alert("失败!");
+            //     } else {
+            //         if (perid != "") {
+            //             if ($(this).html() == "否") {
+            //                 setadmin(id);
+            //                 $(this).html("是");
+            //             } else {
+            //                 removeadmin(id);
+            //                 $(this).html("否");
+            //             }
+            //         } else {
+            //             alert("仅限社长操作!");
+            //         }
+            //     }
+            // });
 
             $("#box2ul").on("click", "li .removemember", function () {
                 var id = $(this).siblings(".box2span2id").html();
@@ -225,6 +301,10 @@
                     initsharefile();
                 } else if (sel[1] == 5) {
                     initmsg();
+                } else if (sel[1] == 6) {
+                    initact()
+                } else if (sel[1] == 7) {
+                    initact()
                 }
                 $(box).siblings().fadeOut(500, function () {
                     $(box).fadeIn(500);
@@ -385,6 +465,8 @@
             <li id="sel3">相 册 管 理</li>
             <li id="sel4">文 件 管 理</li>
             <li id="sel5">资 料 更 改</li>
+            <li id="sel6">社团活动成员</li>
+            <li id="sel7">联合活动成员</li>
         </ul>
     </div>
     <div id="rightbox">
@@ -407,9 +489,15 @@
             </ul>
         </div>
         <div id="box5">
-            <span style="display: block;float: left">社 团 名&nbsp&nbsp</span><input id="clubname" type="text" style="display: block;width: 200px;height: 26px;float: left "><br><br>
-            <span style="display: block;float: left">社团简介&nbsp&nbsp</span><textarea id="clubmsg" style="resize: none;width: 600px;height: 200px;" placeholder="最多500字" maxlength="500"></textarea><br><br>
-            <span style="display: block;float: left">主页图片&nbsp&nbsp</span><img id="bg" style="display: block;width: 600px;height: 300px;border: 1px solid #333" src="#">
+            <span style="display: block;float: left">社 团 名&nbsp&nbsp</span><input id="clubname" type="text"
+                                                                                  style="display: block;width: 200px;height: 26px;float: left "><br><br>
+            <span style="display: block;float: left">社团简介&nbsp&nbsp</span><textarea id="clubmsg"
+                                                                                    style="resize: none;width: 600px;height: 200px;"
+                                                                                    placeholder="最多500字"
+                                                                                    maxlength="500"></textarea><br><br>
+            <span style="display: block;float: left">主页图片&nbsp&nbsp</span><img id="bg"
+                                                                               style="display: block;width: 600px;height: 300px;border: 1px solid #333"
+                                                                               src="#">
             <span id="change" style="display: block;float: left;cursor: pointer">更换图片&nbsp</span>
             <div id="uploadbox"
                  style="display: none;background: white;width: 500px;height: 22px;float: left">
@@ -427,6 +515,22 @@
                 <span id="chsure"
                       style="display: block;position: absolute;right:0;height: 32px;width: 110px;border-bottom:2px solid #333;font-size: 26px;text-align: center;cursor: pointer">确认修改</span>
             </div>
+        </div>
+        <div id="box6">
+            <div style="position: relative;height: 30px"><span class="box2span1">用户名</span><span
+                    class="box2span1">邮箱</span><span
+                    class="box2span1">参与活动</span>
+                <span class="box2span1">删除成员</span></div>
+            <ul id="box6ul" style="display:block;position: relative">
+
+            </ul>
+        </div>
+        <div id="box7">
+            <div style="position: relative;height: 30px"><span class="box2span1">用户名</span><span
+                    class="box2span1">邮箱</span><span
+                    class="box2span1">参与活动</span>
+                <span class="box2span1">删除成员</span></div>
+            <ul id="box7ul" style="display:block;position: relative"></ul>
         </div>
     </div>
 </div>
