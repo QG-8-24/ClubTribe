@@ -156,20 +156,44 @@
                         $.each(resp, function (i, it) {
                             var type = i.split("type=")[1].split("}")[0];
                             var acname = i.split("name=")[1].split("'")[1];
-                            // var acid
-                            console.log(i.split("id"));
+                            var acid = i.split("id=")[2].split(",")[0];
                             if (type == 1) {
                                 $.each(it, function (ii, itt) {
-                                        $("#box6ul").append("<li><span style='displsy:none' class='dd'></span><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                                        $("#box6ul").append("<li><span style=\"display: none;\" class=\"dd\">" + acid + "@" + itt.userid + "</span><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
                                     }
                                 )
                             } else {
                                 $.each(it, function (ii, itt) {
-                                        $("#box7ul").append(" <li><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                                        $("#box7ul").append(" <li><span style=\"display: none;\" class=\"dd\">" + acid + "@" + itt.userid + "</span><span class=\"box2span2id\">" + itt.username + "</span><span class=\"box2span2\">" + itt.useremail + "</span><span\n" + "class=\"box2span2id\">" + acname + " </span><span class=\"removemember\">[删除]</span>\n" + "</li>");
                                     }
                                 )
                             }
                         })
+                    }
+                });
+            }
+
+            // 活动
+            function initactt() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/initact",
+                    data: {
+                        "clubid": cid
+                    },
+                    success: function (resp) {
+                        $("#box8ul").children().remove();
+                        $.each(resp, function (i, it) {
+                            var type = i.split("type=")[1].split("}")[0];
+                            var acname = i.split("name=")[1].split("'")[1];
+                            var acid = i.split("id=")[2].split(",")[0];
+                            var begintime = i.split("begintime=")[1].split("'")[1];
+                            var endtime = i.split("endtime=")[1].split("'")[1];
+                            if (type == 1) {
+                                $("#box8ul").append("<li><span style=\"display: none;\" class=\"dd\">" + acid + "</span><span class=\"box2span2id\">" + acname + "</span><span class=\"box2span2\">" + begintime + "至" + endtime + "</span><span\n" + "class=\"box2span2id\">社团活动</span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                            } else {
+                                $("#box8ul").append("<li><span style=\"display: none;\" class=\"dd\">" + acid + "</span><span class=\"box2span2id\">" + acname + "</span><span class=\"box2span2\">" + begintime + "至" + endtime + "</span><span\n" + "class=\"box2span2id\">联合活动</span><span class=\"removemember\">[删除]</span>\n" + "</li>");
+                            }
+                        });
                     }
                 });
             }
@@ -217,12 +241,25 @@
             }
 
             //删除活动成员
-            function removemember(id, userid) {
+            function removeacmember(id, userid) {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/admin/removeacmember",
                     data: {
                         "id": id,
                         "userid": userid,
+                    },
+                    success: function (resp) {
+                        alert(resp);
+                    }
+                });
+            }
+
+            //删除活动
+            function removeac(id, userid) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/admin/removeac",
+                    data: {
+                        "id": id,
                     },
                     success: function (resp) {
                         alert(resp);
@@ -249,25 +286,27 @@
                 }
             });
 
-            // $("#box6ul").on("click", "li .removemember", function () {
-            //     var id = $(this).siblings(".box2span2id").html();
-            //     var userid=
-            //     if (id == perid) {
-            //         alert("失败!");
-            //     } else {
-            //         if (perid != "") {
-            //             if ($(this).html() == "否") {
-            //                 setadmin(id);
-            //                 $(this).html("是");
-            //             } else {
-            //                 removeadmin(id);
-            //                 $(this).html("否");
-            //             }
-            //         } else {
-            //             alert("仅限社长操作!");
-            //         }
-            //     }
-            // });
+            $("#box6ul").on("click", "li .removemember", function () {
+                var str = $(this).siblings(".dd").html();
+                var acid = str.split("@")[0];
+                var userid = str.split("@")[1];
+                removeacmember(acid, userid);
+                $(this).parent().remove();
+            });
+
+            $("#box7ul").on("click", "li .removemember", function () {
+                var str = $(this).siblings(".dd").html();
+                var acid = str.split("@")[0];
+                var userid = str.split("@")[1];
+                removeacmember(acid, userid);
+                $(this).parent().remove();
+            });
+
+            $("#box8ul").on("click", "li .removemember", function () {
+                var acid = $(this).siblings(".dd").html();
+                removeac(acid);
+                $(this).parent().remove();
+            });
 
             $("#box2ul").on("click", "li .removemember", function () {
                 var id = $(this).siblings(".box2span2id").html();
@@ -305,6 +344,8 @@
                     initact()
                 } else if (sel[1] == 7) {
                     initact()
+                } else if (sel[1] == 8) {
+                    initactt()
                 }
                 $(box).siblings().fadeOut(500, function () {
                     $(box).fadeIn(500);
@@ -455,7 +496,9 @@
 <body>
 <div id="top">
     <div id="title">管 理 员 操 作</div>
-    <div style="height: 4px;width: 100%;background: skyblue;margin-top: 10px"></div>
+    <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
+        C L U B T R I B E
+    </div>
 </div>
 <div id="context">
     <div id="leftbox">
@@ -467,6 +510,7 @@
             <li id="sel5">资 料 更 改</li>
             <li id="sel6">社团活动成员</li>
             <li id="sel7">联合活动成员</li>
+            <li id="sel8">活 动 管 理</li>
         </ul>
     </div>
     <div id="rightbox">
@@ -531,6 +575,13 @@
                     class="box2span1">参与活动</span>
                 <span class="box2span1">删除成员</span></div>
             <ul id="box7ul" style="display:block;position: relative"></ul>
+        </div>
+        <div id="box8">
+            <div style="position: relative;height: 30px"><span class="box2span1">活动名</span><span
+                    class="box2span1">活动时间</span><span
+                    class="box2span1">类型</span>
+                <span class="box2span1">删除活动</span></div>
+            <ul id="box8ul" style="display:block;position: relative"></ul>
         </div>
     </div>
 </div>

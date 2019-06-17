@@ -13,4 +13,7 @@
     <select id="getactivitbyid" resultType="clubtribe.pojo.Activity">
         select * from activity where clubid=#{?}
     </select>
+    <delete id="removeactivity">
+        delete from activity where id=#{?}
+    </delete>
 </mapper>

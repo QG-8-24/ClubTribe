@@ -226,19 +226,39 @@ public class Controller_user {
     @ResponseBody
     public String getsignmsg(String clubid) throws ParseException, JsonProcessingException {
         ClubMember[] list = clubMemberServices.getmembermsg(clubid);
-        ClubMember tep = new ClubMember();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ArrayList<ClubMember> newlist = new ArrayList<>();
         for (int i = 0; i < list.length; i++) {
-            for (int j = i + 1; j < list.length; j++) {
-                Date date1 = sdf.parse(list[i].getSign());
-                Date date2 = sdf.parse(list[j].getSign());
-                if (date1.compareTo(date2) > 0) {
-                    tep = list[i];
-                    list[i] = list[j];
-                    list[j] = tep;
+            if (list[i].getSign() != "" && list[i].getSign().length() != 0) {
+                newlist.add(list[i]);
+            }
+        }
+        ClubMember[] newlist1 = newlist.toArray(new ClubMember[newlist.size()]);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (newlist1.length >= 2) {
+            ClubMember tep = new ClubMember();
+            for (int i = 0; i < newlist1.length; i++) {
+                for (int j = i + 1; j < list.length; j++) {
+                    Date date1 = sdf.parse(newlist1[i].getSign());
+                    Date date2 = sdf.parse(newlist1[j].getSign());
+                    if (date1.compareTo(date2) > 0) {
+                        tep = newlist1[i];
+                        newlist1[i] = newlist1[j];
+                        newlist1[j] = tep;
+                    }
                 }
             }
         }
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(newlist);
+    }
+
+    /**
+     * 获取月签到信息
+     */
+    @RequestMapping(value = "getmsign")
+    @ResponseBody
+    public String getmsign(String clubid) throws JsonProcessingException {
+        ClubMember[] list = clubMemberServices.getmembermsg(clubid);
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(list);
     }
@@ -522,6 +542,7 @@ public class Controller_user {
 
     /**
      * 创建活动
+     *
      * @param clubid
      * @param aname
      * @param begintime
@@ -567,6 +588,7 @@ public class Controller_user {
 
     /**
      * 获取所有活动
+     *
      * @return
      * @throws IOException
      * @throws ClassNotFoundException
@@ -587,6 +609,7 @@ public class Controller_user {
 
     /**
      * 加入活动
+     *
      * @param id
      * @param userid
      * @return
@@ -596,21 +619,21 @@ public class Controller_user {
     @RequestMapping("joinactivity")
     @ResponseBody
     public String joinactivity(String id, String userid) throws IOException, ClassNotFoundException {
-        String result="加入成功!";
-        boolean ifjoin=false;
+        String result = "加入成功!";
+        boolean ifjoin = false;
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
-        for (String it : map.get(Integer.parseInt(id))){
-            if (!userid.equals(it)){
-               ifjoin=true;
+        for (String it : map.get(Integer.parseInt(id))) {
+            if (!userid.equals(it)) {
+                ifjoin = true;
             }
         }
-        if (ifjoin||map.get(Integer.parseInt(id)).size()==0){
+        if (ifjoin || map.get(Integer.parseInt(id)).size() == 0) {
             map.get(Integer.parseInt(id)).add(userid);
-        }else{
-            result="请不要重复加入!";
+        } else {
+            result = "请不要重复加入!";
         }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
         oos.writeObject(map);

@@ -145,13 +145,13 @@
             }
 
             $("#context #aboutus #btn").click(function () {
-                $("#context #aboutus #btn").fadeOut(2000, function () {
-                    $("#context #aboutus #data").fadeIn(2000);
+                $("#context #aboutus #btn").fadeOut(1000, function () {
+                    $("#context #aboutus #data").fadeIn(1000);
                 });
             });
             $("#context #aboutus #data").click(function () {
-                $("#context #aboutus #data").fadeOut(2000, function () {
-                    $("#context #aboutus #btn").fadeIn(2000);
+                $("#context #aboutus #data").fadeOut(1000, function () {
+                    $("#context #aboutus #btn").fadeIn(1000);
                 });
             });
 
@@ -184,6 +184,41 @@
                 }
             });
 
+            //获取月签到
+            function getmsign() {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/getmsign",
+                    data: {
+                        "clubid": cid,
+                    },
+                    dataType: "json",
+                    success: function (resp) {
+                        var resp2 = resp;
+                        $.each(resp2, function (i, obj) {
+                            for (var j = i + 1; j < resp.length - 1; j++) {
+                                if (resp2[j].msign > resp2[i].msign) {
+                                    var tep = resp2[i]
+                                    resp2[i] = resp2[j];
+                                    resp2[j] = tep;
+                                }
+                            }
+                        });
+                        $.each(resp2, function (i, obj) {
+                            if (i == 0) {
+                                $("#msign table").append("<tr class='gold'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else if (i == 1) {
+                                $("#msign table").append("<tr class='silver'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else if (i == 2) {
+                                $("#msign table").append("<tr class='bronze'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            } else {
+                                $("#msign table").append("<tr class='white'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
+                            }
+                        });
+                    }
+                });
+            }
+
+            //日签到情况
             function getsignmsg() {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/getsignmsg",
@@ -207,27 +242,6 @@
                                 $("#sign table").append("<tr class='white'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.sign + "</td></tr>")
                             }
                         });
-                        var resp2 = resp;
-                        $.each(resp2, function (i, obj) {
-                            if (i + 1 < resp.length) {
-                                if (resp2[i + 1].msign > resp2[i].msign) {
-                                    tep = resp2[i]
-                                    resp2[i] = resp2[i + 1];
-                                    resp2[i + 1] = tep;
-                                }
-                            }
-                        });
-                        $.each(resp2, function (i, obj) {
-                            if (i == 0) {
-                                $("#msign table").append("<tr class='gold'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
-                            } else if (i == 1) {
-                                $("#msign table").append("<tr class='silver'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
-                            } else if (i == 2) {
-                                $("#msign table").append("<tr class='bronze'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
-                            } else {
-                                $("#msign table").append("<tr class='white'><td>" + (i + 1) + "</td>\n" + "<td>" + obj.username + "</td>\n" + "<td>" + obj.msign + "</td></tr>")
-                            }
-                        });
                     }
                 });
             }
@@ -246,6 +260,7 @@
                         success: function (resp) {
                             alert(resp);
                             getsignmsg();
+                            getmsign();
                         }
                     });
                 }
@@ -262,16 +277,6 @@
                 $("#show4").append(" <h1 style=\"position: absolute;color: " + col + ";top:" + top + "%\"> " + msg + "</h1>");
                 $("#show4 h1").animate({right: '100%'}, parseInt(Math.random() * 20000 + 5000), function () {
                     $(this).remove();
-                });
-            }
-
-            //相册轮播
-            function albumplay() {
-                var wit = $("#show3 ul").css("width");
-                $("#show3 ul").animate({left: '-' + wit}, autoplaytime, function () {
-                    $("#show3 ul").animate({left: '0px'}, autoplaytime, function () {
-                        albumplay();
-                    });
                 });
             }
 
@@ -311,15 +316,14 @@
                         if (resp != false) {
                             albums = resp;
                         }
-                        autoplaytime = albums.length * 3000;
-                        ulwidth = (albums.length * 700) + "px";
+                        var ulwidth = (albums.length * 1000) + "px";
                         $("#show3 ul").css({
                             "width": ulwidth
                         });
                         $.each(albums, function (i, it) {
                             path = "../clubtribefile/clubalbum/album" + cid + "/" + it;
                             addpicture(path);
-                        })
+                        });
                     }
                 });
             }
@@ -333,7 +337,6 @@
                 var sel = "#show" + $(this).attr("id").split("fun")[1];
                 if (sel == "#show3") {
                     initalbum();
-                    albumplay();
                 } else if (sel == "#show5") {
                     $("#show5 div ul").children().remove();
                     initnotice();
@@ -631,7 +634,7 @@
                                     "<div class=\"sld1\">\n" +
                                     "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +
                                     "<div style=\"font-size: 24px;font-weight: bold\">" + it.name + "</div>\n" +
-                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团联合活动<br>简介:\"+it.itrdc+\"</div>\n" +
+                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团联合活动<br>简介:" + it.itrdc + "</div>\n" +
                                     "</div>\n" +
                                     "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
                                     "</li>");
@@ -677,6 +680,27 @@
                     });
                 }
             });
+
+            $("#aright").click(function () {
+                var pos = $("#show3 ul").position().left;
+                var poss="-"+($("#show3 ul").css("width").split("px")[0]-document.body.clientWidth);
+                if ((pos-1000)>poss) {
+                    pos -= 1000;
+                }else {
+                    pos=poss;
+                }
+                $("#show3 ul").animate({left: pos}, 500);
+            });
+
+            $("#aleft").click(function () {
+                var pos = $("#show3 ul").position().left;
+                if ((pos+1000)<0) {
+                    pos += 1000;
+                }else {
+                    pos=0;
+                }
+                $("#show3 ul").animate({left: pos}, 500);
+            });
         });
     </script>
 </head>
@@ -688,7 +712,7 @@
         <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
         <a href="#" id="username"></a>
         <a id="logout" href="${pageContext.request.contextPath}/user/logout" onclick="return false">退出</a>
-        <a href="${pageContext.request.contextPath}/user/toRegister">注册</a>
+        <a href="${pageContext.request.contextPath}/user/toRegister">用户注册</a>
     </div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
@@ -701,8 +725,8 @@
         <div id="title"></div>
         <div id="join">JOIN&nbspUS</div>
     </div>
-    <div id="aboutus">
-        <div id="btn">关于我们>>></div>
+    <div id="aboutus" style="background:#ccf381;color: #4831d4;">
+        <div id="btn">关 于 我 们> > ></div>
         <div id="data" style="width: 100%;height: 100%;overflow: auto"></div>
     </div>
     <div id="function">
@@ -712,7 +736,7 @@
         <div id="fun4"><span>留言墙</span></div>
         <div id="fun5"><span>公告</span></div>
         <div id="fun6"><span>文件分享</span></div>
-        <div><a id="admin" href="#" onclick="return false;"><span style="color: white">管理员操作</span></a>
+        <div><a id="admin" href="#" onclick="return false;"><span style="color: #8BD8BD">管理员操作</span></a>
         </div>
     </div>
 </div>
@@ -818,11 +842,12 @@
             </div>
         </div>
     </div>
-    <div id="show3" style="height: 600px;width:100%;background:black;position: relative;overflow: hidden">
+    <div id="show3" style="height: 600px;width:100%;position: relative;overflow: hidden">
+        <span id="aleft">◀</span>
+        <span id="aright">▶</span>
         <ul style="height: 100%;position: absolute">
         </ul>
-        <div style="height: 30%;width: 100%;position:absolute;top:0;background: black;border-radius: 0 0  100% 50% / 100%;"></div>
-        <div style="height: 30%;width: 100%;position:absolute;bottom:0;background: black;border-radius: 50% / 100% 100% 0 0;">
+        <div style="height: 8%;width: 100%;position:absolute;bottom:0;background: black;">
             <span id="uploadpic"
                   style="color: white;display: block;position: absolute;bottom: 0;right: 10%;cursor: pointer;">上 传 图 片</span>
         </div>

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -241,6 +242,28 @@ public class Controller_admin {
     }
 
     /**
+     * 删除活动成员
+     *
+     * @param id
+     * @param userid
+     * @return
+     */
+    @RequestMapping(value = "removeacmember", produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String removeacmember(String id, String userid) throws IOException, ClassNotFoundException {
+        String filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt";
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
+        Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
+        ois.close();
+        map.get(Integer.parseInt(id)).remove(userid);
+        ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(filepath));
+        oos.writeObject(map);
+        oos.close();
+        return "删除成功!";
+    }
+
+
+    /**
      * 删除相册
      *
      * @param clubid
@@ -346,15 +369,35 @@ public class Controller_admin {
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
         for (Activity it : list) {
-            ArrayList<User>userlist=new ArrayList<>();
-           for (String itt:map.get(it.getId())){
-               User user=userServices.getuserbyid(Integer.parseInt(itt));
-               System.out.println(user);
-               userlist.add(user);
-           }
-            result.put(it,userlist);
+            ArrayList<User> userlist = new ArrayList<>();
+            for (String itt : map.get(it.getId())) {
+                User user = userServices.getuserbyid(Integer.parseInt(itt));
+                System.out.println(user);
+                userlist.add(user);
+            }
+            result.put(it, userlist);
         }
-        ObjectMapper objectMapper=new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(result);
+    }
+    /**
+     * 删除活动
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "removeac", produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String removeac(String id) throws IOException, ClassNotFoundException, ParseException {
+        String file = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt";
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+        Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
+        ois.close();
+        map.remove(Integer.parseInt(id));
+        ObjectOutputStream oos=new ObjectOutputStream(new FileOutputStream(file));
+        oos.writeObject(map);
+        oos.close();
+        activityServices.removeactivitybyid(Integer.parseInt(id));
+        return "删除成功!";
     }
 }

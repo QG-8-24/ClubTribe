@@ -32,4 +32,8 @@ public interface ActivityMapper {
      */
     ArrayList<Activity> getactivitbyid(String clubid);
 
+    /**
+     * 删除过期活动
+     */
+    void removeactivity(Integer id);
 }

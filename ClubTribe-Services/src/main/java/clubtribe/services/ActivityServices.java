@@ -2,6 +2,8 @@ package clubtribe.services;
 
 import clubtribe.pojo.Activity;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public interface ActivityServices {
@@ -33,4 +35,14 @@ public interface ActivityServices {
      * @return
      */
     ArrayList<Activity> getactivitbyid(String clubid);
+
+    /**
+     * 删除过期活动
+     */
+    void removeactivity() throws ParseException, IOException, ClassNotFoundException;
+
+    /**
+     * 删除活动byid
+     */
+    void removeactivitybyid(Integer id) throws ParseException, IOException, ClassNotFoundException;
 }
