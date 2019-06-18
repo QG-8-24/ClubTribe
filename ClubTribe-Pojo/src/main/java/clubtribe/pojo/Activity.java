@@ -15,9 +15,6 @@ public class Activity {
     private Integer ifjoin;
     private ArrayList<String> memberid;
     private String site;
-    /**
-     * introduce
-     */
     private String itrdc;
     /**
      * 活动类型
