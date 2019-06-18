@@ -138,4 +138,5 @@ public interface ClubServices {
      * @return
      */
     void setitrdc(String clubid,String itrdc);
+
 }

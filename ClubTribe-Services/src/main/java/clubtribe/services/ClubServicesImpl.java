@@ -98,5 +98,4 @@ public class ClubServicesImpl implements ClubServices {
     public void setitrdc(String clubid, String itrdc) {
         clubMapper.setitrdc(clubid,itrdc);
     }
-
 }
