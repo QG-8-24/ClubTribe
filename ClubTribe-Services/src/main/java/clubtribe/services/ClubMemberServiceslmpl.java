@@ -66,6 +66,11 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
         return clubMemberMapper.removeadmin(userid, clubid);
     }
 
+    /**
+     * 移除成员
+     * @param userid
+     * @param clubid
+     */
     @Override
     public void removemember(String userid, String clubid) {
         clubMemberMapper.removemember(userid,clubid);
