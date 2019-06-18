@@ -15,4 +15,8 @@ public interface UserServices_TYC {
     Integer findSchoolId(String schoolname, String schooladress);
 
     Integer auditRequest(String url, Map<String, String> map) throws IOException;
+
+    Integer findclubId(String schoolname, String clubname);
+
+    Integer auditRequest2(String url, Map<String, String> map) throws IOException;
 }

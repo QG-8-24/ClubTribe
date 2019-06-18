@@ -80,9 +80,18 @@ public class UserServicesTYCImpl implements UserServices_TYC {
         schoolmap.put("schooladress",schooladress);
         return userMapperTYC.findSchoolID(schoolmap);
     }
+    @Override
+    public Integer findclubId(String schoolname, String clubname) {
+        Map<String,String> clubmap=new HashMap<>();
+        Integer schoolid=userMapperTYC.findSchoolIDByName(schoolname);
+        System.out.println("找到的schoolid:"+schoolid);
+        clubmap.put("schoolid",String.valueOf(schoolid));
+        clubmap.put("clubname",clubname);
+        return userMapperTYC.findclubId(clubmap);
+    }
 
     /**
-     * 发送认证请求
+     * 向文件写入学校认证请求
      * @param url
      * @param map
      * @return
@@ -97,6 +106,26 @@ public class UserServicesTYCImpl implements UserServices_TYC {
         FileWriter fileWriter=new FileWriter(file,true);
         String sep="@";
         String content=map.get("schoolname")+sep+map.get("schooladress")+sep+map.get("img")+"\n";
+        fileWriter.write(content);
+        fileWriter.close();
+        return 1;
+    }
+    /**
+     * 向文件写入社团认证请求
+     * @param url
+     * @param map
+     * @return
+     */
+    @Override
+    public Integer auditRequest2(String url, Map<String, String> map) throws IOException {
+        File file=new File(url);
+        if(!file.exists()| !file.isFile()){
+            System.out.println("不存在指定路径");
+            return 0;
+        }
+        FileWriter fileWriter=new FileWriter(file,true);
+        String sep="@";
+        String content=map.get("clubname")+sep+map.get("schoolname")+sep+map.get("userid")+sep+map.get("img")+"\n";
         fileWriter.write(content);
         fileWriter.close();
         return 1;

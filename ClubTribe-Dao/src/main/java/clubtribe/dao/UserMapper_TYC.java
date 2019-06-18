@@ -41,4 +41,14 @@ public interface UserMapper_TYC {
      * @return
      */
     Integer findSchoolID(Map<String, String> map);
+
+
+    Integer findclubId(Map<String, String> clubmap);
+    Integer findSchoolIDByName(String schoolname);
+
+    /**
+     * select clubid by clubname and schoolname
+     * @return
+     */
+
 }

@@ -40,8 +40,12 @@
                             });
                             if (admin == ""||admin==null) {
                                 $("#username").append(username);
+                                $("#schoolapply").append('学校申请');
+                                $("#clubapply").append('社团申请');
                             }else {
                                 $("#admin").append(username);
+                                $("#schoolcheck").append('校园认证');
+                                $("#clubcheck").append('社团认证');
                             }
                             $("#quit").append('退出');
                         }
@@ -52,10 +56,16 @@
             $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
             });
-            $("#admin").click(function () {
+            $("#schoolcheck").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid+ '&admin=' + admin);
             });
-            $("#quit").click(function () {
+            $("#schoolapply").click(function () {
+                $(window).attr('location', '${pageContext.request.contextPath}/user/toCompusAccr?userid=' + userid+ '&admin=' + admin);
+            });
+            $("#clubapply").click(function () {
+                $(window).attr('location', '${pageContext.request.contextPath}/user/toClubsaccr?userid=' + userid+ '&admin=' + admin);
+            });
+                $("#quit").click(function () {
                 if(confirm("确定退出吗")){
                     alert("退出成功");
                     return true;
@@ -198,6 +208,11 @@
             <a href="${pageContext.request.contextPath}/user/toLogin" id="userlog">用户登录</a>
             <a href="#" id="username"></a>
             <a href="#" id="admin"></a>
+            <a href="#" id="schoolcheck"></a>
+            <a href="#" id="clubcheck"></a>
+            <a href="#" id="schoolapply"></a>
+            <a href="#" id="clubapply"></a>
+
             <a href="/" id="quit"></a>
         </div>
     </div>
@@ -283,4 +298,5 @@
         })
         return map;
     }
+
 </script>

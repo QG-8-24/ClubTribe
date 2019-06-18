@@ -16,4 +16,11 @@
     <select id="findSchoolID" parameterType="java.util.Map" resultType="java.lang.Integer">
         select Schoolid from t_school where Schoolname=#{schoolname} and SchoolAddress=#{schooladress}
     </select>
+    <select id="findSchoolIDByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select Schoolid from t_school where Schoolname=#{schoolname}
+    </select>
+    <!--select clubid by clubname and schoolid-->
+    <select id="findclubId" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select clubid from t_clubs where clubname=#{clubname} and schoolid=#{schoolid}
+    </select>
 </mapper>
