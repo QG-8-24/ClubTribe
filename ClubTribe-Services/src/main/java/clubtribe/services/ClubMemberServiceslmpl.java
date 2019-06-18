@@ -70,4 +70,5 @@ public class ClubMemberServiceslmpl implements ClubMemberServices {
     public void removemember(String userid, String clubid) {
         clubMemberMapper.removemember(userid,clubid);
     }
+
 }

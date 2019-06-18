@@ -64,4 +64,5 @@ public interface ClubMemberServices {
      * @param userid
      */
     void removemember(String userid, String clubid);
+
 }
