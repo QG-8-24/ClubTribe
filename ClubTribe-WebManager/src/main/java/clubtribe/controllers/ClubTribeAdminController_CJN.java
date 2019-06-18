@@ -1,14 +1,11 @@
 package clubtribe.controllers;
 
-import clubtribe.pojo.School;
 import clubtribe.services.ClubSearchServices_CJN;
 import clubtribe.services.ClubTribeAdminServices_CJN;
 import clubtribe.services.UserServices_TYC;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;

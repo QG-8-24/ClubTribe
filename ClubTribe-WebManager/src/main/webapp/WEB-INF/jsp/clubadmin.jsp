@@ -525,7 +525,7 @@
             <ul id="box2ul" style="display:block;position: relative">
             </ul>
         </div>
-        <div id="box3" style="height: 100%;width: 100%;overflow: hidden;">
+        <div id="box3" style="height: 100%;width: 100%;overflow: auto;">
         </div>
         <div id="box4" style="height: 100%;width: 100%;overflow: hidden;">
             <ul>

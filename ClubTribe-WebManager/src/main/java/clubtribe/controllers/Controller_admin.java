@@ -251,7 +251,7 @@ public class Controller_admin {
     @RequestMapping(value = "removeacmember", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String removeacmember(String id, String userid) throws IOException, ClassNotFoundException {
-        String filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt";
+        String filepath = "D:\\clubtribefile\\activatyfile\\activity.txt";
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
@@ -365,7 +365,7 @@ public class Controller_admin {
     public String initact(String clubid) throws IOException, ClassNotFoundException {
         Map<Activity, ArrayList<User>> result = new HashMap<>();
         ArrayList<Activity> list = activityServices.getactivitbyid(clubid);
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\clubtribefile\\activatyfile\\activity.txt"));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
         for (Activity it : list) {
@@ -389,7 +389,7 @@ public class Controller_admin {
     @RequestMapping(value = "removeac", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String removeac(String id) throws IOException, ClassNotFoundException, ParseException {
-        String file = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt";
+        String file = "D:\\clubtribefile\\activatyfile\\activity.txt";
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();

@@ -102,7 +102,7 @@ public class Controller_user {
                 str = "你已是该社团成员 无需再次擦操作！";
             } else {
                 if (clubsServices.getmsg(Integer.parseInt(clubid)) == null || clubsServices.getmsg(Integer.parseInt(clubid)).length() == 0) {
-                    String filename = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/msg" + clubid + ".txt";
+                    String filename = "D:/clubtribefile/clubmsg/msg" + clubid + ".txt";
                     File file = new File(filename);
                     if (!file.exists()) {
                         file.createNewFile();
@@ -278,7 +278,7 @@ public class Controller_user {
         String filepath = clubsServices.getmsgboard(Integer.parseInt(clubid));
         ArrayList<String> list = null;
         if (filepath == null || filepath.length() == 0) {
-            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/msgboard" + clubid + ".txt";
+            filepath = "D:/clubtribefile/clubmsg/msgboard" + clubid + ".txt";
             File file = new File(filepath);
             if (!file.exists()) {
                 file.createNewFile();
@@ -319,8 +319,9 @@ public class Controller_user {
     @ResponseBody
     public String initalbum(String clubid) throws JsonProcessingException {
         String filepath = clubsServices.getalbum(clubid);
+        System.out.println(filepath);
         if (filepath == null || filepath.length() == 0) {
-            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubalbum/album" + clubid;
+            filepath = "D:/clubtribefile/clubalbum/album" + clubid;
             new File(filepath).mkdir();
             Club club = new Club();
             club.setClubid(clubid);
@@ -427,7 +428,7 @@ public class Controller_user {
         String filepath = clubsServices.getnotice(Integer.parseInt(clubid));
         ArrayList<String> list = null;
         if (filepath == null || filepath.length() == 0) {
-            filepath = "D:/ClubTribe/ClubTribe-WebManager/src/main/webapp/clubtribefile/clubmsg/notice" + clubid + ".txt";
+            filepath = "D:/clubtribefile/clubmsg/notice" + clubid + ".txt";
             File file = new File(filepath);
             if (!file.exists()) {
                 file.createNewFile();
@@ -501,7 +502,7 @@ public class Controller_user {
     public String initsharefile(String clubid) throws JsonProcessingException {
         String filepath = clubsServices.getsharefile(clubid);
         if (filepath == null || filepath.length() == 0) {
-            filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\clubsharefile\\files" + clubid;
+            filepath = "D:\\clubtribefile\\clubsharefile\\files" + clubid;
             new File(filepath).mkdir();
             Club club = new Club();
             club.setClubid(clubid);
@@ -557,7 +558,7 @@ public class Controller_user {
     @RequestMapping("createNewActivity")
     @ResponseBody
     public String createNewActivity(String clubid, String aname, String begintime, String endtime, String atype, String aplace, String itrdc) throws IOException, ClassNotFoundException {
-        String filepath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile";
+        String filepath = "D:\\clubtribefile\\activatyfile";
         File file = new File(filepath + "\\activity.txt");
         Map<Integer, ArrayList<String>> map = new TreeMap<>();
         if (!file.exists()) {
@@ -597,7 +598,7 @@ public class Controller_user {
     @ResponseBody
     public String getallactivity() throws IOException, ClassNotFoundException {
         ArrayList<Activity> acs = activityServices.getallactivity();
-        ObjectInputStream oos = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        ObjectInputStream oos = new ObjectInputStream(new FileInputStream("D:\\clubtribefile\\activatyfile\\activity.txt"));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) oos.readObject();
         oos.close();
         for (Activity it : acs) {
@@ -622,7 +623,7 @@ public class Controller_user {
         String result = "加入成功!";
         boolean ifjoin = false;
         ObjectMapper objectMapper = new ObjectMapper();
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\clubtribefile\\activatyfile\\activity.txt"));
         Map<Integer, ArrayList<String>> map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();
         for (String it : map.get(Integer.parseInt(id))) {
@@ -635,7 +636,7 @@ public class Controller_user {
         } else {
             result = "请不要重复加入!";
         }
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\clubtribefile\\activatyfile\\activity.txt"));
         oos.writeObject(map);
         return objectMapper.writeValueAsString(result);
     }

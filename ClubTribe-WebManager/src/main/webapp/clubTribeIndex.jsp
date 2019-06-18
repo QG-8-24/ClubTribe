@@ -19,7 +19,7 @@
     <script>
         $(function () {
             var map=getParamsByGet();
-            var userid = '${userid}';
+            var userid = '${userid}'
             var admin = map.get('admin');
             var flag=1;
             var check=1;
@@ -65,13 +65,13 @@
             $("#clubapply").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/user/toClubsaccr?userid=' + userid+ '&admin=' + admin);
             });
-                $("#quit").click(function () {
+            $("#quit").click(function () {
                 if(confirm("确定退出吗")){
                     alert("退出成功");
                     return true;
                 }
                 return false;
-            })
+            });
             function findFirstData() {
                 $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
                     var school = data;
@@ -89,7 +89,6 @@
                                 }
                             }
                         }
-
                     }
                     $("#select1").append(res);
                 });
@@ -145,7 +144,8 @@
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid='+ club[i].clubid+'');
+                            alert(res);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -190,7 +190,6 @@
                     $("#quitbox").hide();
                 }
             });
-
         })
     </script>
 </head>
@@ -212,7 +211,6 @@
             <a href="#" id="clubcheck"></a>
             <a href="#" id="schoolapply"></a>
             <a href="#" id="clubapply"></a>
-
             <a href="/" id="quit"></a>
         </div>
     </div>
@@ -223,7 +221,7 @@
             </div>
             <img src="../img/back.jpg" alt="#">
             <%--<div id="secondbtn">--%>
-                <%--查找个人社团--%>
+            <%--查找个人社团--%>
             <%--</div>--%>
         </div>
         <div class="mid">
@@ -298,5 +296,4 @@
         })
         return map;
     }
-
 </script>

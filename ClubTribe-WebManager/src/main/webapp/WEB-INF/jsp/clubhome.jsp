@@ -321,7 +321,7 @@
                             "width": ulwidth
                         });
                         $.each(albums, function (i, it) {
-                            path = "../clubtribefile/clubalbum/album" + cid + "/" + it;
+                            path = "/clubtribefile/clubalbum/album" + cid + "/" + it;
                             addpicture(path);
                         });
                     }

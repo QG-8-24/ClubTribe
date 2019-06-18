@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>校园认证</title>
+  <title>社团申请</title>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/AdminLTE.min.css">
@@ -13,23 +13,24 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/main.css">
     <link rel="stylesheet" href="/bootstrap/js/bootstrap.min.js" />
     <script type="application/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+
     <style type="text/css">
     </style>
 </head>
 <body >
-<div class="container header ">
-    <div class="text-center"><h1>学校申请</h1></div>
+<div class="container header " style="">
+    <div class="text-center"><h1>社团申请</h1></div>
     <div class="alert alert-danger alert-dismissible" style="display:none">
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle" id="errorMessage"></i></h4>
     </div>
     <div class="text-right"><small>暂时不要认证？<a href="../../clubTribeIndex.jsp">返回上一级</a></small></div>
     <div class="form-group">
-        <label>学校名称</label>
-        <input type="text" class="form-control" id="schoolname">
+        <label>社团名称</label>
+        <input type="text" class="form-control" id="clubname" placeholder="社团全名，如..社团">
     </div>
     <div class="form-group">
-        <label>学校地址</label>
-        <input type="text" class="form-control" id="schooladress">
+        <label>社团所在学校</label>
+        <input type="text" class="form-control" id="schoolname" placeholder="学校官方名称,如..大学/学院">
     </div>
     <div id="photobox" style="width: 1132px;height: 500px;display: none">
        <img id="img">
@@ -64,7 +65,7 @@
         formdata.append("img",$('#lefile').prop("files")[0]);
         $.ajax({
             type:'post',
-            url:'${basePath}/user/fileUpload',
+            url:'${basePath}/user/fileUpload2',
             async:true,
             data:formdata,
             processData:false,
@@ -115,37 +116,53 @@
 
     function doAccr() {
         var schoolname=$("#schoolname").val();
-        var schooladress=$("#schooladress").val();
+        var clubname=$("#clubname").val();
         var img=$('#photoCover').val();
         var errorMessage=$("#errorMessage");
         var URL=$('#img').attr('src');
+        var map=getParamsByGet();
+        var userid=map.get("userid");
+        if(clubname==''){
+            errorMessage.parent().parent().css('display','block');
+            errorMessage.text("社团名称为空！");
+            return false;
+        }
         if(schoolname==''){
             errorMessage.parent().parent().css('display','block');
             errorMessage.text("学校名称为空！");
             return false;
         }
-        if(schooladress==''){
-            errorMessage.parent().parent().css('display','block');
-            errorMessage.text("学校地址为空！");
-            return false;
-        }
         errorMessage.parent().parent().css('display','none');
-        var url="${basePath}/user/schoolAccr";
-        var params={"schoolname":schoolname,"schooladress":schooladress,"img":img,"URL":URL};
+        var url="${basePath}/user/clubAccr";
+        var params={"schoolname":schoolname,"clubname":clubname,"img":img,"URL":URL,"userid":userid};
         $.post(url,params,function (result) {
             result=result.trim();
+            alert(result);
             if(result=='false'){
                 errorMessage.parent().parent().css('display','block');
                 errorMessage.text("认证失败！");
                 return false;
             }else if(result=='existed'){
                 errorMessage.parent().parent().css('display','block');
-                errorMessage.text("此学校已认证过！");
+                errorMessage.text("此社团已认证过！");
                 return false;
             }else {
                 alert("已发送认证！");
-                location.href="../../clubTribeIndex.jsp?userid=${userid}&admin=${admin}";
+                location.href="../../clubTribeIndex.jsp";
             }
         })
+    }
+</script>
+<script>
+    //获取get请求参数封装成一个map集合
+    function getParamsByGet(){
+        var map=new Map();
+        var paramsStr=location.search.split('?')[1];
+        var paramsArr=(paramsStr||"").split('&');
+        $.each(paramsArr,function (index,item) {
+            var itemArr=item.split("=");
+            map.set(itemArr[0],itemArr[1]);
+        })
+        return map;
     }
 </script>
