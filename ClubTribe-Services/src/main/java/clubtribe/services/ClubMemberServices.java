@@ -58,7 +58,7 @@ public interface ClubMemberServices {
     int removeadmin(String userid, String clubid);
 
     /**
-     * 删除成员
+     * 移除成员
      *
      * @param clubid
      * @param userid
