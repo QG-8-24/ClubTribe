@@ -712,7 +712,6 @@
         <a href="${pageContext.request.contextPath}/user/toLogin" id="log">登录</a>
         <a href="#" id="username"></a>
         <a id="logout" href="${pageContext.request.contextPath}/user/logout" onclick="return false">退出</a>
-        <a href="${pageContext.request.contextPath}/user/toRegister">用户注册</a>
     </div>
 </div>
 <div style="height: 36px;width: 100%;margin:0px auto;font-size: 24px;background: black;text-align: center;color: white">
@@ -725,7 +724,7 @@
         <div id="title"></div>
         <div id="join">JOIN&nbspUS</div>
     </div>
-    <div id="aboutus" style="background:#ccf381;color: #4831d4;">
+    <div id="aboutus">
         <div id="btn">关 于 我 们> > ></div>
         <div id="data" style="width: 100%;height: 100%;overflow: auto"></div>
     </div>

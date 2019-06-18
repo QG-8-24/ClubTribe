@@ -19,7 +19,7 @@
     <script>
         $(function () {
             var map=getParamsByGet();
-            var userid = map.get('userid');
+            var userid = '${userid}';
             var admin = map.get('admin');
             var flag=1;
             var check=1;
@@ -135,8 +135,7 @@
                         var res = "";
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
-                            alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid='+ club[i].clubid+'');
                         }
                     });
                 }
