@@ -117,7 +117,7 @@
     function doAccr() {
         var schoolname=$("#schoolname").val();
         var clubname=$("#clubname").val();
-        var img=$('#photoCover').val();
+        var img=$('#img').attr("src");
         var errorMessage=$("#errorMessage");
         var URL=$('#img').attr('src');
         var map=getParamsByGet();
@@ -130,6 +130,11 @@
         if(schoolname==''){
             errorMessage.parent().parent().css('display','block');
             errorMessage.text("学校名称为空！");
+            return false;
+        }
+        if(img==undefined){
+            errorMessage.parent().parent().css('display','block');
+            errorMessage.text("图片未上传！");
             return false;
         }
         errorMessage.parent().parent().css('display','none');

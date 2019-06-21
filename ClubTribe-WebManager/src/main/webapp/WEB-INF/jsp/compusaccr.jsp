@@ -129,6 +129,11 @@
             errorMessage.text("学校地址为空！");
             return false;
         }
+        if(img==undefined){
+            errorMessage.parent().parent().css('display','block');
+            errorMessage.text("图片未上传！");
+            return false;
+        }
         errorMessage.parent().parent().css('display','none');
         var url="${basePath}/user/schoolAccr";
         var params={"schoolname":schoolname,"schooladress":schooladress,"img":img,"URL":URL};
