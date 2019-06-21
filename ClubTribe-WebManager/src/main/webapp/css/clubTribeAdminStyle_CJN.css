@@ -79,3 +79,7 @@ table.altrowstable td {
 .evenrowcolor{
     background-color:#c3dde0;
 }
+#info tr td a{
+    display: block;
+    cursor: pointer;
+}

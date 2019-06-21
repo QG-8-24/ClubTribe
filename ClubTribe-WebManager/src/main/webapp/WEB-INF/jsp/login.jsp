@@ -81,6 +81,8 @@
                 "username": userName,
                 "password": userPwd,
             },
+
+
             type:'post',
             async:true,
             success: function (result) {
@@ -90,7 +92,7 @@
                     $('#errorMessage').text('用户不存在！');
                 } else
                 {
-                   window.location.href=document.referrer;
+                    window.location.href =document.referrer;
                 }
             },
             error:function () {

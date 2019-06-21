@@ -20,7 +20,7 @@
         $(function () {
             var map=getParamsByGet();
             var userid = '${userid}'
-            var admin = map.get('admin');
+            var admin = '${admin}';
             var flag=1;
             var check=1;
             function init() {
@@ -52,6 +52,8 @@
                     }
                 })
             }
+
+
             init();
             $("#username").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/search/myClub?userid=' + userid);
@@ -59,18 +61,14 @@
             $("#schoolcheck").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/intoAdmin?userid=' + userid+ '&admin=' + admin);
             });
+            $("#clubcheck").click(function () {
+                $(window).attr('location', '${pageContext.request.contextPath}/clubtribeadmin/clubCheck?userid=' + userid+ '&admin=' + admin);
+            });
             $("#schoolapply").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/user/toCompusAccr?userid=' + userid+ '&admin=' + admin);
             });
             $("#clubapply").click(function () {
                 $(window).attr('location', '${pageContext.request.contextPath}/user/toClubsaccr?userid=' + userid+ '&admin=' + admin);
-            });
-            $("#quit").click(function () {
-                if(confirm("确定退出吗")){
-                    alert("退出成功");
-                    return true;
-                }
-                return false;
             });
             function findFirstData() {
                 $.getJSON("${pageContext.request.contextPath}/search/firstData", function (data) {
@@ -89,6 +87,7 @@
                                 }
                             }
                         }
+
                     }
                     $("#select1").append(res);
                 });
@@ -145,7 +144,7 @@
                         for (var i = 0; i < club.length; i++) {
                             res += "uid:" + userid + ",cid:" + club[i].clubid;
                             alert(res);
-                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?userid=' + userid + '&clubid=' + club[i].clubid);
+                            $(window).attr('location', '${pageContext.request.contextPath}/user/clubhome?clubid=' + club[i].clubid);
                         }
                     });
                 }
@@ -190,6 +189,15 @@
                     $("#quitbox").hide();
                 }
             });
+            $("#quit").click(function () {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/user/logout",
+                    success: function () {
+                        alert("退出成功!");
+                        window.location.reload();
+                    }
+                });
+            });
         })
     </script>
 </head>
@@ -211,7 +219,8 @@
             <a href="#" id="clubcheck"></a>
             <a href="#" id="schoolapply"></a>
             <a href="#" id="clubapply"></a>
-            <a href="/" id="quit"></a>
+
+            <a href="${pageContext.request.contextPath}/user/logout" id="quit" onclick="return false"></a>
         </div>
     </div>
     <div  class="no-js">
@@ -221,7 +230,7 @@
             </div>
             <img src="../img/back.jpg" alt="#">
             <%--<div id="secondbtn">--%>
-            <%--查找个人社团--%>
+                <%--查找个人社团--%>
             <%--</div>--%>
         </div>
         <div class="mid">
@@ -293,7 +302,7 @@
         $.each(paramsArr,function (index,item) {
             var itemArr=item.split("=");
             map.set(itemArr[0],itemArr[1]);
-        })
+        });
         return map;
     }
 </script>

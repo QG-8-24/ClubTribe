@@ -1,6 +1,5 @@
 package clubtribe.services;
 
-import clubtribe.pojo.School;
 
 public interface ClubTribeAdminServices_CJN {
 
@@ -8,4 +7,15 @@ public interface ClubTribeAdminServices_CJN {
 
 
     int insert(String schoolname, String schoolid, String clubids, String message, String schooladdress);
+
+    String findIdByName(String schoolname);
+
+    String findClubidsByName(String schoolname);
+
+    int updateClubidsByName(String schoolname, String clubids);
+
+    Integer insertClub(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String album);
+
+
+
 }

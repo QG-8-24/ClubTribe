@@ -295,7 +295,7 @@ public class Controller_admin {
     @RequestMapping(value = "/uploadbg", produces = "text/plain;charset=utf-8")
     @ResponseBody
     public String uploadFiles(HttpServletRequest request, String clubid) throws IOException {
-        String savePath = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\img";
+        String savePath = "D:\\clubtribefile\\clubbg";
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         MultipartFile file = null;
         BufferedOutputStream stream = null;

@@ -16,8 +16,7 @@
             var albums = ["!没有任何照片!"];
             var ifmember = false;
             var ifadmin = false;
-            var autoplaytime;
-            var bg = "../img/bg" + cid + ".jpg";
+            var bg = "/clubtribefile/clubbg/bg" + cid + ".jpg";
             $("#clubbg #img").attr("src", bg);
 
             function init() {

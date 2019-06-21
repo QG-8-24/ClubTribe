@@ -7,4 +7,19 @@
     <insert id="insert" parameterType="clubtribe.pojo.School">
        insert into t_school(Schoolname,Schoolid,Clubids,Message,SchoolAddress) value (#{schoolname},#{schoolid},#{clubids},#{message},#{schooladdress})
    </insert>
+    <select id="findIdByName" resultType="java.lang.String">
+        select Schoolid from t_school where Schoolname=#{schoolname}
+    </select>
+    <select id="findClubidsByName" resultType="java.lang.String">
+        select Clubids from t_school where Schoolname=#{schoolname}
+    </select>
+    <update id="updateClubidsByName" parameterType="clubtribe.pojo.School">
+         update t_school set clubids=#{clubids} where Schoolname=#{schoolname}
+    </update>
+    <insert id="insertClub" parameterType="clubtribe.pojo.Club">
+       insert into t_clubs(schoolid,clubid,clubname,perid,adminid,msgboard,msg,album) value (#{schoolid},#{clubid},#{clubname},#{perid},#{adminid},#{msgboard},#{msg},#{album})
+   </insert>
+
+
+
 </mapper>

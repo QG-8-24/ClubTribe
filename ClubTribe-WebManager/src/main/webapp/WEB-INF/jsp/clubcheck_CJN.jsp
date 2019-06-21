@@ -1,18 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ClubTribe校园认证界面</title>
+    <title>ClubTribe社团认证界面</title>
     <link rel="stylesheet" type="text/css" href="../css/clubTribeAdminStyle_CJN.css">
     <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function () {
             function init() {
-                $.getJSON("${pageContext.request.contextPath}/clubtribeadmin/getmsg",function (data) {
+                $.getJSON("${pageContext.request.contextPath}/clubtribeadmin/getclub",function (data) {
                     $.each(data,function (i, item) {
-                        var schoolList=item.split("@");
-                        var schoolname=schoolList[0];
-                        var schooladdress=schoolList[1];
-                        var photopath=schoolList[2];
+                        var clubList=item.split("@");
+                        var clubname=clubList[0];
+                        var schoolname=clubList[1];
+                        var applyman=clubList[2];
+                        var photopath=clubList[3];
                         var agree='认证';
                         var reject='拒绝';
                         var agreeid = 'agree' + i;
@@ -21,15 +22,16 @@
                         var photoid='photo'+i;
                         var res = "";
                         res+="<tr>";
+                        res += "<td>" + clubname + "</td>";
                         res += "<td>" + schoolname + "</td>";
-                        res += "<td>" + schooladdress + "</td>";
+                        res += "<td>" + applyman + "</td>";
                         res += "<td><a id='"+photoid+"'>" + check + "</a></td>";
                         // res += "<td><a id='"+"agree_"+i+"'>" + agree + "</a></td>";
                         res += "<td><a id='"+agreeid+"'>" + agree + "</a></td>";
                         res += "<td><a id='"+rejectid+"'>" + reject + "</a></td>";
                         res+="</tr>";
-                        $("#" + agreeid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/agree?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
-                        $("#" + rejectid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/reject?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
+                        $("#" + agreeid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/clubagree?clubname="+clubname+"&schoolname="+schoolname+"&applyman="+applyman+"&username=${username}&userid=${userid}&admin=${admin}");
+                        $("#" + rejectid + "").attr("href","${pageContext.request.contextPath}/clubtribeadmin/clubreject?clubname="+clubname+"&schoolname="+schoolname+"&applyman="+applyman+"&username=${username}&userid=${userid}&admin=${admin}");
                         $("#" + photoid + "").attr("href",photopath);
                         $("#info").append(res);
                         $("#" + photoid + "").click(function () {
@@ -41,7 +43,7 @@
                         })
                         $("#" + agreeid + "").click(function () {
                             if(confirm("确定认证吗")){
-                                $(this).attr("href","${pageContext.request.contextPath}/clubtribeadmin/agree?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
+                                $(this).attr("href","${pageContext.request.contextPath}/clubtribeadmin/clubagree?clubname="+clubname+"&schoolname="+schoolname+"&applyman="+applyman+"&username=${username}&userid=${userid}&admin=${admin}");
                                 alert("认证成功");
                                 init();
                                 return true;
@@ -50,7 +52,7 @@
                         })
                         $("#" + rejectid + "").click(function () {
                             if(confirm("确定拒绝吗")){
-                                $(this).attr("href","${pageContext.request.contextPath}/clubtribeadmin/reject?schoolname="+schoolname+"&schooladdress="+schooladdress+"&username=${username}&userid=${userid}&admin=${admin}");
+                                $(this).attr("href","${pageContext.request.contextPath}/clubtribeadmin/clubreject?clubname="+clubname+"&schoolname="+schoolname+"&applyman="+applyman+"&username=${username}&userid=${userid}&admin=${admin}");
                                 alert("已拒绝");
                                 init();
                                 return true;
@@ -60,9 +62,12 @@
                     });
                 })
             }
-            init();
 
+
+            init();
         })
+
+
     </script>
     <script type="text/javascript">
         function altRows(id){
@@ -106,11 +111,12 @@
         <table class="altrowstable" id="alternatecolor">
             <thead>
             <tr>
-                <th colspan="6"><h2>学校认证申请列表</h2></th>
+                <th colspan="6"><h2>社团认证申请列表</h2></th>
             </tr>
             <tr>
-                <th>学校名</th>
-                <th>地址</th>
+                <th>社团名</th>
+                <th>入驻学校</th>
+                <th>申请人id</th>
                 <th>图片</th>
                 <th colspan="2">操作</th>
             </tr>

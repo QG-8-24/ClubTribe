@@ -12,7 +12,7 @@
             var uid = '${userid}';
             var cid = '${clubid}';
             var perid = "";
-            var bg = "../img/bg" + cid + ".jpg";
+            var bg = "/clubtribefile/clubbg/bg" + cid + ".jpg";
             $("#bg").attr("src", bg);
 
             function init() {
@@ -444,7 +444,6 @@
                     success: function (data) {
                         alert(data);
                         $("#uploadbox").fadeOut(500);
-                        $("#bg").attr("src", bg);
                     },
                     error: function (data) {
                         alert(data);

@@ -108,6 +108,7 @@ public class Controller_TYC {
     @ResponseBody
     public void login(HttpServletRequest request) {
         request.getSession(true).removeAttribute("userid");
+        request.getSession(true).removeAttribute("admin");
     }
 
     /**

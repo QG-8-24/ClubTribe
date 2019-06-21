@@ -85,9 +85,7 @@
                     $('#errorMessage').text('管理员不存在或密码错误！');
                 } else {
                     var str = result.split("@");
-                    var username = str[0];
-                    var admin = str[1];
-                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp?userid=" + username + '&admin=' + admin;
+                    location.href = "${pageContext.request.contextPath}/clubTribeIndex.jsp" ;
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

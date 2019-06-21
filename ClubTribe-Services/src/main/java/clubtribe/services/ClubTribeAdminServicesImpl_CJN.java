@@ -21,5 +21,24 @@ public class ClubTribeAdminServicesImpl_CJN implements ClubTribeAdminServices_CJ
         return clubTribeAdminMapper_cjn.insert(schoolname,schoolid,clubids,message,schooladdress);
     }
 
+    @Override
+    public String findIdByName(String schoolname) {
+        return clubTribeAdminMapper_cjn.findIdByName(schoolname);
+    }
+
+    @Override
+    public String findClubidsByName(String schoolname) {
+        return clubTribeAdminMapper_cjn.findClubidsByName(schoolname);
+    }
+
+    @Override
+    public int updateClubidsByName(String schoolname, String clubids) {
+        return clubTribeAdminMapper_cjn.updateClubidsByName(schoolname,clubids);
+    }
+    @Override
+    public Integer insertClub(Integer schoolid, String clubid, String clubname, Integer perid, String adminid, String msgboard, String msg, String album) {
+        return  clubTribeAdminMapper_cjn.insertClub(schoolid,clubid,clubname,perid,adminid,msgboard,msg,album);
+    }
+
 
 }
