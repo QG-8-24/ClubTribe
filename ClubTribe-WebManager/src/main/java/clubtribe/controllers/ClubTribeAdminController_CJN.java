@@ -1,6 +1,7 @@
 package clubtribe.controllers;
 
 import clubtribe.pojo.ClubMember;
+import clubtribe.pojo.User;
 import clubtribe.services.*;
 import commom.Generator;
 import net.sf.json.JSONArray;
@@ -398,6 +399,12 @@ public class ClubTribeAdminController_CJN {
         String username1 =services.findnamebyid(Integer.parseInt(applyman));
         ClubMember clubMember = new ClubMember(clubid,applyman,username1, "", "0", 1);
         clubMemberServices.insert(clubMember);
+        String clubidss =services.getuserclubs(Integer.parseInt(userid));
+        clubidss = clubidss + "@" + clubid;
+        User user = new User();
+        user.setUserid(Integer.parseInt(userid));
+        user.setClubids(clubidss);
+        services.joinclub(user);
         return modelAndView;
     }
 
@@ -430,7 +437,7 @@ public class ClubTribeAdminController_CJN {
             br = new BufferedReader(new FileReader(inFile));
             int idx = 0;
             while ((readedLine = br.readLine()) != null) {
-                if (readedLine.contains(schoolname)) {
+                if (readedLine.contains(clubname)) {
                     continue;
                 }
                 bw.write(readedLine + "\n");
