@@ -623,7 +623,7 @@
                                     "</div>\n" +
                                     "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
                                     "</li>");
-                            } else {
+                            } else if (it.type == 2) {
                                 if (it.ifjoin != "1") {
                                     $(".joinactivity").css({"display": "none"});
                                 } else {
@@ -682,21 +682,21 @@
 
             $("#aright").click(function () {
                 var pos = $("#show3 ul").position().left;
-                var poss="-"+($("#show3 ul").css("width").split("px")[0]-document.body.clientWidth);
-                if ((pos-1000)>poss) {
+                var poss = "-" + ($("#show3 ul").css("width").split("px")[0] - document.body.clientWidth);
+                if ((pos - 1000) > poss) {
                     pos -= 1000;
-                }else {
-                    pos=poss;
+                } else {
+                    pos = poss;
                 }
                 $("#show3 ul").animate({left: pos}, 500);
             });
 
             $("#aleft").click(function () {
                 var pos = $("#show3 ul").position().left;
-                if ((pos+1000)<0) {
+                if ((pos + 1000) < 0) {
                     pos += 1000;
-                }else {
-                    pos=0;
+                } else {
+                    pos = 0;
                 }
                 $("#show3 ul").animate({left: pos}, 500);
             });
