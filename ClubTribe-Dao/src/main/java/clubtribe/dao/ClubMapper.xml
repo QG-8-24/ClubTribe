@@ -4,6 +4,12 @@
     <select id="getclubname" resultType="java.lang.String">
         select clubname from t_clubs where clubid =#{?}
     </select>
+    <select id="getsnamebyid" resultType="java.lang.String">
+        select Schoolname from t_school where Schoolid =#{?}
+    </select>
+    <select id="getschoolid" resultType="java.lang.String">
+        select schoolid from t_clubs where clubid =#{?}
+    </select>
     <select id="getmsg" resultType="java.lang.String">
         select msg from t_clubs where clubid =#{?}
     </select>

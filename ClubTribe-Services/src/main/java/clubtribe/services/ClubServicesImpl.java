@@ -20,6 +20,16 @@ public class ClubServicesImpl implements ClubServices {
     }
 
     @Override
+    public String getschoolid(Integer clubid) {
+        return clubMapper.getschoolid(clubid);
+    }
+
+    @Override
+    public String getsnamebyid(String schoolid) {
+        return clubMapper.getsnamebyid(schoolid);
+    }
+
+    @Override
     public String getmsg(Integer clubid) {
         return clubMapper.getmsg(clubid);
     }

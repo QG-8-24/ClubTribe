@@ -12,6 +12,22 @@ public interface ClubServices {
     String findnamebyid(Integer clubid);
 
     /**
+     * 根据cludid查询学校id
+     *
+     * @param clubid
+     * @return clubname
+     */
+    String getschoolid(Integer clubid);
+
+    /**
+     * get学校名字
+     *
+     * @param schoolid
+     * @return
+     */
+    String getsnamebyid(String schoolid);
+
+    /**
      * 获取通知
      *
      * @param clubid
@@ -119,10 +135,11 @@ public interface ClubServices {
     /**
      * 设置社团名
      *
-     * @param  clubname
+     * @param clubname
      * @return
      */
-    int setclubname(Integer clubid,String clubname);
+    int setclubname(Integer clubid, String clubname);
+
     /**
      * 获取社团简介
      *
@@ -137,6 +154,6 @@ public interface ClubServices {
      * @param clubid
      * @return
      */
-    void setitrdc(String clubid,String itrdc);
+    void setitrdc(String clubid, String itrdc);
 
 }

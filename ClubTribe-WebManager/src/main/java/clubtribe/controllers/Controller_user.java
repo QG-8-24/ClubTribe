@@ -558,6 +558,10 @@ public class Controller_user {
     @RequestMapping("createNewActivity")
     @ResponseBody
     public String createNewActivity(String clubid, String aname, String begintime, String endtime, String atype, String aplace, String itrdc) throws IOException, ClassNotFoundException {
+        String cn=clubsServices.findnamebyid(Integer.parseInt(clubid));
+        String sid=clubsServices.getschoolid(Integer.parseInt(clubid));
+        String sn=clubsServices.getsnamebyid(sid);
+        System.out.println(cn +"@"+ sn);
         String filepath = "D:\\clubtribefile\\activatyfile";
         File file = new File(filepath + "\\activity.txt");
         Map<Integer, ArrayList<String>> map = new TreeMap<>();
@@ -572,7 +576,8 @@ public class Controller_user {
             id = Integer.parseInt(new Generator().gRanId());
         }
         ArrayList<String> member = new ArrayList<>();
-        Activity activity = new Activity(clubid, id, aname, begintime, endtime, 1, member, aplace, itrdc, Integer.parseInt(atype));
+        Activity activity = new Activity(clubid, id, aname, begintime, endtime, 1, member, aplace, itrdc,sn ,cn,Integer.parseInt(atype));
+        System.out.println(activity.toString());
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
         map = (Map<Integer, ArrayList<String>>) ois.readObject();
         ois.close();

@@ -5,7 +5,7 @@
         select id from activity
     </select>
     <insert id="insertNewActivity" parameterType="clubtribe.pojo.Activity">
-      insert into activity(id,clubid,name,type,begintime,endtime,ifjoin,site,itrdc) value (#{id},#{clubid},#{name},#{type},#{begintime},#{endtime},#{ifjoin},#{site},#{itrdc})
+      insert into activity(id,clubid,name,type,begintime,endtime,ifjoin,site,itrdc,schoolname,clubname) value (#{id},#{clubid},#{name},#{type},#{begintime},#{endtime},#{ifjoin},#{site},#{itrdc},#{shoolname},#{clubname})
     </insert>
     <select id="getallactivity" resultType="clubtribe.pojo.Activity">
         select * from activity

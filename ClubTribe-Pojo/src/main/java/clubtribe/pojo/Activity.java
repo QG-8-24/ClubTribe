@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * 活动pojo
+ *
  * @author QGshen
  */
 public class Activity {
@@ -16,6 +17,8 @@ public class Activity {
     private ArrayList<String> memberid;
     private String site;
     private String itrdc;
+    private String schoolname;
+    private String clubname;
     /**
      * 活动类型
      * 1 社团内部活动
@@ -27,7 +30,7 @@ public class Activity {
         super();
     }
 
-    public Activity(String clubid, Integer id, String name, String begintime, String endtime, Integer ifjoin, ArrayList<String> memberid, String site, String itrdc, Integer type) {
+    public Activity(String clubid, Integer id, String name, String begintime, String endtime, Integer ifjoin, ArrayList<String> memberid, String site, String itrdc, String schoolname, String clubname, Integer type) {
         this.clubid = clubid;
         this.id = id;
         this.name = name;
@@ -37,7 +40,25 @@ public class Activity {
         this.memberid = memberid;
         this.site = site;
         this.itrdc = itrdc;
+        this.schoolname = schoolname;
+        this.clubname = clubname;
         this.type = type;
+    }
+
+    public String getSchoolname() {
+        return schoolname;
+    }
+
+    public void setSchoolname(String schoolname) {
+        this.schoolname = schoolname;
+    }
+
+    public String getClubname() {
+        return clubname;
+    }
+
+    public void setClubname(String clubname) {
+        this.clubname = clubname;
     }
 
     public String getClubid() {
@@ -132,6 +153,8 @@ public class Activity {
                 ", memberid=" + memberid +
                 ", site='" + site + '\'' +
                 ", itrdc='" + itrdc + '\'' +
+                ", schoolname='" + schoolname + '\'' +
+                ", clubname='" + clubname + '\'' +
                 ", type=" + type +
                 '}';
     }

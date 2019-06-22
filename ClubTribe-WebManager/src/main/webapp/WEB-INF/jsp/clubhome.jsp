@@ -601,6 +601,7 @@
                 $.ajax({
                     url: "${pageContext.request.contextPath}/user/getallactivity",
                     success: function (resp) {
+                        console.log(resp);
                         $.each(resp, function (i, it) {
                             if (it.type == 1 && it.clubid == cid) {
                                 $("#s2c1 ul").children().remove();

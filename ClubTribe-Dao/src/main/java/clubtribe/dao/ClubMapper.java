@@ -17,6 +17,21 @@ public interface ClubMapper {
     String getclubname(Integer clubid);
 
     /**
+     * 根据cludid查询学校id
+     *
+     * @param clubid
+     * @return clubname
+     */
+    String getschoolid(Integer clubid);
+
+    /**
+     * get学校名字
+     * @param schoolid
+     * @return
+     */
+    String getsnamebyid(String schoolid);
+
+    /**
      * 设置社团名
      *
      * @param clubid
