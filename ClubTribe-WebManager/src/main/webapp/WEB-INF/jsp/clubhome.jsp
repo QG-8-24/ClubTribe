@@ -585,6 +585,9 @@
                                 },
                                 success: function (resp) {
                                     alert(resp);
+                                    $("#aname").val("");
+                                    $("#aplace").val("");
+                                    $("#itrdc").val("");
                                 }
                             })
                             ;
@@ -634,7 +637,7 @@
                                     "<div class=\"sld1\">\n" +
                                     "<div style=\"display: none\" class=\"aid\">" + it.id + "</div>\n" +
                                     "<div style=\"font-size: 24px;font-weight: bold\">" + it.name + "</div>\n" +
-                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团联合活动<br>简介:" + it.itrdc + "</div>\n" +
+                                    "<div>时间:" + it.begintime + "--" + it.endtime + "<br>地点:<br>已报人数:" + it.memberid.length + "<br>类型:社团联合活动<br>主办方: <a style='color: deepskyblue;text-decoration: underline' href=\"/user/clubhome?clubid=" + it.clubid + "\">" + it.clubname + "(" + it.schoolname + ")" + "</a><br>简介:" + it.itrdc + "</div>\n" +
                                     "</div>\n" +
                                     "<div class=\"sld2\"><span class=\"joinactivity\">参&nbsp加</span></div>\n" +
                                     "</li>");
@@ -762,6 +765,7 @@
                         <td>用户名</td>
                         <td>总签到天数</td>
                     </tr>
+
                 </table>
             </div>
         </div>

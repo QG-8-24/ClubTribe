@@ -372,7 +372,6 @@ public class Controller_admin {
             ArrayList<User> userlist = new ArrayList<>();
             for (String itt : map.get(it.getId())) {
                 User user = userServices.getuserbyid(Integer.parseInt(itt));
-                System.out.println(user);
                 userlist.add(user);
             }
             result.put(it, userlist);

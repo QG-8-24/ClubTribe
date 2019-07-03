@@ -49,8 +49,7 @@ public class ActivityServicesImpl implements ActivityServices {
     @Override
     @Scheduled(cron = "0 0 0 * * ?")
     public void removeactivity() throws ParseException, IOException, ClassNotFoundException {
-        System.out.println("执行++++++++++++");
-        String file = "D:\\ClubTribe\\ClubTribe-WebManager\\src\\main\\webapp\\clubtribefile\\activatyfile\\activity.txt";
+        String file = "D:\\clubtribefile\\activatyfile\\activity.txt";
         Date dt = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

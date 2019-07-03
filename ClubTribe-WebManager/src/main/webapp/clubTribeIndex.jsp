@@ -84,10 +84,10 @@
                                     break;
                                 } else {
                                     res += "<option>" + school[i].schoolAddress + "</option>";
+                                    break;
                                 }
                             }
                         }
-
                     }
                     $("#select1").append(res);
                 });
