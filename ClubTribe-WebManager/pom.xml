@@ -150,6 +150,13 @@
                     <include>**/*.svg</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 </project>
