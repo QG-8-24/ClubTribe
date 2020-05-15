@@ -28,7 +28,7 @@
         <jstl.version>1.2</jstl.version>
         <jsp.version>2.2</jsp.version>
         <druid.version>1.1.12</druid.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.11.0</jackson.version>
     </properties>
     <!--依赖管理，不直接下载依赖，只是管理依赖-->
     <dependencyManagement>
